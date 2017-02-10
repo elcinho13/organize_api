@@ -1,0 +1,22 @@
+{
+    "name": "API ORGANIZE",
+    "description": "The Organize System API",
+    "homepage":"http://localhost/organize_api/",
+    "keywords":["organize", "events", "graduation", "api"],
+    "authors": [
+        {
+            "name": "Marcela Melo",
+            "email": "marcelaamelo1986@gmail.com"
+        },
+        {
+            "name": "Elcio Raimundo",
+            "email": "elcinho.13@gmail.com"
+        }
+        
+    ],
+    "require": {
+        "php": ">=5",
+        "slim/slim": "2.6.3",
+        "illuminate/database": "v4.2.9"
+    }
+}
