@@ -1,0 +1,20 @@
+[
+    {
+        "locale": "pt_BR",
+        "institutional" : {
+            "site_url" : "http://organize4events.com",
+            "description" : "Organize é um serviço de administração de eventos bla bla bla bla bla bla blba",
+            "mission" : "Nossa missão é bla bla bla bla bla bla blba",
+            "vision" : "Nossa visão é bla bla bla bla bla bla blba",
+            "values" : "Nossos valores são bla bla bla bla bla bla blba",
+            "contacts" : {
+                "phone" : "(31)3000-4000",
+                "whatsapp" : "(31)90000-0000",
+                "admin_mail" : "administrativo@organize4event.com",
+                "suport_mail" : "suporte@organize4event.com",
+                "finance_mail" : "financeiro@organize4event.com",
+                "developer_mail" : "desenvolvimento@organize4event.com"
+            }
+        }
+    }
+]

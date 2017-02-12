@@ -1,0 +1,49 @@
+[
+    {
+        "locale": "pt_BR",
+        "settings":[
+            {
+                "id": 1,
+                "name": "Exibir Notificações",
+                "check_default" : true
+            },
+            {
+                "id": 2,
+                "name": "Exibir Notificações",
+                "check_default" : false
+            },
+            {
+                "id": 3,
+                "name": "Configurações de Privacidade"
+            },
+            {
+                "id": 4,
+                "name": "Melhor dia para pagamento",
+                "values" : [6, 10, 15, 18, 22, 28, 30],
+                "value_default" : 10
+            },
+            {
+                "id": 5,
+                "name": "Arredondar valores",
+                "check_default" : true
+            },
+            {
+                "id": 6,
+                "name": "Receber relatórios por email",
+                "check_default" : false
+            },
+            {
+                "id": 7,
+                "name": "Nossos Planos"
+            },
+            {
+                "id": 8,
+                "name": "Tutorial"
+            },
+            {
+                "id": 9,
+                "name": "Sair"
+            }
+        ]
+    }
+]

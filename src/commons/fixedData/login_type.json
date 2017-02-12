@@ -1,0 +1,23 @@
+[
+    {
+        "locale": "pt_BR",
+        "login_type":[
+            {
+                "id": 1,
+                "name": "E-mail"
+            },
+            {
+                "id": 2,
+                "name": "Facebook"
+            },
+            {
+                "id": 3,
+                "name": "Linkedin"
+            },
+            {
+                "id": 4,
+                "name": "Google"
+            }
+        ]
+    }
+]

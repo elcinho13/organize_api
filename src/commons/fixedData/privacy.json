@@ -1,0 +1,25 @@
+[
+    {
+        "locale": "pt_BR",
+        "privacy":[
+            {
+                "id": 1,
+                "name": "Público",
+                "description" : "Qualquer usuário poderá visualizar seus dados de perfil.",
+                "check_default" : false
+            },
+            {
+                "id": 2,
+                "name": "Somente amigos",
+                "description" : "Usuários de sua turma / evento poderá visualizar seus dados de perfil.",
+                "check_default" : true
+            },
+            {
+                "id": 3,
+                "name": "Restrito",
+                "description" : "Somente os administradores do evento poderá visualizar seus dados de perfil.",
+                "check_default" : false
+            }
+        ]
+    }
+]
