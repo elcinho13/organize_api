@@ -1,0 +1,28 @@
+<?php
+
+class HttpBasicAuth extends \Slim\Middleware
+{
+    protected $realm;
+    protected $username;
+    protected $password;
+    public function __construct($username, $password, $realm = 'Protected Area')
+    {
+        $this->username = $username;
+        $this->password = $password;
+        $this->realm = $realm;
+    }
+ 
+    public function call()
+    {
+        $req = $this->app->request();
+        $res = $this->app->response();
+        $authUser = $req->headers('PHP_AUTH_USER');
+        $authPass = $req->headers('PHP_AUTH_PW');
+        if ($authUser && $authPass && $authUser === $this->username && $authPass === $this->password) {
+            $this->next->call();
+        } else {
+            $res->status(401);
+            $res->header('WWW-Authenticate', sprintf('Basic realm="%s"', $this->realm));
+        }
+    }
+}

@@ -1,7 +1,4 @@
 /**
- * Author:  marcelamelo
- * Created: 09/02/2017
- * 
  * Version: 01
  * Updated: 11/02/2017
  */

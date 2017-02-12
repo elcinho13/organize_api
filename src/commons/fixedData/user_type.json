@@ -1,23 +1,20 @@
-[
-    {
-        "locale": "pt_BR",
-        "user_type":[
-            {
-                "id": 1,
-                "name": "Master Admin"
-            },
-            {
-                "id": 2,
-                "name": "Proprietário"
-            },
-            {
-                "id": 3,
-                "name": "Administrador"
-            },
-            {
-                "id": 4,
-                "name": "Padrão"
-            }
-        ]
-    }
-]
+{
+    "pt_BR":[
+        {
+            "id": 1,
+            "name": "Master Admin"
+        },
+        {
+            "id": 2,
+            "name": "Proprietário"
+        },
+        {
+            "id": 3,
+            "name": "Administrador"
+        },
+        {
+            "id": 4,
+            "name": "Padrão"
+        }
+    ]
+}

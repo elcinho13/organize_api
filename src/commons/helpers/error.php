@@ -1,13 +1,6 @@
 <?php
 
-/**
- * Author:  marcelamelo
- * Created: 12/02/2017
- * 
- * Class: error
- */
-
-class Error {
+class custonError {
     
     private $type;
     private $code;
@@ -19,6 +12,7 @@ class Error {
     const INSERT = 2;
     const SELECT = 3;
     const UPDATE = 4;
+    const LOADING = 5;
     
     function __construct($type, $code, $message) {
                     
@@ -27,20 +21,23 @@ class Error {
         $this->message = $message;
         
         switch ($type){
-            case Error::NETWORK:
+            case CustonError::NETWORK:
                 $this->return = "Ocorreu um erro de REDE. \n Verifique sua internet e tente novamente.";
                 break;
-            case Error::VALIDATE:
+            case CustonError::VALIDATE:
                 $this->return = "Ocorreu um erro de VALIDAÇÃO. \n Verifique os campos informados e tente novamente.";
                 break;
-            case Error::INSERT:
+            case CustonError::INSERT:
                 $this->return = "Não foi possível inserir os dados.";
                 break;
-            case Error::SELECT:
+            case CustonError::SELECT:
                 $this->return = "Nenhum dado pôde ser retornado";
                 break;
-            case Error::UPDATE:
+            case CustonError::UPDATE:
                 $this->return = "Não foi possível atualizar os dados.";
+                break;
+            case CustonError::LOADING:
+                $this->return = "Ocorreu um erro ao carregar os dados.";
                 break;
         }
     }
