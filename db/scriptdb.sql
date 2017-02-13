@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `org_plan_price`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `plan` INT,
     `price` FLOAT,
+    `is_active` CHAR(1),
     `inserted_by` INT,
     `updated_by` INT,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -28,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `org_term`(
     `title` VARCHAR(255),
     `content` LONGTEXT,
     `publication_date` DATE,
+    `is_active` CHAR(1),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

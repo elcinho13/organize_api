@@ -11,8 +11,19 @@ require_once _CONFIG . '/database.php';
 require_once _HELPER . '/helpers.php';
 require_once _HELPER . '/error.php';
 
-//fixed data
+//Fixed data
 require_once _CONTROLLER . '/fixed_data.php';
+
+//Models
+require_once _MODEL . '/first_access.php';
+require_once _MODEL . '/plan_price.php';
+require_once _MODEL . '/term.php';
+require_once _MODEL . '/user.php';
+require_once _MODEL . '/token.php';
+
+//Controllers
+require_once _CONTROLLER . '/plan_price.php';
+require_once _CONTROLLER . '/term.php';
 
 
 
