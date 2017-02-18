@@ -4,7 +4,7 @@ $app->get('/users', function(){
     try{
         $data = user::all();
         if(empty($data) || is_null($data)){
-            $error = new custonError(5, 0, 'Nenhum usuário cadastrado');
+            $error = new custonError(3, 0, 'Nenhum usuário cadastrado');
             $data = $error->parse_error();
         }
         return helpers::jsonResponse($data);
@@ -18,7 +18,7 @@ $app->get('/user/:id', function($id){
     try{
         $data = user::find($id);
         if(empty($data)){
-            $error = new custonError(5, 0, 'Não foi possível localizar este usuário');
+            $error = new custonError(3, 0, 'Não foi possível localizar este usuário');
             $data = $error->parse_error();
         }
         return helpers::jsonResponse($data);
@@ -48,7 +48,7 @@ $app->post('/user/save', function () use ($app){
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(0, $ex->getCode(), $ex->getMessage());
+        $error = new custonError(2, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error());
     }
 });
@@ -60,7 +60,7 @@ $app->post('/user/:id/photo', function ($id){
             $url = $upload['message'];
             $user = user::find($id);
             if(empty($user)){
-                $error = new custonError(5, 0, 'Não foi possível localizar este usuário');
+                $error = new custonError(3, 0, 'Não foi possível localizar este usuário');
                 $data = $error->parse_error();
             }
             $user->profile_picture = $url;
@@ -74,7 +74,7 @@ $app->post('/user/:id/photo', function ($id){
         }
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
-        $error = new custonError(0, $ex->getCode(), $ex->getMessage());
+        $error = new custonError(2, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error());
     }
 });
@@ -97,7 +97,7 @@ $app->post('/user/:id', function ($id) use ($app){
             return helpers::jsonResponse($user);
         }
     } catch (Exception $ex) {
-        $error = new custonError(0, $ex->getCode(), $ex->getMessage());
+        $error = new custonError(4, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error());
     }
 });
@@ -119,7 +119,7 @@ $app->post('/user/:id/alter_password', function ($id) use ($app){
         }
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
-        $error = new custonError(0, $ex->getCode(), $ex->getMessage());
+        $error = new custonError(4, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error());
     }
 });
