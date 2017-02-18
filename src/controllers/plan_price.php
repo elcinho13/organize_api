@@ -10,7 +10,6 @@ $app->get('/price/:planId', function ($planId){
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());
-        $data = $error->parse_error();
-        return helpers::jsonResponse($data);
+        return helpers::jsonResponse($error->parse_error());
     }
 });
