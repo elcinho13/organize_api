@@ -17,6 +17,7 @@ $app->get('/term', function(){
 $app->post('/term/save', function () use($app){
     try {
         $term = new term();
+        $term->locale = $app->request()->post('locale');
         $term->version_name = $app->request()->post('version_name');
         $term->title = $app->request()->post('title');
         $term->content = $app->request()->post('content');
@@ -37,6 +38,7 @@ $app->post('/term/save', function () use($app){
 $app->post('/term/:id', function ($id) use($app){
     try{
         $term = term::find($id);
+        $term->locale = $app->request()->post('locale');
         $term->version_name = $app->request()->post('version_name');
         $term->title = $app->request()->post('title');
         $term->content = $app->request()->post('content');
