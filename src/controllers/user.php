@@ -12,7 +12,7 @@ $app->get('/users', function(){
 
 $app->get('/user/:id', function($id){
     try{
-        $data = user::find($id);
+        $data = user::with('term')->get()->find($id);
         if(empty($data)){
             $error = new custonError(3, 0, 'Não foi possível localizar este usuário');
             $data = $error->parse_error();
@@ -38,13 +38,13 @@ $app->post('/user/save', function () use ($app){
         $user->birth_date = $app->request()->post('birth_date');
         $user->responsible_name = $app->request()->post('responsible_name');
         $user->responsible_cpf = $app->request()->post('responsible_cpf');
-        $user->org_term_id = $app->request()->post('term_id');
+        $user->term = $app->request()->post('term');
         $user->term_accept = $app->request()->post('term_accept');
         $user->term_accept_date = $app->request()->post('term_accept_date');
         $user->plan = $app->request()->post('plan');
         
         if($user->save()){
-            $data = user::find($user->id);
+            $data = user::with('term')->find($user->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
@@ -59,22 +59,18 @@ $app->post('/user/:id/photo', function ($id){
         if($upload['success']){
             $url = $upload['message'];
             $user = user::find($id);
-            if(empty($user)){
-                $error = new custonError(3, 0, 'Não foi possível localizar este usuário');
-                $data = $error->parse_error();
-            }
             $user->profile_picture = $url;
             if($user->update()){
-                $data = user::find($user->id);
+                $data = user::with('term')->find($user->id);
             }
         }
         else{
-            $error = new custonError(5, 1, $upload['message']);
+            $error = new custonError(5, 0, $upload['message']);
             $data = $error->parse_error();
         }
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
-        $error = new custonError(2, $ex->getCode(), $ex->getMessage());
+        $error = new custonError(4, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error());
     }
 });
@@ -92,13 +88,14 @@ $app->post('/user/:id', function ($id) use ($app){
         $user->birth_date = $app->request()->post('birth_date');
         $user->responsible_name = $app->request()->post('responsible_name');
         $user->responsible_cpf = $app->request()->post('responsible_cpf');
-        $user->org_term_id = $app->request()->post('term_id');
+        $user->term = $app->request()->post('term');
         $user->term_accept = $app->request()->post('term_accept');
         $user->term_accept_date = $app->request()->post('term_accept_date');
         $user->plan = $app->request()->post('plan');
         
         if($user->update()){
-            return helpers::jsonResponse($user);
+            $data = user::with('term')->find($user->id);
+            return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
         $error = new custonError(4, $ex->getCode(), $ex->getMessage());
