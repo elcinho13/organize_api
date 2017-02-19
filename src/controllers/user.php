@@ -3,10 +3,6 @@
 $app->get('/users', function(){
     try{
         $data = user::all();
-        if(empty($data) || is_null($data)){
-            $error = new custonError(3, 0, 'Nenhum usuário cadastrado');
-            $data = $error->parse_error();
-        }
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());
@@ -42,6 +38,10 @@ $app->post('/user/save', function () use ($app){
         $user->birth_date = $app->request()->post('birth_date');
         $user->responsible_name = $app->request()->post('responsible_name');
         $user->responsible_cpf = $app->request()->post('responsible_cpf');
+        $user->org_term_id = $app->request()->post('term_id');
+        $user->term_accept = $app->request()->post('term_accept');
+        $user->term_accept_date = $app->request()->post('term_accept_date');
+        $user->plan = $app->request()->post('plan');
         
         if($user->save()){
             $data = user::find($user->id);
@@ -92,6 +92,10 @@ $app->post('/user/:id', function ($id) use ($app){
         $user->birth_date = $app->request()->post('birth_date');
         $user->responsible_name = $app->request()->post('responsible_name');
         $user->responsible_cpf = $app->request()->post('responsible_cpf');
+        $user->org_term_id = $app->request()->post('term_id');
+        $user->term_accept = $app->request()->post('term_accept');
+        $user->term_accept_date = $app->request()->post('term_accept_date');
+        $user->plan = $app->request()->post('plan');
         
         if($user->update()){
             return helpers::jsonResponse($user);
@@ -102,7 +106,7 @@ $app->post('/user/:id', function ($id) use ($app){
     }
 });
 
-$app->post('/user/:id/alter_password', function ($id) use ($app){
+$app->post('/user/:id/edit_password', function ($id) use ($app){
     try{
         $user = user::find($id);
         $oldPassword = application::cryptPassword($user->birth_date, $app->request()->post('old_password'));

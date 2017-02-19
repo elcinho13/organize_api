@@ -10,7 +10,7 @@ class application{
     static function upload_photo($file, $id){
         $way = 'http://localhost/_uploads/organize/';
         $folder = '/home/marcelamelo/Documentos/Projetos/_uploads/organize/';
-        $file_name = $id.'_profile_picture.';
+        $file_name = $id.'_profile_picture.png';
         $extensions = array('jpg', 'png', 'jpeg');
         $size = 1024*1024*2; 
         
@@ -27,7 +27,6 @@ class application{
             $tmp_name = $file['name'];
             $tmp_extension = explode('.', $tmp_name);
             $extension = end($tmp_extension);
-            $file_name = $file_name.$extension;
             if (array_search($extension, $extensions) === false) {
                 $response['message'] = 'Arquivo não suportado. São permitidos arquivos : JPG, PNG, JPEG.';
                 return $response;

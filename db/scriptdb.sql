@@ -55,6 +55,9 @@ CREATE TABLE IF NOT EXISTS `org_user`(
     `full_name` VARCHAR(255),
     `mail` VARCHAR(255) UNIQUE,
     `password` VARCHAR(255),
+    `facebook_id` VARCHAR(255),
+    `linkedin_id` VARCHAR(255),
+    `google_id` VARCHAR(255),
     `profile_picture` VARCHAR(255),
     `cpf` VARCHAR(255) UNIQUE,
     `rg_number` VARCHAR(255),
@@ -64,8 +67,52 @@ CREATE TABLE IF NOT EXISTS `org_user`(
     `birth_date` DATE,
     `responsible_name` VARCHAR(255),
     `responsible_cpf` VARCHAR(255),
+    `org_term_id` INT UNSIGNED, 
+    `term_accept` TINYINT(1), 
+    `term_accept_date` TIMESTAMP,
+    `plan` INT,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_user_fk1` (`org_term_id`),
+    CONSTRAINT `org_user_fk1` FOREIGN KEY (`org_term_id`) REFERENCES `org_term` (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_security_question
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_security_question`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `org_user_id` INT UNSIGNED,
+    `locale` VARCHAR(255),
+    `security_question` VARCHAR(255),
+    `private` TINYINT(1),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_security_question_fk1` (`org_user_id`),
+    CONSTRAINT `org_security_question_fk1` FOREIGN KEY (`org_user_id`) REFERENCES `org_user` (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_user_security
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_user_security`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `org_user_id` INT UNSIGNED,
+    `org_security_question_id` INT UNSIGNED,
+    `security_answer` VARCHAR(255),
+    `last_update_date` TIMESTAMP,
+    `last_update_platform` INT,
+    `last_update_identifier` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_user_security_fk1` (`org_user_id`),
+    CONSTRAINT `org_user_security_fk1` FOREIGN KEY (`org_user_id`) REFERENCES `org_user` (`id`),
+
+    KEY `org_user_security_fk2` (`org_security_question_id`),
+    CONSTRAINT `org_user_security_fk2` FOREIGN KEY (`org_security_question_id`) REFERENCES `org_security_question` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
@@ -75,14 +122,10 @@ CREATE TABLE IF NOT EXISTS `org_token`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `org_user_id` INT UNSIGNED,
     `org_first_access_id` INT UNSIGNED,
-    `org_term_id` INT UNSIGNED, 
-    `term_accept` TINYINT(1), 
-    `term_accept_date` TIMESTAMP,
-    `plan` INT,
-    `last_login_type` INT,
-    `last_access_token` VARCHAR(255),
-    `last_access_plataform` INT,
-    `last_access_date` TIMESTAMP,
+    `login_type` INT,
+    `access_token` VARCHAR(255),
+    `access_platform` INT,
+    `access_date` TIMESTAMP,
     `keep_logged` TINYINT(1),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -91,10 +134,8 @@ CREATE TABLE IF NOT EXISTS `org_token`(
     CONSTRAINT `org_token_fk1` FOREIGN KEY (`org_user_id`) REFERENCES `org_user` (`id`),
 
     KEY `org_token_fk2` (`org_first_access_id`),
-    CONSTRAINT `org_token_fk2` FOREIGN KEY (`org_first_access_id`) REFERENCES `org_first_access` (`id`),
+    CONSTRAINT `org_token_fk2` FOREIGN KEY (`org_first_access_id`) REFERENCES `org_first_access` (`id`)
 
-    KEY `org_token_fk3` (`org_term_id`),
-    CONSTRAINT `org_token_fk3` FOREIGN KEY (`org_term_id`) REFERENCES `org_term` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------

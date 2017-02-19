@@ -21,6 +21,8 @@ require_once _MODEL . '/plan_price.php';
 require_once _MODEL . '/term.php';
 require_once _MODEL . '/first_access.php';
 require_once _MODEL . '/user.php';
+require_once _MODEL . '/security_question.php';
+require_once _MODEL . '/user_security.php';
 require_once _MODEL . '/token.php';
 
 //Controllers
@@ -28,7 +30,9 @@ require_once _CONTROLLER . '/plan_price.php';
 require_once _CONTROLLER . '/term.php';
 require_once _CONTROLLER . '/first_access.php';
 require_once _CONTROLLER . '/user.php';
-//require_once _CONTROLLER . '/token.php';
+require_once _CONTROLLER . '/security_question.php';
+require_once _CONTROLLER . '/user_security.php';
+require_once _CONTROLLER . '/token.php';
 
 
 
