@@ -28,4 +28,3 @@ Repositório do web service
             - se a controller e a rota foi iniciada no arquivo routers.php
             - chame manualmente o index.php na url: http://localhost/organize_api/index.php/'suarota' 
               (algumas vezes o servidor não resolve a url corretamente)
-

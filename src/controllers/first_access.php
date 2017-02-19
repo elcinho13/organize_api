@@ -2,7 +2,7 @@
 
 $app->get('/first_access/:device_id', function ($device_id){
     try{
-        $data = firstAccess::query()->where('device_id', '=', $device_id)->first();
+        $data = first_access::query()->where('device_id', '=', $device_id)->first();
         if(empty($data) || is_null($data)){
             $error = new custonError(3, 0, 'Erro ao carregar os dados.');
             $data = $error->parse_error();
@@ -16,13 +16,13 @@ $app->get('/first_access/:device_id', function ($device_id){
 
 $app->post('/first_access/save', function () use($app){
     try{
-        $first_access = new firstAccess();
+        $first_access = new first_access();
         $first_access->device_id = $app->request()->post('device_id');
         $first_access->instalation_date = $app->request()->post('instalation_date');
         $first_access->locale = $app->request()->post('locale');
         
         if($first_access->save()){
-            $data = firstAccess::find($first_access->id);
+            $data = first_access::find($first_access->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {

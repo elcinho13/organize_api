@@ -56,7 +56,7 @@ $app->post('/login', function () use($app){
     try{
         $user = user::query()->where('mail', '=', $app->request()->post('mail'))->first();
         if($user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))){
-            $data = $user;
+            $data = user::with('term')->get()->find($user->id);
         }
         else{
             $error = new custonError(5, 0, 'Usuário ou senha inválidos.');
