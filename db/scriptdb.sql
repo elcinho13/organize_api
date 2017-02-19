@@ -67,15 +67,15 @@ CREATE TABLE IF NOT EXISTS `org_user`(
     `birth_date` DATE,
     `responsible_name` VARCHAR(255),
     `responsible_cpf` VARCHAR(255),
-    `org_term_id` INT UNSIGNED, 
+    `term` INT UNSIGNED, 
     `term_accept` TINYINT(1), 
     `term_accept_date` TIMESTAMP,
     `plan` INT,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
 
-    KEY `org_user_fk1` (`org_term_id`),
-    CONSTRAINT `org_user_fk1` FOREIGN KEY (`org_term_id`) REFERENCES `org_term` (`id`)
+    KEY `org_user_fk1` (`term`),
+    CONSTRAINT `org_user_fk1` FOREIGN KEY (`term`) REFERENCES `org_term` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
@@ -83,15 +83,15 @@ CREATE TABLE IF NOT EXISTS `org_user`(
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `org_security_question`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `org_user_id` INT UNSIGNED,
+    `user` INT UNSIGNED,
     `locale` VARCHAR(255),
     `security_question` VARCHAR(255),
     `private` TINYINT(1),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
 
-    KEY `org_security_question_fk1` (`org_user_id`),
-    CONSTRAINT `org_security_question_fk1` FOREIGN KEY (`org_user_id`) REFERENCES `org_user` (`id`)
+    KEY `org_security_question_fk1` (`user`),
+    CONSTRAINT `org_security_question_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS `org_security_question`(
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `org_user_security`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `org_user_id` INT UNSIGNED,
-    `org_security_question_id` INT UNSIGNED,
+    `user` INT UNSIGNED,
+    `security_question` INT UNSIGNED,
     `security_answer` VARCHAR(255),
     `last_update_date` TIMESTAMP,
     `last_update_platform` INT,
@@ -108,11 +108,11 @@ CREATE TABLE IF NOT EXISTS `org_user_security`(
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
 
-    KEY `org_user_security_fk1` (`org_user_id`),
-    CONSTRAINT `org_user_security_fk1` FOREIGN KEY (`org_user_id`) REFERENCES `org_user` (`id`),
+    KEY `org_user_security_fk1` (`user`),
+    CONSTRAINT `org_user_security_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`),
 
-    KEY `org_user_security_fk2` (`org_security_question_id`),
-    CONSTRAINT `org_user_security_fk2` FOREIGN KEY (`org_security_question_id`) REFERENCES `org_security_question` (`id`)
+    KEY `org_user_security_fk2` (`security_question`),
+    CONSTRAINT `org_user_security_fk2` FOREIGN KEY (`security_question`) REFERENCES `org_security_question` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
@@ -120,8 +120,8 @@ CREATE TABLE IF NOT EXISTS `org_user_security`(
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `org_token`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `org_user_id` INT UNSIGNED,
-    `org_first_access_id` INT UNSIGNED,
+    `user` INT UNSIGNED,
+    `first_access` INT UNSIGNED,
     `login_type` INT,
     `access_token` VARCHAR(255),
     `access_platform` INT,
@@ -130,11 +130,11 @@ CREATE TABLE IF NOT EXISTS `org_token`(
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
 
-    KEY `org_token_fk1` (`org_user_id`),
-    CONSTRAINT `org_token_fk1` FOREIGN KEY (`org_user_id`) REFERENCES `org_user` (`id`),
+    KEY `org_token_fk1` (`user`),
+    CONSTRAINT `org_token_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`),
 
-    KEY `org_token_fk2` (`org_first_access_id`),
-    CONSTRAINT `org_token_fk2` FOREIGN KEY (`org_first_access_id`) REFERENCES `org_first_access` (`id`)
+    KEY `org_token_fk2` (`first_access`),
+    CONSTRAINT `org_token_fk2` FOREIGN KEY (`first_access`) REFERENCES `org_first_access` (`id`)
 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -143,15 +143,15 @@ CREATE TABLE IF NOT EXISTS `org_token`(
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `org_settings`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `org_user_id` INT UNSIGNED,
+    `user` INT UNSIGNED,
     `settings` INT,
     `checking` TINYINT(1),
     `value` INT,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
 
-    KEY `org_settings_fk1` (`org_user_id`),
-    CONSTRAINT `org_settings_fk1` FOREIGN KEY (`org_user_id`) REFERENCES `org_user` (`id`)
+    KEY `org_settings_fk1` (`user`),
+    CONSTRAINT `org_settings_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
@@ -159,14 +159,14 @@ CREATE TABLE IF NOT EXISTS `org_settings`(
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `org_privacy`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `org_user_id` INT UNSIGNED,
+    `user` INT UNSIGNED,
     `privacy` INT,
     `checking` TINYINT(1),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
 
-    KEY `org_privacy_fk1` (`org_user_id`),
-    CONSTRAINT `org_privacy_fk1` FOREIGN KEY (`org_user_id`) REFERENCES `org_user` (`id`)
+    KEY `org_privacy_fk1` (`user`),
+    CONSTRAINT `org_privacy_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
@@ -174,13 +174,13 @@ CREATE TABLE IF NOT EXISTS `org_privacy`(
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `org_notification`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `org_user_id` INT UNSIGNED,
+    `user` INT UNSIGNED,
     `brief_description` VARCHAR(255),
     `description` VARCHAR(1500),
     `read` TINYINT(1) DEFAULT 0,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
 
-    KEY `org_notification_fk1` (`org_user_id`),
-    CONSTRAINT `org_notification_fk1` FOREIGN KEY (`org_user_id`) REFERENCES `org_user` (`id`)
+    KEY `org_notification_fk1` (`user`),
+    CONSTRAINT `org_notification_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -2,7 +2,7 @@
 
 $app->get('/users', function(){
     try{
-        $data = user::all();
+        $data = user::with('term')->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());

@@ -27,35 +27,35 @@ VALUES ('1abcd2', '2017-02-19', 'pt_BR');
 -- -----------------------------------------------------------------------------
 -- Insert in table org_user
 -- -----------------------------------------------------------------------------
-INSERT INTO org_user(full_name, mail, password, facebook_id, linkedin_id, google_id, profile_picture, cpf, rg_number, rg_emitter_uf, rg_emitter_organ, rg_emitter_date, birth_date, responsible_name, responsible_cpf, org_term_id, term_accept, term_accept_date, plan) 
+INSERT INTO org_user(full_name, mail, password, facebook_id, linkedin_id, google_id, profile_picture, cpf, rg_number, rg_emitter_uf, rg_emitter_organ, rg_emitter_date, birth_date, responsible_name, responsible_cpf, term, term_accept, term_accept_date, plan) 
 VALUES('Organize', 'organize@organize.com', '', '', '', '', '', '09876543212', '12345678', 'MG', 'SSP', '2003-01-01', '2000-01-01', 'Organize Mãe', '01234567890', 1, 1, '2017-02-19', 1);
 
 -- -----------------------------------------------------------------------------
 -- Insert in table org_security_question
 -- -----------------------------------------------------------------------------
-INSERT INTO org_security_question(org_user_id, locale, security_question, private)
+INSERT INTO org_security_question(user, locale, security_question, private)
 VALUES(null, 'pt_BR', 'Qual o nome do seu cachorro?', 0);
 
-INSERT INTO org_security_question(org_user_id, locale, security_question, private)
+INSERT INTO org_security_question(user, locale, security_question, private)
 VALUES(null, 'pt_BR', 'Qual a cor do seu time favorito?', 0);
 
-INSERT INTO org_security_question(org_user_id, locale, security_question, private)
+INSERT INTO org_security_question(user, locale, security_question, private)
 VALUES(null, 'pt_BR', 'Onde seu pai nasceu?', 0);
 
-INSERT INTO org_security_question(org_user_id, locale, security_question, private)
+INSERT INTO org_security_question(user, locale, security_question, private)
 VALUES(null, 'pt_BR', 'Qual a cor do seu time favorito?', 0);
 
-INSERT INTO org_security_question(org_user_id, locale, security_question, private)
+INSERT INTO org_security_question(user, locale, security_question, private)
 VALUES(null, 'pt_BR', 'Qual era seu brinquedo favorito?', 0);
 
 -- -----------------------------------------------------------------------------
 -- Insert in table org_user_security
 -- -----------------------------------------------------------------------------
-INSERT INTO org_user_security(org_user_id, org_security_question_id, security_answer, last_update_date, last_update_platform, last_update_identifier)
+INSERT INTO org_user_security(user, security_question, security_answer, last_update_date, last_update_platform, last_update_identifier)
 VALUES(1, 1, 'Noturno', '2017-02-19', 1, '1abcd2');
 
 -- -----------------------------------------------------------------------------
 -- Insert in table org_token
 -- -----------------------------------------------------------------------------
-INSERT INTO org_token(org_user_id, org_first_access_id, login_type, access_token, access_platform, access_date)
+INSERT INTO org_token(user, first_access, login_type, access_token, access_platform, access_date)
 VALUES(1, 1, 1, 'asdfghjkl', 1, '2017-02-19');
