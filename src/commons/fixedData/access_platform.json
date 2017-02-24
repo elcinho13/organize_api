@@ -1,0 +1,16 @@
+{
+    "pt_BR":[
+        {
+            "id": 1,
+            "name": "Site"
+        },
+        {
+            "id": 2,
+            "name": "Android"
+        },
+        {
+            "id": 3,
+            "name": "IPhone"
+        }
+    ]
+}

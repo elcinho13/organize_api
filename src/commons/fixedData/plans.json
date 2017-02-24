@@ -1,0 +1,26 @@
+{
+    "pt_BR": [
+        {
+            "id": 1,
+            "name": "Gratuito",
+            "description": "Plano gratuito permite acesso a plataforma blabla",
+            "security_code": null,
+            "advantages" : ["Acesso gratuito a ferramenta.", "Controle de arrecadações", "Contém anúncios."]
+        },
+        {
+            "id": 2,
+            "name": "Básico",
+            "description": "Plano básico permite acesso a plataforma blabla",
+            "security_code": 923534,
+            "advantages" : ["Consultoria inicial", "Controle de arrecadações", "Contém anúncios."]
+        },
+        {
+            "id": 3,
+            "name": "Prêmium",
+            "description": "Plano prêmium permite acesso a plataforma blabla",
+            "security_code": 358965,
+            "advantages" : ["Administração total do evento", "Controle de arrecadações", "Sem anúncios."]
+        }
+    ]
+    
+}
