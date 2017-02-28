@@ -29,6 +29,7 @@ Repositório do web service
             - chame manualmente o index.php na url: http://localhost/organize_api/index.php/'suarota' 
               (algumas vezes o servidor não resolve a url corretamente)
 
+[ELCIO RAIMUNDO] [28.02.2017]
 - CAMINHOS 
     
     * pasta da API clonada (/opt/lampp/htdocs/organize_api/)
