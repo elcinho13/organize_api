@@ -28,3 +28,16 @@ Repositório do web service
             - se a controller e a rota foi iniciada no arquivo routers.php
             - chame manualmente o index.php na url: http://localhost/organize_api/index.php/'suarota' 
               (algumas vezes o servidor não resolve a url corretamente)
+
+- CAMINHOS 
+    
+    * pasta da API clonada (/opt/lampp/htdocs/organize_api/)
+    
+    * Versão Servidor 10.1.21-MariaDB - Source distribution
+
+    * Inicializar o servidor Xampp no terminal (sudo /opt/lampp/lampp start)
+
+- ERROS 
+    
+    * Verificar a conta do git antes de fazer o PULL REQUEST     
+
