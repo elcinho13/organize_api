@@ -3,10 +3,6 @@
 $app->get('/first_access/:device_id', function ($device_id){
     try{
         $data = first_access::query()->where('device_id', '=', $device_id)->first();
-        if(empty($data) || is_null($data)){
-            $error = new custonError(3, 0, 'Erro ao carregar os dados.');
-            $data = $error->parse_error();
-        }
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());

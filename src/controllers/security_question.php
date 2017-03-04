@@ -5,7 +5,7 @@ $app->get('/security_questions/:user_id', function ($user_id){
         $data = array();
         $security_questions = security_question::with('user')->get();
         foreach ($security_questions as $security_question){
-            if ($security_question->private == 0 || $security_question->org_user_id == $user_id){
+            if (!$security_question->private || $security_question->org_user_id == $user_id){
                 $data[] = $security_question;
             }
         }

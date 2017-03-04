@@ -13,10 +13,6 @@ $app->get('/users', function(){
 $app->get('/user/:id', function($id){
     try{
         $data = user::with('term')->get()->find($id);
-        if(empty($data)){
-            $error = new custonError(3, 0, 'Não foi possível localizar este usuário');
-            $data = $error->parse_error();
-        }
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());

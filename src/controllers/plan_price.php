@@ -3,7 +3,7 @@
 $app->get('/price/:planId', function ($planId){
     try{
         $data = planPrice::query()->where('plan', '=', $planId)->first();
-        if(empty($data) || is_null($data) || $data->is_active != 1){
+        if(empty($data) || is_null($data) || $data->is_active != true){
             $error = new custonError(3, 0, 'Não há preço disponível para este plano');
             $data = $error->parse_error();
         }

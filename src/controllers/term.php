@@ -2,11 +2,7 @@
 
 $app->get('/term', function(){
     try{
-        $data = term::query()->where('is_active', '=', 1)->first();
-        if(empty($data) || is_null($data)){
-            $error = new custonError(3, 0, 'Não há nenhum termo disponível');
-            $data = $error->parse_error();
-        }
+        $data = term::query()->where('is_active', '=', true)->first();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());
@@ -22,7 +18,7 @@ $app->post('/term/save', function () use($app){
         $term->title = $app->request()->post('title');
         $term->content = $app->request()->post('content');
         $term->publication_date = $app->request()->post('publication_date');
-        $term->is_active = 1;
+        $term->is_active = true;
         
         if($term->save()){
             $data = term::find($term->id);
