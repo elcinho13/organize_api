@@ -25,6 +25,7 @@ require_once _MODEL . '/security_question.php';
 require_once _MODEL . '/user_security.php';
 require_once _MODEL . '/token.php';
 require_once _MODEL . '/notification.php';
+require_once _MODEL . '/settings.php';
 
 //Controllers
 require_once _CONTROLLER . '/plan_price.php';

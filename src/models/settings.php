@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class notification extends Eloquent
+class settings extends Eloquent
 {
 	public $timestamps = true;
-	protected $table = 'org_notification';	
+	protected $table = 'org_settings';
 
 	public function user(){
     return $this->belongsTo('user','user');
