@@ -36,6 +36,4 @@ require_once _CONTROLLER . '/security_question.php';
 require_once _CONTROLLER . '/user_security.php';
 require_once _CONTROLLER . '/token.php';
 require_once _CONTROLLER . '/notification.php';
-
-
-
+require_once _CONTROLLER . '/settings.php';
