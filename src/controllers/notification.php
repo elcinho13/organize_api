@@ -26,10 +26,10 @@ $app->post('/notification/:save', function() use ($app) {
         $notification->user = $app->request()->post('user');
         $notification->brief_description = $app->request()->post('brief_description');
         $notification->description = $app->request()->post('description');
-        $notification->read = $app->request->post('read');
+        $notification->read = false;
 
         if ($notification->save()) {
-            $data = notification::with('user')->find($notification->id);
+            $data = notification::find($notification->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
