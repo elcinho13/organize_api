@@ -13,9 +13,6 @@ require_once _HELPER . '/helpers.php';
 require_once _COMMON . '/error.php';
 require_once _COMMON . '/application.php';
 
-//Fixed data
-require_once _CONTROLLER . '/fixed_data.php';
-
 //Models
 require_once _MODEL . '/plan_price.php';
 require_once _MODEL . '/term.php';
