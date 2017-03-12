@@ -30,3 +30,7 @@ $app->get('/user_type', function (){
     include(_DATA.'/user_type.json');
 });
 
+$app->get('/notification', function()
+{
+	include(_DATA.'/notification.json');
+});
