@@ -22,8 +22,8 @@ $app->post('/institutional/save', function () use($app) {
         $institutional->code_enum = $app->request()->post('code_enum');
         $institutional->site_url = $app->request()->post('site_url');
         $institutional->description = $app->request()->post('description');
-        $institutional->mission = $app->request()->post('vision');
-        $institutional->vision = $app->request()->post('name');
+        $institutional->mission = $app->request()->post('mission');
+        $institutional->vision = $app->request()->post('vision');
         $institutional->values = $app->request()->post('values');
         $institutional->is_active = true;
 
@@ -44,8 +44,8 @@ $app->post('/institutional/:id/edit', function ($id) use($app) {
         $institutional->code_enum = $app->request()->post('code_enum');
         $institutional->site_url = $app->request()->post('site_url');
         $institutional->description = $app->request()->post('description');
-        $institutional->mission = $app->request()->post('vision');
-        $institutional->vision = $app->request()->post('name');
+        $institutional->mission = $app->request()->post('mission');
+        $institutional->vision = $app->request()->post('vision');
         $institutional->values = $app->request()->post('values');
         $institutional->is_active = $app->request()->post('is_active');
 
