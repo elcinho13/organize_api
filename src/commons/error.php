@@ -1,13 +1,13 @@
 <?php
 
 class custonError {
-    
+
     private $success;
     private $type;
     private $code;
     private $message;
-    private $error_ruturn; 
-    
+    private $error_ruturn;
+
     const NETWORK = 0;
     const VALIDATE = 1;
     const INSERT = 2;
@@ -15,14 +15,14 @@ class custonError {
     const UPDATE = 4;
     const LOADING = 5;
     const SUCESS = 99;
-    
+
     function __construct($type, $code, $message) {
-                    
+
         $this->type = $type;
         $this->code = $code;
         $this->message = $message;
-        
-        switch ($type){
+
+        switch ($type) {
             case custonError::NETWORK:
                 $this->success = false;
                 $this->error_ruturn = "Ocorreu um erro de REDE. Verifique sua internet e tente novamente.";
@@ -53,17 +53,16 @@ class custonError {
                 break;
         }
     }
-    
-    public function parse_error(){
+
+    public function parse_error() {
         $error = array(
             'success' => $this->success,
             'code' => $this->code,
             'error_ruturn' => $this->error_ruturn,
             'message' => $this->message
         );
-        
+
         return $error;
     }
+
 }
-
-

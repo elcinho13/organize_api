@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class first_access extends Eloquent {
+class access_platform extends Eloquent {
 
     public $timestamps = true;
-    protected $table = 'org_first_access';
+    protected $table = 'org_access_platform';
 
 }

@@ -10,13 +10,13 @@ $app = new \Slim\Slim(
 //Instance routers
 require_once 'routers.php';
 
-require_once _API.'/config/authenticator.php';
+require_once _API . '/config/authenticator.php';
 $app->add(new \HttpBasicAuth('root', 'root'));
 
 $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
 //Instance Index
-$app->get('/', function(){
+$app->get('/', function() {
     include('README.md');
 });
 
