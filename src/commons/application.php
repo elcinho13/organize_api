@@ -10,6 +10,7 @@ class application {
     static function upload_photo($file, $id) {
         $way = 'http://localhost/_uploads/organize/';
         $folder = '/home/marcelamelo/Documentos/Projetos/_uploads/organize/';
+
         $file_name = $id . '_profile_picture.png';
         $extensions = array('jpg', 'png', 'jpeg');
         $size = 1024 * 1024 * 2;

@@ -14,5 +14,9 @@ class user extends Eloquent {
     public function term() {
         return $this->belongsTo('term', 'term');
     }
+    
+    public function plan() {
+        return $this->belongsTo('plan', 'plan');
+    }
 
 }

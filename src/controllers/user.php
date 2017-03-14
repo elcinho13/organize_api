@@ -2,7 +2,7 @@
 
 $app->get('/users', function(){
     try{
-        $data = user::with('user_type', 'term')->get();
+        $data = user::with('user_type', 'term', 'plan')->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());
@@ -12,7 +12,7 @@ $app->get('/users', function(){
 
 $app->get('/user/:id', function($id){
     try{
-        $data = user::with('user_type', 'term')->get()->find($id);
+        $data = user::with('user_type', 'term', 'plan')->get()->find($id);
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());
@@ -41,7 +41,7 @@ $app->post('/user/save', function () use ($app){
         $user->plan = $app->request()->post('plan');
         
         if($user->save()){
-            $data = user::with('user_type', 'term')->find($user->id);
+            $data = user::with('user_type', 'term', 'plan')->find($user->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
@@ -55,10 +55,12 @@ $app->post('/user/:id/photo', function ($id){
         $upload = application::upload_photo($_FILES['profile_picture'], $id);
         if($upload['success']){
             $url = $upload['message'];
+            
             $user = user::find($id);
             $user->profile_picture = $url;
+                        
             if($user->update()){
-                $data = user::with('user_type', 'term')->find($user->id);
+                $data = user::with('user_type', 'term', 'plan')->find($user->id);
             }
         }
         else{
@@ -92,7 +94,7 @@ $app->post('/user/:id', function ($id) use ($app){
         $user->plan = $app->request()->post('plan');
         
         if($user->update()){
-            $data = user::with('user_type', 'term')->find($user->id);
+            $data = user::with('user_type', 'term', 'plan')->find($user->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
