@@ -2,7 +2,7 @@
 
 $app->get('/users', function(){
     try{
-        $data = user::with('term')->get();
+        $data = user::with('user_type', 'term')->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());
@@ -12,7 +12,7 @@ $app->get('/users', function(){
 
 $app->get('/user/:id', function($id){
     try{
-        $data = user::with('term')->get()->find($id);
+        $data = user::with('user_type', 'term')->get()->find($id);
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());
@@ -23,6 +23,7 @@ $app->get('/user/:id', function($id){
 $app->post('/user/save', function () use ($app){
     try{
         $user = new user();
+        $user->user_type = $app->request()->post('user_type');
         $user->full_name = $app->request()->post('full_name');
         $user->mail = $app->request()->post('mail');
         $user->password = application::cryptPassword($app->request()->post('birth_date'), $app->request()->post('password'));
@@ -40,7 +41,7 @@ $app->post('/user/save', function () use ($app){
         $user->plan = $app->request()->post('plan');
         
         if($user->save()){
-            $data = user::with('term')->find($user->id);
+            $data = user::with('user_type', 'term')->find($user->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
@@ -57,7 +58,7 @@ $app->post('/user/:id/photo', function ($id){
             $user = user::find($id);
             $user->profile_picture = $url;
             if($user->update()){
-                $data = user::with('term')->find($user->id);
+                $data = user::with('user_type', 'term')->find($user->id);
             }
         }
         else{
@@ -74,6 +75,7 @@ $app->post('/user/:id/photo', function ($id){
 $app->post('/user/:id', function ($id) use ($app){
     try{
         $user = user::find($id);
+        $user->user_type = $app->request()->post('user_type');
         $user->full_name = $app->request()->post('full_name');
         $user->mail = $app->request()->post('mail');
         $user->cpf = $app->request()->post('cpf');
@@ -90,7 +92,7 @@ $app->post('/user/:id', function ($id) use ($app){
         $user->plan = $app->request()->post('plan');
         
         if($user->update()){
-            $data = user::with('term')->find($user->id);
+            $data = user::with('user_type', 'term')->find($user->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
