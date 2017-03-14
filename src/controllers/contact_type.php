@@ -25,8 +25,6 @@ $app->get('/contact_type/:locale/:id', function ($locale, $id) {
     }
 });
 
-
-
 $app->post('/contact_type/save', function () use($app) {
     try {
         $contact_type = new contact_type();

@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `org_plan`(
     `name` VARCHAR(255),
     `description` VARCHAR(2000),
     `security_code` VARCHAR(255),
+    `is_active` TINYINT(1),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

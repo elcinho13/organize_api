@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class settings extends Eloquent {
+class plan extends Eloquent {
 
     public $timestamps = true;
-    protected $table = 'org_settings';
+    protected $table = 'org_plan';
 
 }
