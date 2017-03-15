@@ -2,7 +2,7 @@
 
 $app->get('/plan/:locale', function ($locale) {
     try {
-        $data = plan::query()->where('locale', '=', $locale)->get();
+        $data = plan::with('advantages')->where('locale', '=', $locale)->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
@@ -12,12 +12,7 @@ $app->get('/plan/:locale', function ($locale) {
 
 $app->get('/plan/:locale/:id', function ($locale, $id) {
     try {
-        $plans = plan::query()->where('locale', '=', $locale)->get();
-        foreach ($plans as $plan) {
-            if ($plan->code_enum == $id) {
-                $data = $plan;
-            }
-        }
+        $data = plan::with('advantages')->where('locale', '=', $locale)->where('code_enum', '=', $id)->first();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
@@ -36,7 +31,7 @@ $app->post('/plan/save', function () use($app) {
         $plan->is_active = true;
 
         if ($plan->save()) {
-            $data = plan::find($plan->id);
+            $data = plan::with('advantages')->find($plan->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
@@ -51,7 +46,7 @@ $app->post('/plan/:id/active', function ($id) use($app) {
         $plan->is_active = $app->request()->post('is_active');
 
         if ($plan->update()) {
-            $data = plan::find($plan->id);
+            $data = plan::with('advantages')->find($plan->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {

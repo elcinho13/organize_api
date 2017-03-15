@@ -6,11 +6,11 @@ $app->post('/user_security/save', function () use($app){
         $user_security->security_question = $app->request()->post('security_question');
         $user_security->security_answer = $app->request()->post('security_answer');
         $user_security->last_update_date = $app->request()->post('last_update_date');
-        $user_security->last_update_platform = $app->request()->post('last_update_platform');
+        $user_security->access_platform = $app->request()->post('access_platform');
         $user_security->last_update_identifier = $app->request()->post('last_update_identifier');
                
         if($user_security->save()){
-            $data = user_security::with('user', 'security_question')->get()->find($user_security->id);
+            $data = user_security::with('user', 'security_question', 'access_platform')->get()->find($user_security->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
@@ -22,7 +22,7 @@ $app->post('/user_security/save', function () use($app){
 $app->get('/user_security/:user_id', function ($user_id) {
     try{
         $user_security = user_security::query()->where('user', '=', $user_id)->first();
-        $data = user_security::with('user', 'security_question')->get()->find($user_security->id);
+        $data = user_security::with('user', 'security_question', 'access_platform')->get()->find($user_security->id);
         
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
@@ -37,11 +37,11 @@ $app->post('/user_security/:id', function ($id) use($app){
         $user_security->security_question = $app->request()->post('security_question');
         $user_security->security_answer = $app->request()->post('security_answer');
         $user_security->last_update_date = $app->request()->post('last_update_date');
-        $user_security->last_update_platform = $app->request()->post('last_update_platform');
+        $user_security->access_platform = $app->request()->post('access_platform');
         $user_security->last_update_identifier = $app->request()->post('last_update_identifier');
         
         if($user_security->update()){
-            $data = user_security::with('user', 'security_question')->get()->find($user_security->id);
+            $data = user_security::with('user', 'security_question', 'access_platform')->get()->find($user_security->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
@@ -54,11 +54,11 @@ $app->post('/user_security/:id/edit', function ($id) use($app){
     try{
         $user_security = user_security::with('user', 'security_question')->get()->find($id);
         $user_security->last_update_date = $app->request()->post('last_update_date');
-        $user_security->last_update_platform = $app->request()->post('last_update_platform');
+        $user_security->access_platform = $app->request()->post('access_platform');
         $user_security->last_update_identifier = $app->request()->post('last_update_identifier');
         
         if($user_security->update()){
-            $data = user_security::with('user', 'security_question')->get()->find($user_security->id);
+            $data = user_security::with('user', 'security_question', 'access_platform')->get()->find($user_security->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {

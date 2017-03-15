@@ -2,7 +2,12 @@
 
 $app->get('/notification/user/:user', function($user_id) {
     try {
-        $data = notification::query()->where('user', '=', $user_id)->get();
+        $notifications = notification::with('user')->get();
+        foreach ($notifications as $notification){
+            if($notification->user == $user_id){
+                $data[] = $notification;
+            }
+        }
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
@@ -12,7 +17,7 @@ $app->get('/notification/user/:user', function($user_id) {
 
 $app->get('/notification/:id', function($id) {
     try {
-        $data = notification::find($id);
+        $data = notification::with('user')->find($id);
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(4, $ex->getCode(), $ex->getMessage());
@@ -29,7 +34,7 @@ $app->post('/notification/:save', function() use ($app) {
         $notification->read = false;
 
         if ($notification->save()) {
-            $data = notification::find($notification->id);
+            $data = notification::with('user')->find($notification->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {

@@ -13,4 +13,8 @@ class user_security extends Eloquent{
     public function security_question(){
         return $this->belongsTo('security_question','security_question');
     }
+    
+    public function access_platform(){
+        return $this->belongsTo('access_platform','access_platform');
+    }
 }

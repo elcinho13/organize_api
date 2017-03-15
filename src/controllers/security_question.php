@@ -22,9 +22,9 @@ $app->post('/security_question/save', function () use ($app){
         $security_question->user = $app->request()->post('user');
         $security_question->locale = $app->request()->post('locale');
         $security_question->security_question = $app->request()->post('security_question');
-        $security_question->private = $app->request()->post('private');
+        $security_question->private_use = $app->request()->post('private_use');
         if($security_question->save()){
-            $data = security_question::with('user')->get()->find($security_question->id);
+            $data = security_question::with('user')->find($security_question->id);
             return helpers::jsonResponse($data);
         }
         

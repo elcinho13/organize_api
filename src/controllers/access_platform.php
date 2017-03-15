@@ -12,12 +12,7 @@ $app->get('/access_platform/:locale', function ($locale) {
 
 $app->get('/access_platform/:locale/:id', function ($locale, $id) {
     try {
-        $access_platforms = access_platform::query()->where('locale', '=', $locale)->get();
-        foreach ($access_platforms as $access_platform) {
-            if ($access_platform->code_enum == $id) {
-                $data = $access_platform;
-            }
-        }
+        $data = access_platform::query()->where('locale', '=', $locale)->where('code_enum', '=', $id)->first();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
