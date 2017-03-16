@@ -1,8 +1,8 @@
 <?php
 
-$app->get('/user_settings/:id', function($id) {
+$app->get('/user_privacy/:id', function($id) {
     try {
-        $data = user_settings::with('user', 'settings')->find($id);
+        $data = user_privacy::with('user', 'privacy')->find($id);
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
@@ -11,10 +11,10 @@ $app->get('/user_settings/:id', function($id) {
 });
 
 
-$app->get('/user_settings/user/:user', function($user_id) {
+$app->get('/user_privacy/user/:user', function($user_id) {
 
     try {
-        $data = user_settings::with('user', 'settings')
+        $data = user_privacy::with('user', 'privacy')
                 ->where('user', '=', $user_id)
                 ->get();
         return helpers::jsonResponse($data);
@@ -25,16 +25,15 @@ $app->get('/user_settings/user/:user', function($user_id) {
 });
 
 
-$app->post('/user_settings/save', function() use($app) {
+$app->post('/user_privacy/save', function() use($app) {
     try {
-        $user_settings = new user_settings();
-        $user_settings->user = $app->request()->post('user');
-        $user_settings->settings = $app->request()->post('settings');
-        $user_settings->checking = true;
-        $user_settings->value = $app->request()->post('value');
+        $user_privacy = new user_privacy();
+        $user_privacy->user = $app->request()->post('user');
+        $user_privacy->privacy = $app->request()->post('privacy');
+        $user_privacy->checking = true;
 
-        if ($user_settings->save()) {
-            $data = user_settings::with('user', 'settings')->find($user_settings->id);
+        if ($user_privacy->save()) {
+            $data = user_privacy::with('user', 'privacy')->find($user_privacy->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
@@ -43,14 +42,14 @@ $app->post('/user_settings/save', function() use($app) {
     }
 });
 
-$app->post('/user_settings/:id/checking', function($id) use ($app) {
+$app->post('/user_privacy/:id/checking', function($id) use ($app) {
     try {
 
-        $user_settings = user_settings::find($id);
-        $user_settings->checking = $app->request()->post('checking');
+        $user_privacy = user_privacy::find($id);
+        $user_privacy->checking = $app->request()->post('checking');
 
-        if ($user_settings->update()) {
-            $data = user_settings::with('user', 'settings')->find($user_settings->id);
+        if ($user_privacy->update()) {
+            $data = user_privacy::with('user', 'privacy')->find($user_privacy->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {

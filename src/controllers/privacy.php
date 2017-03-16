@@ -2,7 +2,9 @@
 
 $app->get('/privacy/:locale', function ($locale) {
     try {
-        $data = privacy::query()->where('locale', '=', $locale)->get();
+        $data = privacy::query()
+                ->where('locale', '=', $locale)
+                ->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
@@ -12,12 +14,10 @@ $app->get('/privacy/:locale', function ($locale) {
 
 $app->get('/privacy/:locale/:id', function ($locale, $id) {
     try {
-        $privacys = privacy::query()->where('locale', '=', $locale)->get();
-        foreach ($privacys as $privacy) {
-            if ($privacy->code_enum == $id) {
-                $data = $privacy;
-            }
-        }
+        $data = privacy::query()
+                ->where('locale', '=', $locale)
+                ->where('code_enum', '=', $id)
+                ->first();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());

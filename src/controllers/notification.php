@@ -2,12 +2,9 @@
 
 $app->get('/notification/user/:user', function($user_id) {
     try {
-        $notifications = notification::with('user')->get();
-        foreach ($notifications as $notification){
-            if($notification->user == $user_id){
-                $data[] = $notification;
-            }
-        }
+        $data = notification::with('user')
+                ->where('user', '=', $user_id)
+                ->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());

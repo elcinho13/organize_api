@@ -2,7 +2,9 @@
 
 $app->get('/login_type/:locale', function ($locale) {
     try {
-        $data = login_type::query()->where('locale', '=', $locale)->get();
+        $data = login_type::query()
+                ->where('locale', '=', $locale)
+                ->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
@@ -12,12 +14,10 @@ $app->get('/login_type/:locale', function ($locale) {
 
 $app->get('/login_type/:locale/:id', function ($locale, $id) {
     try {
-        $login_types = login_type::query()->where('locale', '=', $locale)->get();
-        foreach ($login_types as $login_type) {
-            if ($login_type->code_enum == $id) {
-                $data = $login_type;
-            }
-        }
+        $data = login_type::query()
+                ->where('locale', '=', $locale)
+                ->where('code_enum', '=', $id)
+                ->first();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());

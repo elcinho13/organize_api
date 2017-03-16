@@ -2,12 +2,10 @@
 
 $app->get('/institutional/:locale', function ($locale) {
     try {
-        $institutionals = institutional::query()->where('locale', '=', $locale)->get();
-        foreach ($institutionals as $institutional) {
-            if ($institutional->is_active) {
-                $data = $institutional;
-            }
-        }
+        $data = institutional::query()
+                ->where('locale', '=', $locale)
+                ->where('is_active', '=', true)
+                ->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());

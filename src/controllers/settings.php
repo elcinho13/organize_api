@@ -2,7 +2,9 @@
 
 $app->get('/settings/:locale', function ($locale) {
     try {
-        $data = settings::query()->where('locale', '=', $locale)->get();
+        $data = settings::query()
+                ->where('locale', '=', $locale)
+                ->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
@@ -12,12 +14,10 @@ $app->get('/settings/:locale', function ($locale) {
 
 $app->get('/settings/:locale/:id', function ($locale, $id) {
     try {
-        $settingss = settings::query()->where('locale', '=', $locale)->get();
-        foreach ($settingss as $settings) {
-            if ($settings->code_enum == $id) {
-                $data = $settings;
-            }
-        }
+        $data = settings::query()
+                ->where('locale', '=', $locale)
+                ->where('code_enum', '=', $id)
+                ->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());

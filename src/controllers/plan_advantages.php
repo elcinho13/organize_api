@@ -1,35 +1,5 @@
 <?php
 
-$app->get('/plan_advantages/:locale', function ($locale) {
-    try {
-        $plan_advantages = plan_advantages::with('plan')->get();
-        foreach ($plan_advantages as $advantage){
-            if($advantage->locale == $locale){
-                $data[] = $advantage;
-            }
-        }
-        return helpers::jsonResponse($data);
-    } catch (Exception $ex) {
-        $error = new custonError(3, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
-    }
-});
-
-$app->get('/plan_advantages/:locale/:id', function ($locale, $id) {
-    try {
-        $plan_advantages = plan_advantages::with('plan')->get();
-        foreach ($plan_advantages as $advantage) {
-            if ($advantage->code_enum == $id && $advantage->locale == $locale) {
-                $data = $advantage;
-            }
-        }
-        return helpers::jsonResponse($data);
-    } catch (Exception $ex) {
-        $error = new custonError(3, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
-    }
-});
-
 $app->post('/plan_advantages/save', function () use($app) {
     try {
         $plan_advantages = new plan_advantages();

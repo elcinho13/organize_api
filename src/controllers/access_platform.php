@@ -2,7 +2,9 @@
 
 $app->get('/access_platform/:locale', function ($locale) {
     try {
-        $data = access_platform::query()->where('locale', '=', $locale)->get();
+        $data = access_platform::query()
+                ->where('locale', '=', $locale)
+                ->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
@@ -12,7 +14,10 @@ $app->get('/access_platform/:locale', function ($locale) {
 
 $app->get('/access_platform/:locale/:id', function ($locale, $id) {
     try {
-        $data = access_platform::query()->where('locale', '=', $locale)->where('code_enum', '=', $id)->first();
+        $data = access_platform::query()
+                ->where('locale', '=', $locale)
+                ->where('code_enum', '=', $id)
+                ->first();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());

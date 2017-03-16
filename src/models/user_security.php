@@ -2,19 +2,21 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class user_security extends Eloquent{
+class user_security extends Eloquent {
+
     public $timestamps = true;
     protected $table = 'org_user_security';
-    
-    public function user(){
-        return $this->belongsTo('user','user');
+
+    public function user() {
+        return $this->belongsTo('user', 'user');
     }
-    
-    public function security_question(){
-        return $this->belongsTo('security_question','security_question');
+
+    public function security_question() {
+        return $this->belongsTo('security_question', 'security_question');
     }
-    
-    public function access_platform(){
-        return $this->belongsTo('access_platform','access_platform');
+
+    public function access_platform() {
+        return $this->belongsTo('access_platform', 'access_platform');
     }
+
 }

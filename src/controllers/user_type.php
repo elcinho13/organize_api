@@ -12,12 +12,10 @@ $app->get('/user_type/:locale', function ($locale) {
 
 $app->get('/user_type/:locale/:id', function ($locale, $id) {
     try {
-        $user_types = user_type::query()->where('locale', '=', $locale)->get();
-        foreach ($user_types as $user_type) {
-            if ($user_type->code_enum == $id) {
-                $data = $user_type;
-            }
-        }
+        $data = user_type::query()
+                ->where('locale', '=', $locale)
+                ->where('code_enum', '=', $id)
+                ->first();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
