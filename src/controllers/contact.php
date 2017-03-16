@@ -17,12 +17,10 @@ $app->get('/contact/:locale', function ($locale) {
 
 $app->get('/contact/:locale/:id', function ($locale, $id) {
     try {
-        $contacts = contact::with('contact_type')->get();
-        foreach ($contacts as $contact) {
-            if ($contact->code_enum == $id && $contact->locale == $locale) {
-                $data = $contact;
-            }
-        }
+        $data = contact::with('contact_type')
+                ->where('locale', '=', $locale)
+                ->where('code_enum', '=', $id)
+                ->first();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());

@@ -1,10 +1,8 @@
 <?php
 
-$app->get('/access_platform/:locale', function ($locale) {
+$app->get('/user_type/:locale', function ($locale) {
     try {
-        $data = access_platform::query()
-                ->where('locale', '=', $locale)
-                ->get();
+        $data = user_type::query()->where('locale', '=', $locale)->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
@@ -12,9 +10,9 @@ $app->get('/access_platform/:locale', function ($locale) {
     }
 });
 
-$app->get('/access_platform/:locale/:id', function ($locale, $id) {
+$app->get('/user_type/:locale/:id', function ($locale, $id) {
     try {
-        $data = access_platform::query()
+        $data = user_type::query()
                 ->where('locale', '=', $locale)
                 ->where('code_enum', '=', $id)
                 ->first();
@@ -25,17 +23,15 @@ $app->get('/access_platform/:locale/:id', function ($locale, $id) {
     }
 });
 
-
-
-$app->post('/access_platform/save', function () use($app) {
+$app->post('/user_type/save', function () use($app) {
     try {
-        $access_platform = new access_platform();
-        $access_platform->locale = $app->request()->post('locale');
-        $access_platform->code_enum = $app->request()->post('code_enum');
-        $access_platform->name = $app->request()->post('name');
+        $user_type = new user_type();
+        $user_type->locale = $app->request()->post('locale');
+        $user_type->code_enum = $app->request()->post('code_enum');
+        $user_type->name = $app->request()->post('name');
 
-        if ($access_platform->save()) {
-            $data = access_platform::find($access_platform->id);
+        if ($user_type->save()) {
+            $data = user_type::find($user_type->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {

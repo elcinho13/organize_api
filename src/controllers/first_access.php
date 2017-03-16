@@ -2,7 +2,9 @@
 
 $app->get('/first_access/:device_id', function ($device_id) {
     try {
-        $data = first_access::query()->where('device_id', '=', $device_id)->first();
+        $data = first_access::query()
+                ->where('device_id', '=', $device_id)
+                ->first();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(0, $ex->getCode(), $ex->getMessage());

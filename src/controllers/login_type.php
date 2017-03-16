@@ -1,8 +1,8 @@
 <?php
 
-$app->get('/access_platform/:locale', function ($locale) {
+$app->get('/login_type/:locale', function ($locale) {
     try {
-        $data = access_platform::query()
+        $data = login_type::query()
                 ->where('locale', '=', $locale)
                 ->get();
         return helpers::jsonResponse($data);
@@ -12,9 +12,9 @@ $app->get('/access_platform/:locale', function ($locale) {
     }
 });
 
-$app->get('/access_platform/:locale/:id', function ($locale, $id) {
+$app->get('/login_type/:locale/:id', function ($locale, $id) {
     try {
-        $data = access_platform::query()
+        $data = login_type::query()
                 ->where('locale', '=', $locale)
                 ->where('code_enum', '=', $id)
                 ->first();
@@ -25,17 +25,15 @@ $app->get('/access_platform/:locale/:id', function ($locale, $id) {
     }
 });
 
-
-
-$app->post('/access_platform/save', function () use($app) {
+$app->post('/login_type/save', function () use($app) {
     try {
-        $access_platform = new access_platform();
-        $access_platform->locale = $app->request()->post('locale');
-        $access_platform->code_enum = $app->request()->post('code_enum');
-        $access_platform->name = $app->request()->post('name');
+        $login_type = new login_type();
+        $login_type->locale = $app->request()->post('locale');
+        $login_type->code_enum = $app->request()->post('code_enum');
+        $login_type->name = $app->request()->post('name');
 
-        if ($access_platform->save()) {
-            $data = access_platform::find($access_platform->id);
+        if ($login_type->save()) {
+            $data = login_type::find($login_type->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {

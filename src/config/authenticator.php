@@ -1,19 +1,18 @@
 <?php
 
-class HttpBasicAuth extends \Slim\Middleware
-{
+class HttpBasicAuth extends \Slim\Middleware {
+
     protected $realm;
     protected $username;
     protected $password;
-    public function __construct($username, $password, $realm = 'Protected Area')
-    {
+
+    public function __construct($username, $password, $realm = 'Protected Area') {
         $this->username = $username;
         $this->password = $password;
         $this->realm = $realm;
     }
- 
-    public function call()
-    {
+
+    public function call() {
         $req = $this->app->request();
         $res = $this->app->response();
         $authUser = $req->headers('PHP_AUTH_USER');
@@ -25,4 +24,5 @@ class HttpBasicAuth extends \Slim\Middleware
             $res->header('WWW-Authenticate', sprintf('Basic realm="%s"', $this->realm));
         }
     }
+
 }

@@ -10,6 +10,7 @@ class application {
     static function upload_photo($file, $id) {
         $way = 'http://localhost/_uploads/organize/';
         $folder = '/home/marcelamelo/Documentos/Projetos/_uploads/organize/';
+
         $file_name = $id . '_profile_picture.png';
         $extensions = array('jpg', 'png', 'jpeg');
         $size = 1024 * 1024 * 2;
@@ -35,6 +36,14 @@ class application {
                 return $response;
             }
         }
+    }
+
+    static function generate_code($size, $salt) {
+        $alpha = mt_getrandmax() . $salt . microtime();
+        $beta = md5($alpha);
+        $code = substr($beta, 0, $size);
+
+        return $code;
     }
 
 }

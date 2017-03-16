@@ -2,7 +2,9 @@
 
 $app->get('/contact_type/:locale', function ($locale) {
     try {
-        $data = contact_type::query()->where('locale', '=', $locale)->get();
+        $data = contact_type::query()
+                ->where('locale', '=', $locale)
+                ->get();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
@@ -12,20 +14,16 @@ $app->get('/contact_type/:locale', function ($locale) {
 
 $app->get('/contact_type/:locale/:id', function ($locale, $id) {
     try {
-        $contact_types = contact_type::query()->where('locale', '=', $locale)->get();
-        foreach ($contact_types as $contact_type) {
-            if ($contact_type->code_enum == $id) {
-                $data = $contact_type;
-            }
-        }
+        $data = contact_type::query()
+                ->where('locale', '=', $locale)
+                ->where('code_enum', '=', $id)
+                ->first();
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error());
     }
 });
-
-
 
 $app->post('/contact_type/save', function () use($app) {
     try {

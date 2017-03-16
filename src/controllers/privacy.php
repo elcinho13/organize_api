@@ -1,8 +1,8 @@
 <?php
 
-$app->get('/access_platform/:locale', function ($locale) {
+$app->get('/privacy/:locale', function ($locale) {
     try {
-        $data = access_platform::query()
+        $data = privacy::query()
                 ->where('locale', '=', $locale)
                 ->get();
         return helpers::jsonResponse($data);
@@ -12,9 +12,9 @@ $app->get('/access_platform/:locale', function ($locale) {
     }
 });
 
-$app->get('/access_platform/:locale/:id', function ($locale, $id) {
+$app->get('/privacy/:locale/:id', function ($locale, $id) {
     try {
-        $data = access_platform::query()
+        $data = privacy::query()
                 ->where('locale', '=', $locale)
                 ->where('code_enum', '=', $id)
                 ->first();
@@ -25,17 +25,17 @@ $app->get('/access_platform/:locale/:id', function ($locale, $id) {
     }
 });
 
-
-
-$app->post('/access_platform/save', function () use($app) {
+$app->post('/privacy/save', function () use($app) {
     try {
-        $access_platform = new access_platform();
-        $access_platform->locale = $app->request()->post('locale');
-        $access_platform->code_enum = $app->request()->post('code_enum');
-        $access_platform->name = $app->request()->post('name');
+        $privacy = new privacy();
+        $privacy->locale = $app->request()->post('locale');
+        $privacy->code_enum = $app->request()->post('code_enum');
+        $privacy->name = $app->request()->post('name');
+        $privacy->description = $app->request()->post('description');
+        $privacy->check_default = $app->request()->post('check_default');
 
-        if ($access_platform->save()) {
-            $data = access_platform::find($access_platform->id);
+        if ($privacy->save()) {
+            $data = privacy::find($privacy->id);
             return helpers::jsonResponse($data);
         }
     } catch (Exception $ex) {
