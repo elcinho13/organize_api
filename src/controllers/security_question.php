@@ -2,10 +2,15 @@
 
 $app->get('/security_questions/:user_id', function ($user_id) {
     try {
-        $data = security_question::with('user')
-                ->where('private_use', '=', true)
-                ->where('user', '=', $user_id)
-                ->get();
+        $questions = security_question::with('user')->get();
+
+        foreach ($questions as $question) {
+            if (!$question->private_use) {
+                $data[] = $question;
+            } elseif ($question->private_use && $question->user == $user_id) {
+                $data[] = $question;
+            }
+        }
         return helpers::jsonResponse($data);
     } catch (Exception $ex) {
         $error = new custonError(5, $ex->getCode(), $ex->getMessage());

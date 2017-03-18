@@ -6,10 +6,18 @@ class application {
         $newPassword = $salt . '..' . $password;
         return md5($newPassword);
     }
+    
+    /*
+     * caminho local: http://localhost/_uploads/organize/
+     * caminho server: http://ec2-52-67-67-126.sa-east-1.compute.amazonaws.com/organize/upload/
+     * 
+     * pasta local: /home/marcelamelo/Documentos/Projetos/_uploads/organize/
+     * pasta server: /var/www/html/organize/upload/
+     */
 
     static function upload_photo($file, $id) {
-        $way = 'http://localhost/_uploads/organize/';
-        $folder = '/home/marcelamelo/Documentos/Projetos/_uploads/organize/';
+        $way = 'http://ec2-52-67-67-126.sa-east-1.compute.amazonaws.com/organize/upload/';
+        $folder = '/var/www/html/organize/upload/'; 
 
         $file_name = $id . '_profile_picture.png';
         $extensions = array('jpg', 'png', 'jpeg');
