@@ -5,10 +5,11 @@ $app->get('/term', function() {
         $data = term::query()
                 ->where('is_active', '=', true)
                 ->first();
-        return helpers::jsonResponse($data);
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
-        $error = new custonError(0, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -24,11 +25,12 @@ $app->post('/term/save', function () use($app) {
 
         if ($term->save()) {
             $data = term::find($term->id);
-            return helpers::jsonResponse($data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(2, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 3, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -43,10 +45,12 @@ $app->post('/term/:id', function ($id) use($app) {
         $term->is_active = $app->request()->post('is_active');
 
         if ($term->update()) {
-            return helpers::jsonResponse($term);
+            $data = $term::find($term->id);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(4, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });

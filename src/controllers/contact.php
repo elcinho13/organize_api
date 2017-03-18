@@ -8,10 +8,11 @@ $app->get('/contact/:locale', function ($locale) {
                 $data[] = $contact;
             }
         }
-        return helpers::jsonResponse($data);
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
-        $error = new custonError(3, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -21,10 +22,11 @@ $app->get('/contact/:locale/:id', function ($locale, $id) {
                 ->where('locale', '=', $locale)
                 ->where('code_enum', '=', $id)
                 ->first();
-        return helpers::jsonResponse($data);
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
-        $error = new custonError(3, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -42,11 +44,12 @@ $app->post('/contact/save', function () use($app) {
 
         if ($contact->save()) {
             $data = contact::with('contact_type')->find($contact->id);
-            return helpers::jsonResponse($data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(2, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 3, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -62,11 +65,12 @@ $app->post('/contact/:id/edit', function ($id) use($app) {
 
         if ($contact->update()) {
             $data = contact::with('contact_type')->find($contact->id);
-            return helpers::jsonResponse($data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(2, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -77,10 +81,11 @@ $app->post('/contact/:id/active', function ($id) use($app) {
 
         if ($contact->update()) {
             $data = contact::with('contact_type')->find($contact->id);
-            return helpers::jsonResponse($data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(2, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });

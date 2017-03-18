@@ -3,10 +3,11 @@
 $app->get('/user_privacy/:id', function($id) {
     try {
         $data = user_privacy::with('user', 'privacy')->find($id);
-        return helpers::jsonResponse($data);
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
-        $error = new custonError(3, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -17,10 +18,11 @@ $app->get('/user_privacy/user/:user', function($user_id) {
         $data = user_privacy::with('user', 'privacy')
                 ->where('user', '=', $user_id)
                 ->get();
-        return helpers::jsonResponse($data);
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
-        $error = new custonError(3, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -34,11 +36,12 @@ $app->post('/user_privacy/save', function() use($app) {
 
         if ($user_privacy->save()) {
             $data = user_privacy::with('user', 'privacy')->find($user_privacy->id);
-            return helpers::jsonResponse($data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(2, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 3, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -50,11 +53,12 @@ $app->post('/user_privacy/:id/checking', function($id) use ($app) {
 
         if ($user_privacy->update()) {
             $data = user_privacy::with('user', 'privacy')->find($user_privacy->id);
-            return helpers::jsonResponse($data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(4, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 

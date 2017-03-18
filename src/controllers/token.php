@@ -13,13 +13,14 @@ $app->post('/token/save', function () use($app) {
 
 
         if ($token->save()) {
-            $data = token::with('user', 'login_type','first_access', 'access_platform')
+            $data = token::with('user', 'login_type', 'first_access', 'access_platform')
                     ->find($token->id);
-            return helpers::jsonResponse($data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(2, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 3, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -34,13 +35,14 @@ $app->post('/token/:id', function ($id) use($app) {
         $token->keep_logged = $app->request()->post('keep_logged');
 
         if ($token->update()) {
-            $data = token::with('user', 'login_type','first_access', 'access_platform')
+            $data = token::with('user', 'login_type', 'first_access', 'access_platform')
                     ->find($token->id);
-            return helpers::jsonResponse($data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(4, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -49,12 +51,13 @@ $app->get('/token/:first_access_id', function ($first_access_id) {
         $token = token::query()
                 ->where('first_access', '=', $first_access_id)
                 ->first();
-        $data = token::with('user', 'login_type','first_access', 'access_platform')
+        $data = token::with('user', 'login_type', 'first_access', 'access_platform')
                 ->find($token->id);
-        return helpers::jsonResponse($data);
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
-        $error = new custonError(3, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -64,15 +67,16 @@ $app->post('/login', function () use($app) {
                 ->where('mail', '=', $app->request()->post('mail'))
                 ->first();
         if (!is_null($user) && $user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))) {
+            $error = new custonError(false, 0);
             $data = user::with('user_type', 'term', 'plan')->find($user->id);
         } else {
-            $error = new custonError(5, 0, 'Usuário ou senha inválidos.');
-            $data = $error->parse_error();
+            $error = new custonError(true, 7);
+            $data = null;
         }
-        return helpers::jsonResponse($data);
+        return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
-        $error = new custonError(5, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 1, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 

@@ -5,7 +5,8 @@ $app->get('/notification/user/:user', function($user_id) {
         $data = notification::with('user')
                 ->where('user', '=', $user_id)
                 ->get();
-        return helpers::jsonResponse($data);
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
         $error = new custonError(3, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error());
@@ -15,10 +16,11 @@ $app->get('/notification/user/:user', function($user_id) {
 $app->get('/notification/:id', function($id) {
     try {
         $data = notification::with('user')->find($id);
-        return helpers::jsonResponse($data);
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
-        $error = new custonError(4, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -32,11 +34,12 @@ $app->post('/notification/:save', function() use ($app) {
 
         if ($notification->save()) {
             $data = notification::with('user')->find($notification->id);
-            return helpers::jsonResponse($data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(2, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 3, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 
@@ -47,11 +50,12 @@ $app->post('/notification/:id/read', function($id) use ($app) {
 
         if ($notification->update()) {
             $data = notification::with('user')->find($notification->id);
-            return helpers::jsonResponse($data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
-        $error = new custonError(4, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error());
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
     }
 });
 

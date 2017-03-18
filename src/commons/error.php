@@ -1,68 +1,79 @@
 <?php
 
 class custonError {
-
-    private $success;
+    
+    private $has_error;
     private $type;
     private $code;
     private $message;
-    private $error_ruturn;
-
-    const NETWORK = 0;
-    const VALIDATE = 1;
-    const INSERT = 2;
-    const SELECT = 3;
+    private $exception;
+    
+    private $error = [];
+    
+    const SUCCESS = 0;
+    const GENERIC = 1;
+    const GETDATA = 2;
+    const INSERT = 3;
     const UPDATE = 4;
-    const LOADING = 5;
-    const SUCESS = 99;
-
-    function __construct($type, $code, $message) {
-
+    const DELETE = 5;
+    const UPLOAD = 6;
+    const LOGIN = 7;
+    
+    const SUCCESS_MESSAGE = 'Dados retornados com sucesso.';
+    const GENERIC_MESSAGE = 'Ocorreu um erro genérico no servidor.';
+    const GETDATA_MESSAGE = 'Ocorreu um erro ao buscar os dados.';
+    const INSERT_MESSAGE = 'Ocorreu um erro ao inserir os dados.';
+    const UPDATE_MESSAGE = 'Ocorreu um erro ao atualizar os dados.';
+    const DELETE_MESSAGE = 'Ocorreu um erro ao deletar os dados.';
+    const UPLOAD_MESSAGE = 'Ocorreu um erro ao carregar o arquivo.';
+    const LOGIN_MESSAGE = 'Usuário ou senha inválidos.';
+    
+    function __construct($has_error, $type, $code = null, $exception = null) {
+        $this->has_error = $has_error;
         $this->type = $type;
         $this->code = $code;
-        $this->message = $message;
-
-        switch ($type) {
-            case custonError::NETWORK:
-                $this->success = false;
-                $this->error_ruturn = "Ocorreu um erro de REDE. Verifique sua internet e tente novamente.";
+        $this->exception = $exception;
+    }
+    
+    function parse_error(){
+        $this->error = array(
+            'has_error' => $this->has_error,
+            'type' => $this->type,
+            'code' => $this->code,
+            'message'=> '',
+            'exception' => $this->exception
+        );
+        
+        if(is_null($this->error['code'])){
+            $this->error['code'] = $this->type;
+        }
+        switch ($this->type){
+            case custonError::SUCCESS:
+                $this->error['message'] = custonError::SUCCESS_MESSAGE;
                 break;
-            case custonError::VALIDATE:
-                $this->success = false;
-                $this->error_ruturn = "Ocorreu um erro de VALIDAÇÃO. Verifique os campos informados e tente novamente.";
+            case custonError::GENERIC:
+                $this->error['message'] = custonError::GENERIC_MESSAGE;
+                break;
+            case custonError::GETDATA:
+               $this->error['message'] = custonError::GETDATA_MESSAGE;
                 break;
             case custonError::INSERT:
-                $this->success = false;
-                $this->error_ruturn = "Não foi possível inserir os dados.";
-                break;
-            case custonError::SELECT:
-                $this->success = false;
-                $this->error_ruturn = "Nenhum dado pôde ser retornado";
+                $this->error['message'] = custonError::INSERT_MESSAGE;
                 break;
             case custonError::UPDATE:
-                $this->success = false;
-                $this->error_ruturn = "Não foi possível atualizar os dados.";
+                $this->error['message'] = custonError::UPDATE_MESSAGE;
                 break;
-            case custonError::LOADING:
-                $this->success = false;
-                $this->error_ruturn = "Ocorreu um erro ao carregar os dados.";
+            case custonError::DELETE:
+                $this->error['message'] = custonError::DELETE_MESSAGE;
                 break;
-            case custonError::SUCESS:
-                $this->success = true;
-                $this->error_ruturn = "";
+            case custonError::UPLOAD:
+                $this->error['message'] = custonError::UPLOAD_MESSAGE;
+                break;
+            case custonError::LOGIN:
+                $this->error['message'] = custonError::LOGIN_MESSAGE;
                 break;
         }
-    }
-
-    public function parse_error() {
-        $error = array(
-            'success' => $this->success,
-            'code' => $this->code,
-            'error_ruturn' => $this->error_ruturn,
-            'message' => $this->message
-        );
-
-        return $error;
-    }
-
+        
+        return $this->error;
+    }   
 }
