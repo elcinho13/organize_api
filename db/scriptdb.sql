@@ -211,6 +211,7 @@ CREATE TABLE IF NOT EXISTS `org_user`(
     `rg_emitter_organ` VARCHAR(255),
     `rg_emitter_date` DATE,
     `birth_date` DATE,
+    `gender` VARCHAR(1),
     `responsible_name` VARCHAR(255),
     `responsible_cpf` VARCHAR(255),
     `term` INT UNSIGNED, 

@@ -35,6 +35,7 @@ $app->post('/user/save', function () use ($app) {
         $user->rg_emitter_organ = $app->request()->post('rg_emitter_organ');
         $user->rg_emitter_date = $app->request()->post('rg_emitter_date');
         $user->birth_date = $app->request()->post('birth_date');
+        $user->gender = $app->request()->post('gender');
         $user->responsible_name = $app->request()->post('responsible_name');
         $user->responsible_cpf = $app->request()->post('responsible_cpf');
         $user->term = $app->request()->post('term');
@@ -89,6 +90,7 @@ $app->post('/user/:id', function ($id) use ($app) {
         $user->rg_emitter_organ = $app->request()->post('rg_emitter_organ');
         $user->rg_emitter_date = $app->request()->post('rg_emitter_date');
         $user->birth_date = $app->request()->post('birth_date');
+        $user->gender = $app->request()->post('gender');
         $user->responsible_name = $app->request()->post('responsible_name');
         $user->responsible_cpf = $app->request()->post('responsible_cpf');
         $user->term = $app->request()->post('term');

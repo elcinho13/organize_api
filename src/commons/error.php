@@ -2,6 +2,7 @@
 
 class custonError {
     
+    private $is_new;
     private $has_error;
     private $type;
     private $code;
@@ -28,11 +29,12 @@ class custonError {
     const UPLOAD_MESSAGE = 'Ocorreu um erro ao carregar o arquivo.';
     const LOGIN_MESSAGE = 'Usuário ou senha inválidos.';
     
-    function __construct($has_error, $type, $code = null, $exception = null) {
+    function __construct($has_error, $type, $code = null, $exception = null, $is_new = false) {
         $this->has_error = $has_error;
         $this->type = $type;
         $this->code = $code;
         $this->exception = $exception;
+        $this->is_new = $is_new;
     }
     
     function parse_error(){
@@ -41,7 +43,8 @@ class custonError {
             'type' => $this->type,
             'code' => $this->code,
             'message'=> '',
-            'exception' => $this->exception
+            'exception' => $this->exception,
+            'is_new'=>$this->is_new
         );
         
         if(is_null($this->error['code'])){
