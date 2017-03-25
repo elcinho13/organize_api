@@ -29,7 +29,7 @@ class custonError {
     const UPLOAD_MESSAGE = 'Ocorreu um erro ao carregar o arquivo.';
     const LOGIN_MESSAGE = 'Usuário ou senha inválidos.';
     
-    function __construct($has_error, $type, $code = null, $exception = null, $is_new = false) {
+    function __construct($has_error, $type, $code = null, $exception = null, $is_new = 0) {
         $this->has_error = $has_error;
         $this->type = $type;
         $this->code = $code;

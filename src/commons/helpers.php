@@ -9,7 +9,7 @@ class helpers {
         
         if(is_null($data)){
             if(!$error['has_error']){
-                $error['is_new'] = true;
+                $error['is_new'] = 1;
             }
             $response = $error;
         }
