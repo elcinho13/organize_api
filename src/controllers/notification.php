@@ -2,7 +2,7 @@
 
 $app->get('/notification/user/:user', function($user_id) {
     try {
-        $data = notification::with('user')
+        $data = notification::with('user.user_type','user.term','user.plan')
                 ->where('user', '=', $user_id)
                 ->get();
         $error = new custonError(false, 0);
@@ -15,7 +15,7 @@ $app->get('/notification/user/:user', function($user_id) {
 
 $app->get('/notification/:id', function($id) {
     try {
-        $data = notification::with('user')->find($id);
+        $data = notification::with('user.user_type','user.term','user.plan')->find($id);
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -33,7 +33,7 @@ $app->post('/notification/:save', function() use ($app) {
         $notification->read = false;
 
         if ($notification->save()) {
-            $data = notification::with('user')->find($notification->id);
+            $data = notification::with('user.user_type','user.term','user.plan')->find($notification->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -49,7 +49,7 @@ $app->post('/notification/:id/read', function($id) use ($app) {
         $notification->read = $app->request->post('read');
 
         if ($notification->update()) {
-            $data = notification::with('user')->find($notification->id);
+            $data = notification::with('user.user_type','user.term','user.plan')->find($notification->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }

@@ -48,11 +48,9 @@ $app->post('/token/:id', function ($id) use($app) {
 
 $app->get('/token/:first_access_id', function ($first_access_id) {
     try {
-        $token = token::query()
+        $data = token::with('user.user_type','user.term','user.plan', 'login_type', 'first_access', 'access_platform')
                 ->where('first_access', '=', $first_access_id)
                 ->first();
-        $data = token::with('user.user_type','user.term','user.plan', 'login_type', 'first_access', 'access_platform')
-                ->find($token->id);
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
