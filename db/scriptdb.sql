@@ -1,6 +1,6 @@
 /**
- * Version: 02
- * Updated: 12/03/2017
+ * Version: 03
+ * Updated: 09/04/2017
  */
 
 CREATE DATABASE IF NOT EXISTS `organize_test`;
@@ -193,6 +193,27 @@ CREATE TABLE IF NOT EXISTS `org_first_access`(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
+-- Create table org_token
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_token`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `login_type` INT UNSIGNED,
+    `access_platform` INT UNSIGNED,
+    `access_token` VARCHAR(255),
+    `access_date` TIMESTAMP,
+    `keep_logged` TINYINT(1),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_token_fk1` (`login_type`),
+    CONSTRAINT `org_token_fk1` FOREIGN KEY (`login_type`) REFERENCES `org_login_type` (`id`),
+
+    KEY `org_token_fk2` (`access_platform`),
+    CONSTRAINT `org_token_fk2` FOREIGN KEY (`access_platform`) REFERENCES `org_access_platform` (`id`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
 -- Create table org_user
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `org_user`(
@@ -286,27 +307,6 @@ CREATE TABLE IF NOT EXISTS `org_user_security`(
 
     KEY `org_user_security_fk3` (`access_platform`),
     CONSTRAINT `org_user_security_fk3` FOREIGN KEY (`access_platform`) REFERENCES `org_access_platform` (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------
--- Create table org_token
--- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_token`(
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `login_type` INT UNSIGNED,
-    `access_token` VARCHAR(255),
-    `facebook_id` VARCHAR(255),
-    `linkedin_id` VARCHAR(255),
-    `google_id` VARCHAR(255),
-    `access_platform` INT,
-    `access_date` TIMESTAMP,
-    `keep_logged` TINYINT(1),
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
-
-    KEY `org_token_fk1` (`login_type`),
-    CONSTRAINT `org_token_fk1` FOREIGN KEY (`login_type`) REFERENCES `org_login_type` (`id`)
-
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
