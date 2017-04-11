@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `org_plan_price`(
     `locale` VARCHAR(255),
     `code_enum` INT UNSIGNED,
     `plan` INT UNSIGNED,
+    `description` VARCHAR(255),
     `price` FLOAT,
     `is_active` TINYINT(1),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

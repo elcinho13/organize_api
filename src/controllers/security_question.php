@@ -2,7 +2,7 @@
 
 $app->get('/security_questions/:user_id', function ($user_id) {
     try {
-        $questions = security_question::with('user.user_type','user.term','user.plan')->get();
+        $questions = security_question::with('user.user_type','user.first_access','user.token','user.plan')->get();
 
         foreach ($questions as $question) {
             if (!$question->private_use) {
@@ -27,7 +27,7 @@ $app->post('/security_question/save', function () use ($app) {
         $security_question->security_question = $app->request()->post('security_question');
         $security_question->private_use = $app->request()->post('private_use');
         if ($security_question->save()) {
-            $data = security_question::with('user.user_type','user.term','user.plan')->find($security_question->id);
+            $data = security_question::with('user.user_type','user.first_access','user.token','user.plan')->find($security_question->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }

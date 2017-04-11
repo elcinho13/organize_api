@@ -5,7 +5,7 @@ $app->get('/institutional/:locale', function ($locale) {
         $data = institutional::query()
                 ->where('locale', '=', $locale)
                 ->where('is_active', '=', true)
-                ->get();
+                ->first();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {

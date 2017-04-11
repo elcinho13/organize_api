@@ -2,7 +2,7 @@
 
 $app->get('/user_privacy/:id', function($id) {
     try {
-        $data = user_privacy::with('user.user_type','user.term','user.plan', 'privacy')->find($id);
+        $data = user_privacy::with('user.user_type','user.first_access','user.token','user.plan', 'privacy')->find($id);
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -15,7 +15,7 @@ $app->get('/user_privacy/:id', function($id) {
 $app->get('/user_privacy/user/:user', function($user_id) {
 
     try {
-        $data = user_privacy::with('user.user_type','user.term','user.plan', 'privacy')
+        $data = user_privacy::with('user.user_type','user.first_access','user.token','user.plan', 'privacy')
                 ->where('user', '=', $user_id)
                 ->get();
         $error = new custonError(false, 0);
@@ -35,7 +35,7 @@ $app->post('/user_privacy/save', function() use($app) {
         $user_privacy->checking = true;
 
         if ($user_privacy->save()) {
-            $data = user_privacy::with('user.user_type','user.term','user.plan', 'privacy')->find($user_privacy->id);
+            $data = user_privacy::with('user.user_type','user.first_access','user.token','user.plan', 'privacy')->find($user_privacy->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -52,7 +52,7 @@ $app->post('/user_privacy/:id/checking', function($id) use ($app) {
         $user_privacy->checking = $app->request()->post('checking');
 
         if ($user_privacy->update()) {
-            $data = user_privacy::with('user.user_type','user.term','user.plan', 'privacy')->find($user_privacy->id);
+            $data = user_privacy::with('user.user_type','user.first_access','user.token','user.plan', 'privacy')->find($user_privacy->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }

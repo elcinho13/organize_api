@@ -6,6 +6,7 @@ $app->post('/plan_price/save', function () use($app) {
         $plan_price->locale = $app->request()->post('locale');
         $plan_price->code_enum = $app->request()->post('code_enum');
         $plan_price->plan = $app->request()->post('plan');
+        $plan_price->description = $app->request()->post('description');
         $plan_price->price = $app->request()->post('price');
         $plan_price->is_active = true;
 
