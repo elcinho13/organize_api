@@ -31,6 +31,7 @@ require_once _MODEL . '/token.php';
 require_once _MODEL . '/user_privacy.php';
 require_once _MODEL . '/user_security.php';
 require_once _MODEL . '/user_settings.php';
+require_once _MODEL . '/user_term.php';
 require_once _MODEL . '/user_type.php';
 require_once _MODEL . '/user.php';
 
@@ -53,5 +54,6 @@ require_once _CONTROLLER . '/token.php';
 require_once _CONTROLLER . '/user_privacy.php';
 require_once _CONTROLLER . '/user_security.php';
 require_once _CONTROLLER . '/user_settings.php';
+require_once _CONTROLLER . '/user_term.php';
 require_once _CONTROLLER . '/user_type.php';
 require_once _CONTROLLER . '/user.php';

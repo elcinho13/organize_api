@@ -261,6 +261,9 @@ CREATE TABLE IF NOT EXISTS `org_user_term`(
     `term` INT UNSIGNED, 
     `term_accept` TINYINT(1), 
     `term_accept_date` TIMESTAMP,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
 
     KEY `org_user_term_fk1` (`user`),
     CONSTRAINT `org_user_term_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`),
