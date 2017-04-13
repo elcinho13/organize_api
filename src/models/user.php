@@ -10,10 +10,6 @@ class user extends Eloquent {
     public function user_type() {
         return $this->belongsTo('user_type', 'user_type');
     }
-
-    public function first_access() {
-        return $this->belongsTo('first_access', 'first_access');
-    }
     
     public function token() {
         return $this->belongsTo('token', 'token');
@@ -21,5 +17,9 @@ class user extends Eloquent {
 
     public function plan() {
         return $this->belongsTo('plan', 'plan');
+    }
+    
+    public function user_term(){
+        return $this->hasOne('user_term', 'user');
     }
 }

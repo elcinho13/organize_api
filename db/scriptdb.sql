@@ -1,64 +1,51 @@
 /**
- * Version: 03
- * Updated: 09/04/2017
+ * Version: 04
+ * Updated: 13/04/2017
  */
 
 CREATE DATABASE IF NOT EXISTS `organize_test`;
 USE `organize_test`;
 
 -- -----------------------------------------------------------------------------
--- Create table org_plan
+-- Create table org_access_platform
 -- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_plan`(
+CREATE TABLE IF NOT EXISTS `org_access_platform`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `locale` VARCHAR(255),
     `code_enum` INT UNSIGNED,
     `name` VARCHAR(255),
-    `description` VARCHAR(2000),
-    `security_code` VARCHAR(255),
-    `is_active` TINYINT(1),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
--- Create table org_plan_advantages
+-- Create table org_contact_type
 -- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_plan_advantages`(
+CREATE TABLE IF NOT EXISTS `org_contact_type`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `locale` VARCHAR(255),
     `code_enum` INT UNSIGNED,
-    `plan` INT UNSIGNED, 
-    `advantage` VARCHAR(255),
+    `name` VARCHAR(255),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
-
-    KEY `org_plan_advantages_fk1` (`plan`),
-    CONSTRAINT `org_plan_advantages_fk1` FOREIGN KEY (`plan`) REFERENCES `org_plan` (`id`)
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
--- Create table org_plan_price
+-- Create table org_login_type
 -- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_plan_price`(
+CREATE TABLE IF NOT EXISTS `org_login_type`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `locale` VARCHAR(255),
     `code_enum` INT UNSIGNED,
-    `plan` INT UNSIGNED,
-    `description` VARCHAR(255),
-    `price` FLOAT,
-    `is_active` TINYINT(1),
+    `name` VARCHAR(255),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
-
-    KEY `org_plan_price_fk1` (`plan`),
-    CONSTRAINT `org_plan_price_fk1` FOREIGN KEY (`plan`) REFERENCES `org_plan` (`id`)
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
--- Create table org_access_platform
+-- Create table org_user_type
 -- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_access_platform`(
+CREATE TABLE IF NOT EXISTS `org_user_type`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `locale` VARCHAR(255),
     `code_enum` INT UNSIGNED,
@@ -80,48 +67,6 @@ CREATE TABLE IF NOT EXISTS `org_institutional`(
     `vision` VARCHAR(2500),
     `values` VARCHAR(2500),
     `is_active` TINYINT(1),
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------
--- Create table org_contact_type
--- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_contact_type`(
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `locale` VARCHAR(255),
-    `code_enum` INT UNSIGNED,
-    `name` VARCHAR(255),
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------
--- Create table org_contact
--- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_contact`(
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `locale` VARCHAR(255),
-    `code_enum` INT UNSIGNED,
-    `description` VARCHAR(255),
-    `contact_type` INT UNSIGNED,
-    `contact` varchar(255),
-    `is_active` TINYINT(1),
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
-
-    KEY `org_contact_fk1` (`contact_type`),
-    CONSTRAINT `org_contact_fk1` FOREIGN KEY (`contact_type`) REFERENCES `org_contact_type` (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------
--- Create table org_login_type
--- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_login_type`(
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `locale` VARCHAR(255),
-    `code_enum` INT UNSIGNED,
-    `name` VARCHAR(255),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -155,18 +100,6 @@ CREATE TABLE IF NOT EXISTS `org_settings`(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
--- Create table org_user_type
--- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_user_type`(
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `locale` VARCHAR(255),
-    `code_enum` INT UNSIGNED,
-    `name` VARCHAR(255),
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------
 -- Create table org_term
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `org_term`(
@@ -182,15 +115,70 @@ CREATE TABLE IF NOT EXISTS `org_term`(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
--- Create table org_first_access
+-- Create table org_plan
 -- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_first_access`(
+CREATE TABLE IF NOT EXISTS `org_plan`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `device_id` VARCHAR(255) UNIQUE,
-    `instalation_date` TIMESTAMP,
     `locale` VARCHAR(255),
+    `code_enum` INT UNSIGNED,
+    `name` VARCHAR(255),
+    `description` VARCHAR(2000),
+    `security_code` VARCHAR(255),
+    `is_active` TINYINT(1),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_contact
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_contact`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `locale` VARCHAR(255),
+    `code_enum` INT UNSIGNED,
+    `description` VARCHAR(255),
+    `contact_type` INT UNSIGNED,
+    `contact` varchar(255),
+    `is_active` TINYINT(1),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_contact_fk1` (`contact_type`),
+    CONSTRAINT `org_contact_fk1` FOREIGN KEY (`contact_type`) REFERENCES `org_contact_type` (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_plan_price
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_plan_price`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `locale` VARCHAR(255),
+    `code_enum` INT UNSIGNED,
+    `plan` INT UNSIGNED,
+    `description` VARCHAR(255),
+    `price` FLOAT,
+    `is_active` TINYINT(1),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_plan_price_fk1` (`plan`),
+    CONSTRAINT `org_plan_price_fk1` FOREIGN KEY (`plan`) REFERENCES `org_plan` (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_plan_advantages
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_plan_advantages`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `locale` VARCHAR(255),
+    `code_enum` INT UNSIGNED,
+    `plan` INT UNSIGNED, 
+    `advantage` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_plan_advantages_fk1` (`plan`),
+    CONSTRAINT `org_plan_advantages_fk1` FOREIGN KEY (`plan`) REFERENCES `org_plan` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
@@ -220,7 +208,6 @@ CREATE TABLE IF NOT EXISTS `org_token`(
 CREATE TABLE IF NOT EXISTS `org_user`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `user_type` INT UNSIGNED,
-    `first_access` INT UNSIGNED,
     `token` INT UNSIGNED,
     `plan` INT UNSIGNED,
     `full_name` VARCHAR(255),
@@ -241,9 +228,6 @@ CREATE TABLE IF NOT EXISTS `org_user`(
 
     KEY `org_user_fk1` (`user_type`),
     CONSTRAINT `org_user_fk1` FOREIGN KEY (`user_type`) REFERENCES `org_user_type` (`id`),
-
-    KEY `org_user_fk2` (`first_access`),
-    CONSTRAINT `org_user_fk2` FOREIGN KEY (`first_access`) REFERENCES `org_first_access` (`id`),
 
     KEY `org_user_fk3` (`token`),
     CONSTRAINT `org_user_fk3` FOREIGN KEY (`token`) REFERENCES `org_token` (`id`),
@@ -271,6 +255,57 @@ CREATE TABLE IF NOT EXISTS `org_user_term`(
     KEY `org_user_term_fk2` (`term`),
     CONSTRAINT `org_user_term_fk2` FOREIGN KEY (`term`) REFERENCES `org_term` (`id`)
 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_first_access
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_first_access`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `user` INT UNSIGNED,
+    `device_id` VARCHAR(255) UNIQUE,
+    `instalation_date` TIMESTAMP,
+    `locale` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_first_access_fk1` (`user`),
+    CONSTRAINT `org_first_access_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_notification
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_notification`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `user` INT UNSIGNED,
+    `brief_description` VARCHAR(255),
+    `description` VARCHAR(1500),
+    `read` TINYINT(1) DEFAULT 0,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_notification_fk1` (`user`),
+    CONSTRAINT `org_notification_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_user_settings
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_user_settings`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `user` INT UNSIGNED,
+    `settings` INT UNSIGNED,
+    `checking` TINYINT(1),
+    `value` INT,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_user_settings_fk1` (`user`),
+    CONSTRAINT `org_user_settings_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`),
+
+    KEY `org_user_settings_fk2` (`settings`),
+    CONSTRAINT `org_user_settings_fk2` FOREIGN KEY (`settings`) REFERENCES `org_settings` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
@@ -314,25 +349,6 @@ CREATE TABLE IF NOT EXISTS `org_user_security`(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
--- Create table org_user_settings
--- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_user_settings`(
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `user` INT UNSIGNED,
-    `settings` INT UNSIGNED,
-    `checking` TINYINT(1),
-    `value` INT,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
-
-    KEY `org_user_settings_fk1` (`user`),
-    CONSTRAINT `org_user_settings_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`),
-
-    KEY `org_user_settings_fk2` (`settings`),
-    CONSTRAINT `org_user_settings_fk2` FOREIGN KEY (`settings`) REFERENCES `org_settings` (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------
 -- Create table org_user_privacy
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `org_user_privacy`(
@@ -348,20 +364,4 @@ CREATE TABLE IF NOT EXISTS `org_user_privacy`(
 
     KEY `org_user_privacy_fk2` (`privacy`),
     CONSTRAINT `org_user_privacy_fk2` FOREIGN KEY (`privacy`) REFERENCES `org_privacy` (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------
--- Create table org_notification
--- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_notification`(
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `user` INT UNSIGNED,
-    `brief_description` VARCHAR(255),
-    `description` VARCHAR(1500),
-    `read` TINYINT(1) DEFAULT 0,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
-
-    KEY `org_notification_fk1` (`user`),
-    CONSTRAINT `org_notification_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

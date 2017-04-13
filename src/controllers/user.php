@@ -2,7 +2,7 @@
 
 $app->get('/users', function() {
     try {
-        $data = user::with('user_type', 'first_access','token', 'plan')->get();
+        $data = user::with('user_type', 'token.login_type','token.access_platform', 'plan.price', 'plan.advantages')->get();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -13,7 +13,7 @@ $app->get('/users', function() {
 
 $app->get('/user/:id', function($id) {
     try {
-        $data = user::with('user_type', 'first_access','token', 'plan')->find($id);
+        $data = user::with('user_type', 'token.login_type','token.access_platform', 'plan.price', 'plan.advantages')->find($id);
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -43,7 +43,7 @@ $app->post('/user/save', function () use ($app) {
         $user->responsible_cpf = $app->request()->post('responsible_cpf');
         
         if ($user->save()) {
-            $data = user::with('user_type', 'first_access','token', 'plan')->find($user->id);
+            $data = user::with('user_type', 'token.login_type','token.access_platform', 'plan.price', 'plan.advantages')->find($user->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -63,7 +63,7 @@ $app->post('/user/:id/photo', function ($id) {
             $user->profile_picture = $url;
 
             if ($user->update()) {
-                $data = user::with('user_type', 'first_access','token', 'plan')->find($user->id);
+                $data = user::with('user_type', 'token.login_type','token.access_platform', 'plan.price', 'plan.advantages')->find($user->id);
             }
         } else {
             $error = new custonError(5, 0, $upload['message']);
@@ -95,7 +95,7 @@ $app->post('/user/:id', function ($id) use ($app) {
         $user->responsible_cpf = $app->request()->post('responsible_cpf');
 
         if ($user->update()) {
-            $data = user::with('user_type', 'first_access','token', 'plan')->find($user->id);
+            $data = user::with('user_type', 'token.login_type','token.access_platform', 'plan.price', 'plan.advantages')->find($user->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }

@@ -8,7 +8,7 @@ $app->post('/user_term/accept', function () use ($app){
         $user_term->term_accept = $app->request()->post('term_accept');
         $user_term->term_accept_date = $app->request()->post('term_accept_date');
         if($user_term->save()){
-            $data = user_term::with('user.user_type','user.first_access','user.token','user.plan', 'term')->find($user_term->id);
+            $data = user_term::with('term')->find($user_term->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
