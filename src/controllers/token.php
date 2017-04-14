@@ -21,7 +21,7 @@ $app->post('/token/save', function () use($app) {
                 }
             }
             $error = new custonError(false, 0);
-            $data = token::with('login_type', 'access_platform')->find($token->id);
+            $data = token::with(relations::getTokenRelations())->find($token->id);
             return helpers::jsonResponse($error, $data);
         }
     } catch (Exception $ex) {
@@ -61,7 +61,7 @@ $app->post('/login', function () use($app) {
                 ->first();
         if (!is_null($user) && $user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))) {
             $error = new custonError(false, 0);
-            $data = user::with('user_type', 'first_access','token', 'plan')->find($user->id);
+            $data = user::with(relations::getUserRelations())->find($user->id);
         } else {
             $error = new custonError(true, 7);
             $data = null;

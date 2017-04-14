@@ -18,7 +18,6 @@ class relations {
         ];
         return $relations;
     }
-
     static function getFirstAccessUserRelations() {
         $relations = [
             'user.user_type',
@@ -35,7 +34,6 @@ class relations {
         ];
         return $relations;
     }
-    
     static function getUserPrivacyRelations(){
         $relations = [
             'user.user_type',
@@ -51,7 +49,13 @@ class relations {
             'user.user_notifications',
             'privacy'
         ];
-        
+        return $relations;
+    }
+    static function getTokenRelations(){
+        $relations = [
+            'login_type',
+            'access_platform'
+        ];
         return $relations;
     }
 }
