@@ -1,6 +1,6 @@
 /**
- * Version: 04
- * Updated: 13/04/2017
+ * Version: 05
+ * Updated: 14/04/2017
  */
 
 CREATE DATABASE IF NOT EXISTS `organize_test`;
@@ -282,7 +282,7 @@ CREATE TABLE IF NOT EXISTS `org_user_notifications`(
     `brief_description` VARCHAR(255),
     `description` VARCHAR(1500),
     `notification_date` TIMESTAMP,
-    `read` TINYINT(1) DEFAULT 0,
+    `is_read` TINYINT(1) DEFAULT 0,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
 
@@ -305,8 +305,8 @@ CREATE TABLE IF NOT EXISTS `org_user_settings`(
     KEY `org_user_settings_fk1` (`user`),
     CONSTRAINT `org_user_settings_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`),
 
-    KEY `org_user_settings_fk2` (`settings`),
-    CONSTRAINT `org_user_settings_fk2` FOREIGN KEY (`settings`) REFERENCES `org_settings` (`id`)
+    KEY `org_user_settings_fk2` (`setting`),
+    CONSTRAINT `org_user_settings_fk2` FOREIGN KEY (`setting`) REFERENCES `org_settings` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 $app->get('/first_access/:device_id', function ($device_id) {
     try {
-        $data = first_access::with(relations::getUserRelationsTwo())->where('device_id', '=', $device_id)->first();
+        $data = first_access::with(relations::getFirstAccessUserRelations())->where('device_id', '=', $device_id)->first();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -20,7 +20,7 @@ $app->post('/first_access/save', function () use($app) {
         $first_access->locale = $app->request()->post('locale');
 
         if ($first_access->save()) {
-            $data = first_access::with(relations::getUserRelationsTwo())->find($first_access->id);
+            $data = first_access::with(relations::getFirstAccessUserRelations())->find($first_access->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -36,7 +36,7 @@ $app->post('/first_access/:id/edit', function ($id) use($app) {
         $first_access->locale = $app->request()->post('locale');
 
         if ($first_access->update()) {
-            $data = first_access::with(relations::getUserRelationsTwo())->find($first_access->id);
+            $data = first_access::with(relations::getFirstAccessUserRelations())->find($first_access->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
