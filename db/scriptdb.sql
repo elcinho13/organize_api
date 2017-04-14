@@ -276,17 +276,18 @@ CREATE TABLE IF NOT EXISTS `org_first_access`(
 -- -----------------------------------------------------------------------------
 -- Create table org_notification
 -- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_notification`(
+CREATE TABLE IF NOT EXISTS `org_user_notifications`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `user` INT UNSIGNED,
     `brief_description` VARCHAR(255),
     `description` VARCHAR(1500),
+    `notification_date` TIMESTAMP,
     `read` TINYINT(1) DEFAULT 0,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
 
-    KEY `org_notification_fk1` (`user`),
-    CONSTRAINT `org_notification_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
+    KEY `org_user_notifications_fk1` (`user`),
+    CONSTRAINT `org_user_notifications_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
@@ -295,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `org_notification`(
 CREATE TABLE IF NOT EXISTS `org_user_settings`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `user` INT UNSIGNED,
-    `settings` INT UNSIGNED,
+    `setting` INT UNSIGNED,
     `checking` TINYINT(1),
     `value` INT,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

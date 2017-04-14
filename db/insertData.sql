@@ -83,11 +83,10 @@ INSERT INTO `org_user_term` (`id`, `user`, `term`, `term_accept`, `term_accept_d
 INSERT INTO `org_first_access` (`id`, `user`, `device_id`, `instalation_date`, `locale`, `created_at`, `updated_at`) VALUES
 (1, 1, 'abcd102030', '2017-03-12 00:00:00', 'pt_BR', '2017-04-12 21:19:20', '2017-04-12 21:19:20');
 
-INSERT INTO `org_notification` (`id`, `user`, `brief_description`, `description`, `read`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Lorem ipsum dolor sit amet.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque augue massa, scelerisque ut dui ut, semper viverra tortor. Sed aliquet, risus eu consequat luctus, lorem ipsum convallis orci, non vestibulum augue eros id libero. ', 1, '2017-04-12 21:53:26', '2017-04-12 21:53:26'),
-(2, 1, 'Lorem ipsum dolor sit amet.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque augue massa, scelerisque ut dui ut, semper viverra tortor. Sed aliquet, risus eu consequat luctus, lorem ipsum convallis orci, non vestibulum augue eros id libero. ', 0, '2017-04-12 21:53:32', '2017-04-12 21:53:32');
+INSERT INTO `org_user_notifications` (`id`, `user`, `brief_description`, `description`, notification_date,`read`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Lorem ipsum dolor sit amet.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque augue massa, scelerisque ut dui ut, semper viverra tortor. Sed aliquet, risus eu consequat luctus, lorem ipsum convallis orci, non vestibulum augue eros id libero. ', '2017-04-14 08:53:26',1, '2017-04-12 21:53:26', '2017-04-12 21:53:26');
 
-INSERT INTO `org_user_settings` (`id`, `user`, `settings`, `checking`, `value`, `created_at`, `updated_at`) VALUES
+INSERT INTO `org_user_settings` (`id`, `user`, `setting`, `checking`, `value`, `created_at`, `updated_at`) VALUES
 (1, 1, 2, 1, 0, '2017-04-12 21:39:30', '2017-04-12 21:39:30');
 
 INSERT INTO `org_security_question` (`id`, `user`, `locale`, `security_question`, `private_use`, `created_at`, `updated_at`) VALUES
