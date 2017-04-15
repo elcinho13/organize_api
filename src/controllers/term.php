@@ -34,14 +34,9 @@ $app->post('/term/save', function () use($app) {
     }
 });
 
-$app->post('/term/:id', function ($id) use($app) {
+$app->post('/term/:id/active', function ($id) use($app) {
     try {
         $term = term::find($id);
-        $term->locale = $app->request()->post('locale');
-        $term->version_name = $app->request()->post('version_name');
-        $term->title = $app->request()->post('title');
-        $term->content = $app->request()->post('content');
-        $term->publication_date = $app->request()->post('publication_date');
         $term->is_active = $app->request()->post('is_active');
 
         if ($term->update()) {

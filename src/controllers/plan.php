@@ -2,7 +2,7 @@
 
 $app->get('/plan/:locale', function ($locale) {
     try {
-        $data = plan::with('advantages', 'price')
+        $data = plan::with(relations::getPlanRelations())
                 ->where('locale', '=', $locale)
                 ->get();
         $error = new custonError(false, 0);
@@ -15,7 +15,7 @@ $app->get('/plan/:locale', function ($locale) {
 
 $app->get('/plan/:locale/:id', function ($locale, $id) {
     try {
-        $data = plan::with('advantages', 'price')
+        $data = plan::with(relations::getPlanRelations())
                 ->where('locale', '=', $locale)
                 ->where('code_enum', '=', $id)
                 ->first();
@@ -38,7 +38,7 @@ $app->post('/plan/save', function () use($app) {
         $plan->is_active = true;
 
         if ($plan->save()) {
-            $data = plan::with('advantages', 'price')->find($plan->id);
+            $data = plan::with(relations::getPlanRelations())->find($plan->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -54,7 +54,7 @@ $app->post('/plan/:id/active', function ($id) use($app) {
         $plan->is_active = $app->request()->post('is_active');
 
         if ($plan->update()) {
-            $data = plan::with('advantages', 'price')->find($plan->id);
+            $data = plan::with(relations::getPlanRelations())->find($plan->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }

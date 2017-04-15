@@ -2,9 +2,7 @@
 
 $app->get('/first_access/:device_id', function ($device_id) {
     try {
-        $data = first_access::query()
-                ->where('device_id', '=', $device_id)
-                ->first();
+        $data = first_access::with(relations::getFirstAccessUserRelations())->where('device_id', '=', $device_id)->first();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -16,12 +14,13 @@ $app->get('/first_access/:device_id', function ($device_id) {
 $app->post('/first_access/save', function () use($app) {
     try {
         $first_access = new first_access();
+        $first_access->user = $app->request()->post('user_id');
         $first_access->device_id = $app->request()->post('device_id');
         $first_access->instalation_date = $app->request()->post('instalation_date');
         $first_access->locale = $app->request()->post('locale');
 
         if ($first_access->save()) {
-            $data = first_access::find($first_access->id);
+            $data = first_access::with(relations::getFirstAccessUserRelations())->find($first_access->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -37,7 +36,7 @@ $app->post('/first_access/:id/edit', function ($id) use($app) {
         $first_access->locale = $app->request()->post('locale');
 
         if ($first_access->update()) {
-            $data = first_access::find($first_access->id);
+            $data = first_access::with(relations::getFirstAccessUserRelations())->find($first_access->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
