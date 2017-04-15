@@ -6,6 +6,7 @@ class helpers {
 
     static function jsonResponse($error, $data) {
         $app = Slim::getInstance();
+        $error['is_new'] = 0;
         
         if(is_null($data)){
             if(!$error['has_error']){
