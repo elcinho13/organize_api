@@ -2,9 +2,7 @@
 
 $app->get('/notification/user/:user', function($user_id) {
     try {
-        $data = user_notifications::with(relations::getFirstAccessUserRelations())
-                ->where('user', '=', $user_id)
-                ->get();
+        $data = user_notifications::where('user', '=', $user_id)->get();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -15,7 +13,7 @@ $app->get('/notification/user/:user', function($user_id) {
 
 $app->get('/notification/:id', function($id) {
     try {
-        $data = user_notifications::with(relations::getFirstAccessUserRelations())->find($id);
+        $data = user_notifications::find($id);
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -33,7 +31,7 @@ $app->post('/notification/:save', function() use ($app) {
         $user_notifications->is_read = false;
 
         if ($user_notifications->save()) {
-            $data = user_notifications::with(relations::getFirstAccessUserRelations())->find($user_notifications->id);
+            $data = user_notifications::find($user_notifications->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -49,7 +47,7 @@ $app->post('/notification/:id/read', function($id) use ($app) {
         $user_notifications->is_read = $app->request->post('is_read');
 
         if ($user_notifications->update()) {
-            $data = user_notifications::with(relations::getFirstAccessUserRelations())->find($user_notifications->id);
+            $data = user_notifications::find($user_notifications->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
