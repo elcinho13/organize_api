@@ -27,6 +27,7 @@ $app->post('/user/save', function () use ($app) {
         $user = new user();
         $user->user_type = $app->request()->post('user_type');
         $user->plan = $app->request()->post('plan');
+        $user->privacy = $app->request()->post('privacy');
         $user->full_name = $app->request()->post('full_name');
         $user->mail = $app->request()->post('mail');
         $user->password = application::cryptPassword($app->request()->post('birth_date'), $app->request()->post('password'));
