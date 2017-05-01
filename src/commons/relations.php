@@ -9,11 +9,11 @@ class relations {
             'token.access_platform',
             'plan.price',
             'plan.advantages',
+            'privacy',
             'user_term.term',
             'user_security.access_platform',
             'user_security.security_question',
             'user_settings.setting',
-            'user_privacy.privacy',
             'user_notifications'
         ];
         return $relations;
@@ -25,21 +25,16 @@ class relations {
             'user.token.access_platform',
             'user.plan.price',
             'user.plan.advantages',
+            'user.privacy',
             'user.user_term.term',
             'user.user_security.access_platform',
             'user.user_security.security_question',
             'user.user_settings.setting',
-            'user.user_privacy.privacy',
             'user.user_notifications'
         ];
         return $relations;
     }
-    static function getUserPrivacyRelations(){
-        $relations = [
-            'privacy'
-        ];
-        return $relations;
-    }
+    
     static function getTokenRelations(){
         $relations = [
             'login_type',

@@ -41,7 +41,7 @@ INSERT INTO `org_settings` (`id`, `locale`, `code_enum`, `name`, `description`, 
 (5, 'pt_BR', 5, 'Enviar relatórios por e-mail', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac justo pulvinar, luctus dolor non.', 0, '2017-04-12 03:07:03', '2017-04-12 03:07:03'),
 (6, 'pt_BR', 6, 'Nossos planos', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac justo pulvinar, luctus dolor non.', 0, '2017-04-12 03:07:20', '2017-04-12 03:07:20'),
 (7, 'pt_BR', 7, 'Termo de Uso', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac justo pulvinar, luctus dolor non.', 0, '2017-04-12 03:07:28', '2017-04-12 03:07:28'),
-(8, 'pt_BR', 8, 'Tutorial', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac justo pulvinar, luctus dolor non.', 0, '2017-04-12 03:07:52', '2017-04-12 03:07:52')
+(8, 'pt_BR', 8, 'Tutorial', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac justo pulvinar, luctus dolor non.', 0, '2017-04-12 03:07:52', '2017-04-12 03:07:52'),
 (9, 'pt_BR', 9, 'Sobre', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac justo pulvinar, luctus dolor non.', 0, '2017-04-12 03:07:52', '2017-04-12 03:07:52');
 
 INSERT INTO `org_term` (`id`, `locale`, `version_name`, `title`, `content`, `publication_date`, `is_active`, `created_at`, `updated_at`) VALUES
@@ -75,8 +75,8 @@ INSERT INTO `org_plan_advantages` (`id`, `locale`, `code_enum`, `plan`, `advanta
 INSERT INTO `org_token` (`id`, `login_type`, `access_platform`, `access_token`, `access_date`, `keep_logged`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, '20.98210100 149204422722147483647', '2017-03-15 00:00:00', 1, '2017-04-12 21:43:47', '2017-04-12 21:43:47');
 
-INSERT INTO `org_user` (`id`, `user_type`, `token`, `plan`, `full_name`, `mail`, `password`, `profile_picture`, `cpf`, `rg_number`, `rg_emitter_uf`, `rg_emitter_organ`, `rg_emitter_date`, `birth_date`, `gender`, `responsible_name`, `responsible_cpf`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, 1, 'Lorem ipsum', 'loremipsun@loremipsun.com', 'b848f758bb5d870fd6b9969c5d84101a', 'http://ec2-52-67-67-126.sa-east-1.compute.amazonaws.com/organize/upload/2_profile_picture.png', '09876543212', '09876543', 'MG', 'SPP', '2000-01-01', '1990-01-01', 'F', 'Lorem ipsum Lorem ipsum', '01234567890', '2017-04-12 21:34:01', '2017-04-12 21:43:47');
+INSERT INTO `org_user` (`id`, `user_type`, `token`, `plan`, `privacy` ,`full_name`, `mail`, `password`, `profile_picture`, `cpf`, `rg_number`, `rg_emitter_uf`, `rg_emitter_organ`, `rg_emitter_date`, `birth_date`, `gender`, `responsible_name`, `responsible_cpf`, `created_at`, `updated_at`) VALUES
+(1, 4, 1, 1, 3, 'Lorem ipsum', 'loremipsun@loremipsun.com', 'b848f758bb5d870fd6b9969c5d84101a', 'http://ec2-52-67-67-126.sa-east-1.compute.amazonaws.com/organize/upload/2_profile_picture.png', '09876543212', '09876543', 'MG', 'SPP', '2000-01-01', '1990-01-01', 'F', 'Lorem ipsum Lorem ipsum', '01234567890', '2017-04-12 21:34:01', '2017-04-12 21:43:47');
 
 INSERT INTO `org_user_term` (`id`, `user`, `term`, `term_accept`, `term_accept_date`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, '2017-04-11 00:00:00', '2017-04-12 21:53:44', '2017-04-12 21:53:44');
@@ -95,8 +95,3 @@ INSERT INTO `org_security_question` (`id`, `user`, `locale`, `security_question`
 
 INSERT INTO `org_user_security` (`id`, `user`, `security_question`, `security_answer`, `last_update_date`, `access_platform`, `last_update_identifier`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 'resposta 3', '2017-02-19 00:00:00', 1, '123abc', '2017-04-12 21:39:17', '2017-04-12 21:39:17');
-
-INSERT INTO `org_user_privacy` (`id`, `user`, `privacy`, `checking`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, '2017-04-12 21:38:31', '2017-04-12 21:38:31'),
-(2, 1, 2, 1, '2017-04-12 21:38:38', '2017-04-12 21:38:38'),
-(3, 1, 3, 1, '2017-04-12 21:38:41', '2017-04-12 21:38:41');

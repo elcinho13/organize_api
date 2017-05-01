@@ -1,6 +1,6 @@
 /**
- * Version: 05
- * Updated: 14/04/2017
+ * Version: 06
+ * Updated: 30/05/2017
  */
 
 CREATE DATABASE IF NOT EXISTS `organize_test`;
@@ -210,6 +210,7 @@ CREATE TABLE IF NOT EXISTS `org_user`(
     `user_type` INT UNSIGNED,
     `token` INT UNSIGNED,
     `plan` INT UNSIGNED,
+    `privacy` INT UNSIGNED,
     `full_name` VARCHAR(255),
     `mail` VARCHAR(255) UNIQUE,
     `password` VARCHAR(255),
@@ -233,7 +234,10 @@ CREATE TABLE IF NOT EXISTS `org_user`(
     CONSTRAINT `org_user_fk3` FOREIGN KEY (`token`) REFERENCES `org_token` (`id`),
 
     KEY `org_user_fk4` (`plan`),
-    CONSTRAINT `org_user_fk4` FOREIGN KEY (`plan`) REFERENCES `org_plan` (`id`)
+    CONSTRAINT `org_user_fk4` FOREIGN KEY (`plan`) REFERENCES `org_plan` (`id`),
+
+    KEY `org_user_fk5` (`privacy`),
+    CONSTRAINT `org_user_fk5` FOREIGN KEY (`privacy`) REFERENCES `org_privacy` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------
@@ -347,22 +351,4 @@ CREATE TABLE IF NOT EXISTS `org_user_security`(
 
     KEY `org_user_security_fk3` (`access_platform`),
     CONSTRAINT `org_user_security_fk3` FOREIGN KEY (`access_platform`) REFERENCES `org_access_platform` (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------
--- Create table org_user_privacy
--- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_user_privacy`(
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `user` INT UNSIGNED,
-    `privacy` INT UNSIGNED,
-    `checking` TINYINT(1),
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
-
-    KEY `org_user_privacy_fk1` (`user`),
-    CONSTRAINT `org_user_privacy_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`),
-
-    KEY `org_user_privacy_fk2` (`privacy`),
-    CONSTRAINT `org_user_privacy_fk2` FOREIGN KEY (`privacy`) REFERENCES `org_privacy` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
