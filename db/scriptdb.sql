@@ -1,6 +1,6 @@
 /**
- * Version: 06
- * Updated: 30/05/2017
+ * Version: 07
+ * Updated: 16/05/2017
  */
 
 CREATE DATABASE IF NOT EXISTS `organize_test`;
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `org_token`(
     `login_type` INT UNSIGNED,
     `access_platform` INT UNSIGNED,
     `access_token` VARCHAR(255),
-    `access_date` TIMESTAMP,
+    `access_date` DATETIME,
     `keep_logged` TINYINT(1),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `org_user_term`(
     `user` INT UNSIGNED,
     `term` INT UNSIGNED, 
     `term_accept` TINYINT(1), 
-    `term_accept_date` TIMESTAMP,
+    `term_accept_date` DATETIME,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
 
@@ -268,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `org_first_access`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `user` INT UNSIGNED,
     `device_id` VARCHAR(255) UNIQUE,
-    `instalation_date` TIMESTAMP,
+    `instalation_date` DATETIME,
     `locale` VARCHAR(255),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -285,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `org_user_notifications`(
     `user` INT UNSIGNED,
     `brief_description` VARCHAR(255),
     `description` VARCHAR(1500),
-    `notification_date` TIMESTAMP,
+    `notification_date` DATETIME,
     `is_read` TINYINT(1) DEFAULT 0,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -337,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `org_user_security`(
     `user` INT UNSIGNED,
     `security_question` INT UNSIGNED,
     `security_answer` VARCHAR(255),
-    `last_update_date` TIMESTAMP,
+    `last_update_date` DATETIME,
     `access_platform` INT UNSIGNED,
     `last_update_identifier` VARCHAR(255),
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -351,4 +351,22 @@ CREATE TABLE IF NOT EXISTS `org_user_security`(
 
     KEY `org_user_security_fk3` (`access_platform`),
     CONSTRAINT `org_user_security_fk3` FOREIGN KEY (`access_platform`) REFERENCES `org_access_platform` (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_password_recovery
+-- -----------------------------------------------------------------------------
+    CREATE TABLE IF NOT EXISTS `org_password_recovery`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `user` INT UNSIGNED,
+    `token` VARCHAR(45),
+    `send_date` DATETIME,
+    `validate_date` DATETIME,
+    `access_date` DATETIME,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_password_recovery_fk1` (`user`),
+    CONSTRAINT `org_password_recovery_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
+
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

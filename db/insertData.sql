@@ -1,6 +1,6 @@
 /**
- * Version: 04
- * Updated: 13/04/2017
+ * Version: 07
+ * Updated: 16/05/2017
  */
 
 USE `organize_test`;
@@ -95,3 +95,6 @@ INSERT INTO `org_security_question` (`id`, `user`, `locale`, `security_question`
 
 INSERT INTO `org_user_security` (`id`, `user`, `security_question`, `security_answer`, `last_update_date`, `access_platform`, `last_update_identifier`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 'resposta 3', '2017-02-19 00:00:00', 1, '123abc', '2017-04-12 21:39:17', '2017-04-12 21:39:17');
+
+INSERT INTO `org_password_recovery` (`id`, `user`, `token`, `send_date`, `validate_date`, `access_date`, `created_at`, `updated_at`) VALUES
+(1, 1, '1234QWERasdf', '2017-04-12 21:39:17', '2017-04-13 21:39:17', '2017-04-12 21:40:17', '2017-04-12 21:39:17', '2017-04-12 21:39:17');
