@@ -17,6 +17,7 @@
     "require": {
         "php": ">=5",
         "slim/slim": "2.6.3",
-        "illuminate/database": "v4.2.9"
+        "illuminate/database": "v4.2.9",
+        "phpmailer/phpmailer": "~5.2"
     }
 }
