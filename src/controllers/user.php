@@ -34,7 +34,7 @@ $app->post('/user/save', function () use ($app) {
         $user->cpf = $app->request()->post('cpf');
         $user->birth_date = $app->request()->post('birth_date');
         $user->gender = $app->request()->post('gender');
-        
+
         if ($user->save()) {
             $data = user::with(relations::getUserRelations())->find($user->id);
             $error = new custonError(false, 0);
@@ -46,24 +46,52 @@ $app->post('/user/save', function () use ($app) {
     }
 });
 
+/*
+ * caminho local: http://localhost/_uploads/organize/
+ * caminho server: http://ec2-52-67-67-126.sa-east-1.compute.amazonaws.com/organize/upload/
+ * 
+ * pasta local: /home/marcelamelo/Documentos/Projetos/_uploads/organize/
+ * pasta server: /var/www/html/organize/upload/
+ */
+
 $app->post('/user/:id/photo', function ($id) {
     try {
-        $upload = application::upload_photo($_FILES['profile_picture'], $id);
-        if ($upload['success']) {
-            $url = $upload['message'];
+        $way = 'http://ec2-52-67-67-126.sa-east-1.compute.amazonaws.com/organize/upload/';
+        $folder = '/var/www/html/organize/upload/';
+        $size = (1024 * 1024 * 2) + 1;
+        $file_name = str_replace(array(' ', '.'), '', 'photo_' . $id . '_' . microtime());
+        if (empty($_FILES)) {
+            $error = new custonError(true, 1, 1, 'Nenhum arquivo enviado');
+        } else if (!empty($_FILES['photo']) && $_FILES['photo']['error'] !== 4) {
+            if (!$_FILES['photo']['error']) {
 
-            $user = user::find($id);
-            $user->profile_picture = $url;
+                if ($_FILES['photo']['size'] < $size) {
+                    $tmp_name = $_FILES['photo']['name'];
+                    $tmp_extension = explode('.', $tmp_name);
+                    $extension = end($tmp_extension);
+                    $file_name .= '.' . $extension;
 
-            if ($user->update()) {
-                $data = user::with(relations::getUserRelations())->find($user->id);
+                    if (move_uploaded_file($_FILES['photo']['tmp_name'], $folder . $file_name)) {
+                        $user = user::find($id);
+                        $user->profile_picture = $way . $file_name;
+                        if ($user->update()) {
+                            $error = new custonError(false, 0, 0, 'Upload do arquivo realizado com sucesso.');
+                        } else {
+                            $error = new custonError(true, 4, 1, 'Não foi possível alterar o usuário.');
+                        }
+                    } else {
+                        $error = new custonError(true, 1, 1, 'Ocorreu um erro ao processar o arquivo');
+                    }
+                } else {
+                    $error = new custonError(true, 1, 1, 'O tamanho do arquivo excede o permitido. Permido arquivos de até 2MB.');
+                }
+            } else {
+                $error = new custonError(true, 1, $_FILES['error'], 'Erro interno ao enviar o arquivo.');
             }
         } else {
-            $error = new custonError(5, 0, $upload['message']);
-            $data = $error->parse_error();
+            $error = new custonError(true, 1, $_FILES['error'], 'Nenhum arquivo foi enviado.');
         }
-        $error = new custonError(false, 0);
-        return helpers::jsonResponse($error->parse_error(), $data);
+        return helpers::jsonResponse($error->parse_error(), null);
     } catch (Exception $ex) {
         $error = new custonError(true, 6, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error(), null);
@@ -74,11 +102,11 @@ $app->post('/user/:id', function ($id) use ($app) {
     try {
         $fields = $app->request()->post();
         $user = user::find($id);
-        
-        foreach ($fields as $key => $value){
+
+        foreach ($fields as $key => $value) {
             $user->$key = $value;
         }
-        
+
         if ($user->update()) {
             $data = user::with(relations::getUserRelations())->find($user->id);
             $error = new custonError(false, 0);
