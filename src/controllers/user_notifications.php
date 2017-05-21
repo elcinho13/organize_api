@@ -28,6 +28,7 @@ $app->post('/notification/:save', function() use ($app) {
         $user_notifications->user = $app->request()->post('user');
         $user_notifications->brief_description = $app->request()->post('brief_description');
         $user_notifications->description = $app->request()->post('description');
+        $user_notifications->notification_date = $app->request()->post('notification_date');
         $user_notifications->is_read = false;
 
         if ($user_notifications->save()) {

@@ -19,16 +19,16 @@ class user extends Eloquent {
         return $this->belongsTo('plan', 'plan');
     }
     
+    public function privacy(){
+        return $this->belongsTo('privacy', 'privacy');
+    }
+
     public function user_term(){
         return $this->hasOne('user_term', 'user');
     }
     
     public function user_settings(){
         return $this->hasMany('user_settings', 'user');
-    }
-    
-    public function user_privacy(){
-        return $this->hasMany('user_privacy', 'user');
     }
     
     public function user_security(){
