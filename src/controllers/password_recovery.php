@@ -28,7 +28,7 @@ $app->post('/password_recovery', function() use($app) {
             $password_recovery->validate_date = $validate_date->format($format);
 
             if ($password_recovery->save()) {
-                $link = 'blablabla?token=' . $password_recovery->token;
+                $link = 'configurar esta rota' . $password_recovery->token;
                 send_mail($user_mail, $user->full_name, $link);
             }
         } else {
@@ -107,10 +107,7 @@ function save_notification($mail, $brief_description, $description, $current_dat
 
 function send_mail($user_mail, $user_name, $link) {
     $mail_from = 'passwordrecovery@organize4event.com';
-    $message = 'Prezado (a) ' . $user_name
-            . ', conforme solicitado, segue o link para recuperação da sua senha.'
-            . 'Link: ' . $link
-            . ' Att, Equipe organize.';
+    $message = $user_name. ', esta é uma mensagem de teste para recuperação de senha. ' .$link;
 
     $mail = new PHPMailer;
     $mail->isSMTP();

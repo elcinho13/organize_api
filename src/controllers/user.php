@@ -22,6 +22,17 @@ $app->get('/user/:id', function($id) {
     }
 });
 
+$app->post('/user/mail', function () use ($app) {
+    try {
+        $data = user::with(relations::getUserRelations())->where('mail', '=', $app->request()->post('mail'))->first();
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
+    } catch (Exception $ex) {
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
+});
+
 $app->post('/user/save', function () use ($app) {
     try {
         $user = new user();
