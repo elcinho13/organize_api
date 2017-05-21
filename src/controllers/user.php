@@ -58,38 +58,33 @@ $app->post('/user/:id/photo', function ($id) {
     try {
         $way = 'http://ec2-52-67-67-126.sa-east-1.compute.amazonaws.com/organize/upload/';
         $folder = '/var/www/html/organize/upload/';
-        $size = (1024 * 1024 * 2) + 1;
+        $size = (1024 * 1024) + 1;
         $file_name = str_replace(array(' ', '.'), '', 'photo_' . $id . '_' . microtime());
         if (empty($_FILES)) {
             $error = new custonError(true, 1, 1, 'Nenhum arquivo enviado');
         } else if (!empty($_FILES['photo']) && $_FILES['photo']['error'] !== 4) {
-            if (!$_FILES['photo']['error']) {
+            if ($_FILES['photo']['size'] < $size) {
+                $tmp_name = $_FILES['photo']['name'];
+                $tmp_extension = explode('.', $tmp_name);
+                $extension = end($tmp_extension);
+                $file_name .= '.' . $extension;
 
-                if ($_FILES['photo']['size'] < $size) {
-                    $tmp_name = $_FILES['photo']['name'];
-                    $tmp_extension = explode('.', $tmp_name);
-                    $extension = end($tmp_extension);
-                    $file_name .= '.' . $extension;
-
-                    if (move_uploaded_file($_FILES['photo']['tmp_name'], $folder . $file_name)) {
-                        $user = user::find($id);
-                        $user->profile_picture = $way . $file_name;
-                        if ($user->update()) {
-                            $error = new custonError(false, 0, 0, 'Upload do arquivo realizado com sucesso.');
-                        } else {
-                            $error = new custonError(true, 4, 1, 'Não foi possível alterar o usuário.');
-                        }
+                if (move_uploaded_file($_FILES['photo']['tmp_name'], $folder . $file_name)) {
+                    $user = user::find($id);
+                    $user->profile_picture = $way . $file_name;
+                    if ($user->update()) {
+                        $error = new custonError(false, 0, 0, 'Upload do arquivo realizado com sucesso.');
                     } else {
-                        $error = new custonError(true, 1, 1, 'Ocorreu um erro ao processar o arquivo');
+                        $error = new custonError(true, 4, 1, 'Não foi possível alterar o usuário.');
                     }
                 } else {
-                    $error = new custonError(true, 1, 1, 'O tamanho do arquivo excede o permitido. Permido arquivos de até 2MB.');
+                    $error = new custonError(true, 1, 1, 'Ocorreu um erro ao processar o arquivo. O Arquivo não foi salvo.');
                 }
             } else {
-                $error = new custonError(true, 1, $_FILES['error'], 'Erro interno ao enviar o arquivo.');
+                $error = new custonError(true, 1, 1, 'O tamanho do arquivo excede o permitido. Permido arquivos de até 1MB.');
             }
         } else {
-            $error = new custonError(true, 1, $_FILES['error'], 'Nenhum arquivo foi enviado.');
+            $error = new custonError(true, 1, $_FILES['photo']['error'], 'Nenhum arquivo foi enviado.');
         }
         return helpers::jsonResponse($error->parse_error(), null);
     } catch (Exception $ex) {
