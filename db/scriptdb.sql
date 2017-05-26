@@ -1,6 +1,6 @@
 /**
- * Version: 07
- * Updated: 16/05/2017
+ * Version: 08
+ * Updated: 25/05/2017
  */
 
 CREATE DATABASE IF NOT EXISTS `organize_test`;
@@ -356,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `org_user_security`(
 -- -----------------------------------------------------------------------------
 -- Create table org_password_recovery
 -- -----------------------------------------------------------------------------
-    CREATE TABLE IF NOT EXISTS `org_password_recovery`(
+CREATE TABLE IF NOT EXISTS `org_password_recovery`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `user` INT UNSIGNED,
     `token` VARCHAR(45),
@@ -368,5 +368,243 @@ CREATE TABLE IF NOT EXISTS `org_user_security`(
 
     KEY `org_password_recovery_fk1` (`user`),
     CONSTRAINT `org_password_recovery_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_place
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_place`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `place_id` VARCHAR(255),
+    `name` VARCHAR(255),
+    `icon` VARCHAR(255),
+    `web_site_uri` VARCHAR(255),
+    `formatted_address` VARCHAR(255),
+    `lat` DOUBLE,
+    `long` DOUBLE,
+    `type` int,
+    `price_level` FLOAT,
+    `rating` FLOAT,
+    `references` VARCHAR(255),
+    `permanently_closed` TINYINT(1),
+    `vicinity` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_user_address
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_user_address`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `user` INT UNSIGNED,
+    `place` INT UNSIGNED,
+    `complement` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_user_address_fk1` (`user`),
+    CONSTRAINT `org_user_address_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`),
+
+    KEY `org_user_address_fk2` (`place`),
+    CONSTRAINT `org_user_address_fk2` FOREIGN KEY (`place`) REFERENCES `org_place` (`id`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_user_contact
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_user_contact`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `contact_type` INT UNSIGNED,
+    `user` INT UNSIGNED,
+    `contact` varchar(255),
+    `is_active` TINYINT(1),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_user_contact_fk1` (`contact_type`),
+    CONSTRAINT `org_user_contact_fk1` FOREIGN KEY (`contact_type`) REFERENCES `org_contact_type` (`id`),
+
+    KEY `org_user_contact_fk2` (`user`),
+    CONSTRAINT `org_user_contact_fk2` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_literacy (Grau de instrução)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_literacy`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `locale` VARCHAR(255),
+    `code_enum` INT UNSIGNED,
+    `name` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_social_network_type
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_social_network_type`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `locale` VARCHAR(255),
+    `code_enum` INT UNSIGNED,
+    `name` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_shift (Turno)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_shift`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `locale` VARCHAR(255),
+    `code_enum` INT UNSIGNED,
+    `name` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_institution_type
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_institution_type`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `locale` VARCHAR(255),
+    `code_enum` INT UNSIGNED,
+    `name` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_course
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_course`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `locale` VARCHAR(255),
+    `code_enum` INT UNSIGNED,
+    `name` VARCHAR(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_user_social_network
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_user_social_network`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `social_network_type` INT UNSIGNED,
+    `user` INT UNSIGNED,
+    `url` varchar(255),
+    `is_active` TINYINT(1),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_user_social_network_fk1` (`social_network_type`),
+    CONSTRAINT `org_user_social_network_fk1` FOREIGN KEY (`social_network_type`) REFERENCES `org_social_network_type` (`id`),
+
+    KEY `org_user_social_network_fk2` (`user`),
+    CONSTRAINT `org_user_social_network_fk2` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_institution
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_institution`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `institution_type` INT UNSIGNED,
+    `place` INT UNSIGNED UNIQUE,
+    `name` varchar(255),
+    `unit` varchar(255),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_institution_fk1` (`institution_type`),
+    CONSTRAINT `org_institution_fk1` FOREIGN KEY (`institution_type`) REFERENCES `org_institution_type` (`id`),
+
+    KEY `org_institution_fk2` (`place`),
+    CONSTRAINT `org_institution_fk2` FOREIGN KEY (`place`) REFERENCES `org_place` (`id`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_institution_course
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_institution_course`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `institution` INT UNSIGNED,
+    `course` INT UNSIGNED,
+    `duration` int,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_institution_course_fk1` (`institution`),
+    CONSTRAINT `org_institution_course_fk1` FOREIGN KEY (`institution`) REFERENCES `org_institution` (`id`),
+
+    KEY `org_institution_course_fk2` (`course`),
+    CONSTRAINT `org_institution_course_fk2` FOREIGN KEY (`course`) REFERENCES `org_course` (`id`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_class
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_class`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `institution` INT UNSIGNED,
+    `course` INT UNSIGNED,
+    `shift` INT UNSIGNED,
+    `identify` VARCHAR(200) UNIQUE,
+    `start_year` INT(4),
+    `start_semester` INT(1),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_class_fk1` (`institution`),
+    CONSTRAINT `org_class_fk1` FOREIGN KEY (`institution`) REFERENCES `org_institution` (`id`),
+
+    KEY `org_class_fk2` (`course`),
+    CONSTRAINT `org_class_fk2` FOREIGN KEY (`course`) REFERENCES `org_course` (`id`),
+
+    KEY `org_class_fk3` (`shift`),
+    CONSTRAINT `org_class_fk3` FOREIGN KEY (`shift`) REFERENCES `org_shift` (`id`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------
+-- Create table org_academic_data
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `org_academic_data`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `user` INT UNSIGNED,
+    `literacy` INT UNSIGNED,
+    `institution` INT UNSIGNED,
+    `course` INT UNSIGNED,
+    `class` INT UNSIGNED,
+    `start_date` DATE,
+    `final_date` DATE,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY `org_academic_data_fk1` (`user`),
+    CONSTRAINT `org_academic_data_fk1` FOREIGN KEY (`user`) REFERENCES `org_user` (`id`),
+
+    KEY `org_academic_data_fk2` (`literacy`),
+    CONSTRAINT `org_academic_data_fk2` FOREIGN KEY (`literacy`) REFERENCES `org_literacy` (`id`),
+
+    KEY `org_academic_data_fk3` (`institution`),
+    CONSTRAINT `org_academic_data_fk3` FOREIGN KEY (`institution`) REFERENCES `org_institution` (`id`),
+
+    KEY `org_academic_data_fk4` (`course`),
+    CONSTRAINT `org_academic_data_fk4` FOREIGN KEY (`course`) REFERENCES `org_institution_course` (`id`),
+
+    KEY `org_academic_data_fk5` (`class`),
+    CONSTRAINT `org_academic_data_fk5` FOREIGN KEY (`class`) REFERENCES `org_class` (`id`)
 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

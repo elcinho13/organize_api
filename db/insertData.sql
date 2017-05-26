@@ -1,6 +1,6 @@
 /**
- * Version: 07
- * Updated: 16/05/2017
+ * Version: 08
+ * Updated: 25/05/2017
  */
 
 USE `organize_test`;
@@ -98,3 +98,70 @@ INSERT INTO `org_user_security` (`id`, `user`, `security_question`, `security_an
 
 INSERT INTO `org_password_recovery` (`id`, `user`, `token`, `send_date`, `validate_date`, `access_date`, `created_at`, `updated_at`) VALUES
 (1, 1, '1234QWERasdf', '2017-04-12 21:39:17', '2017-04-13 21:39:17', '2017-04-12 21:40:17', '2017-04-12 21:39:17', '2017-04-12 21:39:17');
+
+INSERT INTO `org_place` (`id`, `place_id`, `name`, `icon`, `web_site_uri`, `formatted_address`, `lat`, `long`, `type`, `price_level`, `rating`, `references`, `permanently_closed`, `vicinity`, `created_at`, `updated_at`) VALUES 
+(1, 'qweasd12345zxcder', 'Condominio Beija Flor', 'http://www.teste.com/image.png', 'http://www.teste.com','Rua Lincoln Amarante Ribeiro, 100, Jardim Vitória. Belo Horizonte', 23456789, -98765432, 1, 4.98, 3.5, 'fjkdhfladhfjldhfaldkjfhadlkjfhlakdjdlflhdfhdçghhgoirthrnm', 0, 'Rua dos Borges, 1615', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 'qweasd12345zxcder', 'Condominio Beija Flor', 'http://www.teste.com/image.png', 'http://www.teste.com','Rua Lincoln Amarante Ribeiro, 100, Jardim Vitória. Belo Horizonte', 23456789, -98765432, 1, 4.98, 3.5, 'fjkdhfladhfjldhfaldkjfhadlkjfhlakdjdlflhdfhdçghhgoirthrnm', 0, 'Rua dos Borges, 1615', '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_user_address` (`id`, `user`, `place`, `complement`, `created_at`, `updated_at`) VALUES 
+(1, 1, 1, 'Bloco 09 - Ap. 406', '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_user_contact` (`id`, `contact_type`, `user`, `contact` , `is_active` , `created_at`, `updated_at`) VALUES 
+(1, 1, 1, 'teste@teste.com.br', 1, '2017-05-25 18:29:30', '017-05-25 18:29:30'),
+(2, 4, 1, '31987654321', 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_literacy` (`id`, `locale`, `code_enum`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'pt_BR', 1, 'Primário', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 'pt_BR', 2, 'Fundamental', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(3, 'pt_BR', 3, 'Ensino Médio', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(4, 'pt_BR', 4, 'Superior', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(5, 'pt_BR', 5, 'Pós Graduação', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(6, 'pt_BR', 6, 'Outro', '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_social_network_type` (`id`, `locale`, `code_enum`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'pt_BR', 1, 'Facebook', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 'pt_BR', 2, 'Twitter', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(3, 'pt_BR', 3, 'Linkedin', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(4, 'pt_BR', 4, 'Instagran', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(5, 'pt_BR', 5, 'Google Plus', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(6, 'pt_BR', 6, 'Outro', '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_shift` (`id`, `locale`, `code_enum`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'pt_BR', 1, 'Integral', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 'pt_BR', 2, 'Manhã', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(3, 'pt_BR', 3, 'Tarde', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(4, 'pt_BR', 4, 'Noite', '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_institution_type` (`id`, `locale`, `code_enum`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'pt_BR', 1, 'Ensino primário (Grupo)', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 'pt_BR', 2, 'Colegial (Ensino Médio)', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(3, 'pt_BR', 3, 'Universidade', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(4, 'pt_BR', 4, 'Escola Integrada (Do Grupo à Universidade)', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(5, 'pt_BR', 5, 'Pré Vestibular / Cursos', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(6, 'pt_BR', 6, 'Outro', '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_course` (`id`, `locale`, `code_enum`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'pt_BR', 1, 'Ensino Médio', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 'pt_BR', 2, 'Direito', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(3, 'pt_BR', 3, 'Sistemas de Informação', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(4, 'pt_BR', 4, 'Administração', '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_user_social_network` (`id`, `social_network_type`, `user`, `url`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'http://facebook.com/marcelamelo', 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 2, 1, 'http://linkedin.com/marcelamelo', 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_institution` (`id`, `institution_type`, `place`, `name`, `unit`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Faculdade Pitagoras', 'Afonso Pena', '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 1, 2, 'Puc Minas', 'São Gabriel', '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_institution_course` (`id`, `institution`, `course`, `duration`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 8, '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 1, 2, 8, '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+
+INSERT INTO `org_class` (`id`, `institution`, `course`, `shift`, `identify`, `start_year`, `start_semester`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 'Turma SI Pitágoras 2013', 2013, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 1, 2, 1, 'Turma Sei lá Pitágoras 2013', 2013, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+
+INSERT INTO `org_academic_data` (`id`, `user`, `literacy`, `institution`, `course`, `class`, `start_date`, `final_date`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1, 1, '2013-02-10', '2016-12-10', '2017-05-25 18:29:30', '2017-05-25 18:29:30');
