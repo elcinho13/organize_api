@@ -34,6 +34,7 @@ $app->post('/user_settings/save', function() use($app) {
         $user_settings->setting = $app->request()->post('setting');
         $user_settings->checking = true;
         $user_settings->value = $app->request()->post('value');
+        $user_settings->user_last_update = $app->request()->post('user_admin');
 
         if ($user_settings->save()) {
             $data = user_settings::with(relations::getUserSettingsRelations())->find($user_settings->id);

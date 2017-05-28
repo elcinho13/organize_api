@@ -35,6 +35,7 @@ $app->post('/setting/save', function () use($app) {
         $setting->name = $app->request()->post('name');
         $setting->description = $app->request()->post('description');
         $setting->check_default = $app->request()->post('check_default');
+        $setting->user_last_update = $app->request()->post('user_admin');
 
         if ($setting->save()) {
             $data = setting::find($setting->id);

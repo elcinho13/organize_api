@@ -8,7 +8,7 @@ $app->post('/plan_price/save', function () use($app) {
         $plan_price->plan = $app->request()->post('plan_id');
         $plan_price->description = $app->request()->post('description');
         $plan_price->price = $app->request()->post('price');
-        $plan_price->is_active = true;
+        $plan_price->user_last_update = $app->request()->post('user_admin');
 
         if ($plan_price->save()) {
             $data = plan::with(relations::getPlanRelations())->find($app->request()->post('plan_id'));;

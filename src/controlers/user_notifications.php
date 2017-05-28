@@ -30,6 +30,7 @@ $app->post('/notification/:save', function() use ($app) {
         $user_notifications->description = $app->request()->post('description');
         $user_notifications->notification_date = $app->request()->post('notification_date');
         $user_notifications->is_read = false;
+        $user_notifications->user_last_update = $app->request()->post('user_admin');
 
         if ($user_notifications->save()) {
             $data = user_notifications::find($user_notifications->id);

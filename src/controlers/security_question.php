@@ -18,6 +18,8 @@ $app->post('/security_question/save', function () use ($app) {
         $security_question->locale = $app->request()->post('locale');
         $security_question->security_question = $app->request()->post('security_question');
         $security_question->private_use = $app->request()->post('private_use');
+        $security_question->user_last_update = $app->request()->post('user_admin');
+        
         if ($security_question->save()) {
             $data = security_question::find($security_question->id);
             $error = new custonError(false, 0);

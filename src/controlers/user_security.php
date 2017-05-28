@@ -9,6 +9,7 @@ $app->post('/user_security/save', function () use($app) {
         $user_security->last_update_date = $app->request()->post('last_update_date');
         $user_security->access_platform = $app->request()->post('access_platform');
         $user_security->last_update_identifier = $app->request()->post('last_update_identifier');
+        $user_security->user_last_update = $app->request()->post('user_admin');
 
         if ($user_security->save()) {
             $data = user_security::with(relations::getUserSecurityRelations())->find($user_security->id);

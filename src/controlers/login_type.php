@@ -33,6 +33,7 @@ $app->post('/login_type/save', function () use($app) {
         $login_type->locale = $app->request()->post('locale');
         $login_type->code_enum = $app->request()->post('code_enum');
         $login_type->name = $app->request()->post('name');
+        $login_type->user_last_update = $app->request()->post('user_admin');
 
         if ($login_type->save()) {
             $data = login_type::find($login_type->id);

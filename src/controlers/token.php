@@ -10,6 +10,7 @@ $app->post('/token/save', function () use($app) {
         $token->access_token = application::generate_code(100, $salt);
         $token->access_date = $app->request()->post('access_date');
         $token->keep_logged = $app->request()->post('keep_logged');
+        $token->user_last_update = $app->request()->post('user_admin');
 
         if ($token->save()) {
             $user = user::find($app->request()->post('user_id'));

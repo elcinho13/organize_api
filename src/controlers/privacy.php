@@ -35,6 +35,7 @@ $app->post('/privacy/save', function () use($app) {
         $privacy->name = $app->request()->post('name');
         $privacy->description = $app->request()->post('description');
         $privacy->check_default = $app->request()->post('check_default');
+        $privacy->user_last_update = $app->request()->post('user_admin');
 
         if ($privacy->save()) {
             $data = privacy::find($privacy->id);

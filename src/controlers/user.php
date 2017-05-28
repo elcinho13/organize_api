@@ -45,6 +45,7 @@ $app->post('/user/save', function () use ($app) {
         $user->cpf = $app->request()->post('cpf');
         $user->birth_date = $app->request()->post('birth_date');
         $user->gender = $app->request()->post('gender');
+        $user->user_last_update = $app->request()->post('user_admin');
 
         if ($user->save()) {
             $data = user::with(relations::getUserRelations())->find($user->id);

@@ -35,8 +35,8 @@ $app->post('/plan/save', function () use($app) {
         $plan->name = $app->request()->post('name');
         $plan->description = $app->request()->post('description');
         $plan->security_code = application::generate_code(10, 'plan');
-        $plan->is_active = true;
-
+        $plan->user_last_update = $app->request()->post('user_admin');
+        
         if ($plan->save()) {
             $data = plan::with(relations::getPlanRelations())->find($plan->id);
             $error = new custonError(false, 0);

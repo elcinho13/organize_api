@@ -24,7 +24,7 @@ $app->post('/institutional/save', function () use($app) {
         $institutional->mission = $app->request()->post('mission');
         $institutional->vision = $app->request()->post('vision');
         $institutional->values = $app->request()->post('values');
-        $institutional->is_active = true;
+        $institutional->user_last_update = $app->request()->post('user_admin');
 
         if ($institutional->save()) {
             $data = institutional::find($institutional->id);

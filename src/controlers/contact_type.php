@@ -33,6 +33,7 @@ $app->post('/contact_type/save', function () use($app) {
         $contact_type->locale = $app->request()->post('locale');
         $contact_type->code_enum = $app->request()->post('code_enum');
         $contact_type->name = $app->request()->post('name');
+        $contact_type->user_last_update = $app->request()->post('user_admin');
 
         if ($contact_type->save()) {
             $data = contact_type::find($contact_type->id);

@@ -31,6 +31,7 @@ $app->post('/user_type/save', function () use($app) {
         $user_type->locale = $app->request()->post('locale');
         $user_type->code_enum = $app->request()->post('code_enum');
         $user_type->name = $app->request()->post('name');
+        $user_type->user_last_update = $app->request()->post('user_admin');
 
         if ($user_type->save()) {
             $data = user_type::find($user_type->id);
