@@ -1,8 +1,8 @@
 <?php
 
-$app->get('/setting/:locale', function ($locale) {
+$app->get('/access_platform/:locale', function ($locale) {
     try {
-        $data = setting::query()
+        $data = access_platform::query()
                 ->where('locale', '=', $locale)
                 ->get();
         $error = new custonError(false, 0);
@@ -13,12 +13,12 @@ $app->get('/setting/:locale', function ($locale) {
     }
 });
 
-$app->get('/setting/:locale/:id', function ($locale, $id) {
+$app->get('/access_platform/:locale/:id', function ($locale, $id) {
     try {
-        $data = setting::query()
+        $data = access_platform::query()
                 ->where('locale', '=', $locale)
                 ->where('code_enum', '=', $id)
-                ->get();
+                ->first();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -27,17 +27,18 @@ $app->get('/setting/:locale/:id', function ($locale, $id) {
     }
 });
 
-$app->post('/setting/save', function () use($app) {
-    try {
-        $setting = new setting();
-        $setting->locale = $app->request()->post('locale');
-        $setting->code_enum = $app->request()->post('code_enum');
-        $setting->name = $app->request()->post('name');
-        $setting->description = $app->request()->post('description');
-        $setting->check_default = $app->request()->post('check_default');
 
-        if ($setting->save()) {
-            $data = setting::find($setting->id);
+
+$app->post('/access_platform/save', function () use($app) {
+    try {
+        $access_platform = new access_platform();
+        $access_platform->locale = $app->request()->post('locale');
+        $access_platform->code_enum = $app->request()->post('code_enum');
+        $access_platform->name = $app->request()->post('name');
+        $access_platform->user_last_update = $app->request()->post('user_admin');
+
+        if ($access_platform->save()) {
+            $data = access_platform::find($access_platform->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }

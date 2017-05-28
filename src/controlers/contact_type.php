@@ -1,8 +1,8 @@
 <?php
 
-$app->get('/login_type/:locale', function ($locale) {
+$app->get('/contact_type/:locale', function ($locale) {
     try {
-        $data = login_type::query()
+        $data = contact_type::query()
                 ->where('locale', '=', $locale)
                 ->get();
         $error = new custonError(false, 0);
@@ -13,9 +13,9 @@ $app->get('/login_type/:locale', function ($locale) {
     }
 });
 
-$app->get('/login_type/:locale/:id', function ($locale, $id) {
+$app->get('/contact_type/:locale/:id', function ($locale, $id) {
     try {
-        $data = login_type::query()
+        $data = contact_type::query()
                 ->where('locale', '=', $locale)
                 ->where('code_enum', '=', $id)
                 ->first();
@@ -27,15 +27,16 @@ $app->get('/login_type/:locale/:id', function ($locale, $id) {
     }
 });
 
-$app->post('/login_type/save', function () use($app) {
+$app->post('/contact_type/save', function () use($app) {
     try {
-        $login_type = new login_type();
-        $login_type->locale = $app->request()->post('locale');
-        $login_type->code_enum = $app->request()->post('code_enum');
-        $login_type->name = $app->request()->post('name');
+        $contact_type = new contact_type();
+        $contact_type->locale = $app->request()->post('locale');
+        $contact_type->code_enum = $app->request()->post('code_enum');
+        $contact_type->name = $app->request()->post('name');
+        $contact_type->user_last_update = $app->request()->post('user_admin');
 
-        if ($login_type->save()) {
-            $data = login_type::find($login_type->id);
+        if ($contact_type->save()) {
+            $data = contact_type::find($contact_type->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }

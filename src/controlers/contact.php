@@ -40,7 +40,7 @@ $app->post('/contact/save', function () use($app) {
         $contact->description = $app->request()->post('description');
         $contact->contact_type = $app->request()->post('contact_type');
         $contact->contact = $app->request()->post('contact');
-        $contact->is_active = true;
+        $contact->user_last_update = $app->request()->post('user_admin');
 
         if ($contact->save()) {
             $data = contact::with(relations::getContactRelations())->find($contact->id);

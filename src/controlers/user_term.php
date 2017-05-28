@@ -7,6 +7,8 @@ $app->post('/user_term/accept', function () use ($app){
         $user_term->term = $app->request()->post('term_id');
         $user_term->term_accept = $app->request()->post('term_accept');
         $user_term->term_accept_date = $app->request()->post('term_accept_date');
+        $user_term->user_last_update = $app->request()->post('user_admin');
+        
         if($user_term->save()){
             $data = user_term::with('term')->find($user_term->id);
             $error = new custonError(false, 0);

@@ -1,9 +1,22 @@
 <?php
 
-$app->get('/plan/:locale', function ($locale) {
+$app->get('/user_settings/:id', function($id) {
     try {
-        $data = plan::with(relations::getPlanRelations())
-                ->where('locale', '=', $locale)
+        $data = user_settings::with(relations::getUserSettingsRelations())->find($id);
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
+    } catch (Exception $ex) {
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
+});
+
+
+$app->get('/user_settings/user/:user', function($user_id) {
+
+    try {
+        $data = user_settings::with(relations::getUserSettingsRelations())
+                ->where('user', '=', $user_id)
                 ->get();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
@@ -13,32 +26,18 @@ $app->get('/plan/:locale', function ($locale) {
     }
 });
 
-$app->get('/plan/:locale/:id', function ($locale, $id) {
-    try {
-        $data = plan::with(relations::getPlanRelations())
-                ->where('locale', '=', $locale)
-                ->where('code_enum', '=', $id)
-                ->first();
-        $error = new custonError(false, 0);
-        return helpers::jsonResponse($error->parse_error(), $data);
-    } catch (Exception $ex) {
-        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error(), null);
-    }
-});
 
-$app->post('/plan/save', function () use($app) {
+$app->post('/user_settings/save', function() use($app) {
     try {
-        $plan = new plan();
-        $plan->locale = $app->request()->post('locale');
-        $plan->code_enum = $app->request()->post('code_enum');
-        $plan->name = $app->request()->post('name');
-        $plan->description = $app->request()->post('description');
-        $plan->security_code = application::generate_code(10, 'plan');
-        $plan->is_active = true;
+        $user_settings = new user_settings();
+        $user_settings->user = $app->request()->post('user');
+        $user_settings->setting = $app->request()->post('setting');
+        $user_settings->checking = true;
+        $user_settings->value = $app->request()->post('value');
+        $user_settings->user_last_update = $app->request()->post('user_admin');
 
-        if ($plan->save()) {
-            $data = plan::with(relations::getPlanRelations())->find($plan->id);
+        if ($user_settings->save()) {
+            $data = user_settings::with(relations::getUserSettingsRelations())->find($user_settings->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -48,13 +47,14 @@ $app->post('/plan/save', function () use($app) {
     }
 });
 
-$app->post('/plan/:id/active', function ($id) use($app) {
+$app->post('/user_settings/:id/checking', function($id) use ($app) {
     try {
-        $plan = plan::find($id);
-        $plan->is_active = $app->request()->post('is_active');
 
-        if ($plan->update()) {
-            $data = plan::with(relations::getPlanRelations())->find($plan->id);
+        $user_settings = user_settings::find($id);
+        $user_settings->checking = $app->request()->post('checking');
+
+        if ($user_settings->update()) {
+            $data = user_settings::with(relations::getUserSettingsRelations())->find($user_settings->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -63,3 +63,5 @@ $app->post('/plan/:id/active', function ($id) use($app) {
         return helpers::jsonResponse($error->parse_error(), null);
     }
 });
+
+

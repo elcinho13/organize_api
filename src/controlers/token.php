@@ -2,14 +2,15 @@
 
 $app->post('/token/save', function () use($app) {
     try {
-        $salt = $app->request()->post('user_id').$app->request()->post('login_type').$app->request()->post('access_platform').$app->request()->post('access_date');
-        
+        $salt = $app->request()->post('user_id') . $app->request()->post('login_type') . $app->request()->post('access_platform') . $app->request()->post('access_date');
+
         $token = new token();
         $token->login_type = $app->request()->post('login_type');
         $token->access_platform = $app->request()->post('access_platform');
         $token->access_token = application::generate_code(100, $salt);
         $token->access_date = $app->request()->post('access_date');
         $token->keep_logged = $app->request()->post('keep_logged');
+        $token->user_last_update = $app->request()->post('user_admin');
 
         if ($token->save()) {
             $user = user::find($app->request()->post('user_id'));
@@ -62,6 +63,26 @@ $app->post('/login', function () use($app) {
                 ->where('mail', '=', $app->request()->post('mail'))
                 ->first();
         if (!is_null($user) && $user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))) {
+            $error = new custonError(false, 0);
+            $data = user::with(relations::getUserRelations())->find($user->id);
+        } else {
+            $error = new custonError(true, 7);
+            $data = null;
+        }
+        return helpers::jsonResponse($error->parse_error(), $data);
+    } catch (Exception $ex) {
+        $error = new custonError(true, 1, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
+});
+
+$app->post('/login/admin', function () use($app) {
+    try {
+        $user = user::query()
+                ->where('mail', '=', $app->request()->post('mail'))
+                ->first();
+
+        if (!is_null($user) && $user->user_type == 1 && $user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))) {
             $error = new custonError(false, 0);
             $data = user::with(relations::getUserRelations())->find($user->id);
         } else {

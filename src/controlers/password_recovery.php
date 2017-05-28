@@ -26,6 +26,7 @@ $app->post('/password_recovery', function() use($app) {
             $password_recovery->token = application::generate_code(40, $salt);
             $password_recovery->send_date = $current_date->format($format);
             $password_recovery->validate_date = $validate_date->format($format);
+            $password_recovery->user_last_update = $app->request()->post('user_admin');
 
             if ($password_recovery->save()) {
                 $link = 'configurar esta rota' . $password_recovery->token;

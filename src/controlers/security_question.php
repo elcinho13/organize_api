@@ -2,15 +2,7 @@
 
 $app->get('/security_questions/:user_id', function ($user_id) {
     try {
-        $questions = security_question::all();
-
-        foreach ($questions as $question) {
-            if (!$question->private_use) {
-                $data[] = $question;
-            } elseif ($question->private_use && $question->user == $user_id) {
-                $data[] = $question;
-            }
-        }
+        $data = security_question::query()->where('private_use', '=', 0)->orWhere('user', '=', $user_id)->get();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -26,6 +18,8 @@ $app->post('/security_question/save', function () use ($app) {
         $security_question->locale = $app->request()->post('locale');
         $security_question->security_question = $app->request()->post('security_question');
         $security_question->private_use = $app->request()->post('private_use');
+        $security_question->user_last_update = $app->request()->post('user_admin');
+        
         if ($security_question->save()) {
             $data = security_question::find($security_question->id);
             $error = new custonError(false, 0);

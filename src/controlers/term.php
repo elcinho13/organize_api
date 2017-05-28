@@ -21,7 +21,7 @@ $app->post('/term/save', function () use($app) {
         $term->title = $app->request()->post('title');
         $term->content = $app->request()->post('content');
         $term->publication_date = $app->request()->post('publication_date');
-        $term->is_active = true;
+        $term->user_last_update = $app->request()->post('user_admin');
 
         if ($term->save()) {
             $data = term::find($term->id);

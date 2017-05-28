@@ -2,7 +2,7 @@
 
 define('_COMMON', _API . '/commons');
 define('_CONFIG', _API . '/config');
-define('_CONTROLLER', _API . '/controllers');
+define('_CONTROLER', _API . '/controlers');
 define('_MODEL', _API . '/models');
 
 //Settings
@@ -37,24 +37,24 @@ require_once _MODEL . '/user_type.php';
 require_once _MODEL . '/user.php';
 
 //Controllers
-require_once _CONTROLLER . '/access_platform.php';
-require_once _CONTROLLER . '/contact_type.php';
-require_once _CONTROLLER . '/contact.php';
-require_once _CONTROLLER . '/first_access.php';
-require_once _CONTROLLER . '/institutional.php';
-require_once _CONTROLLER . '/login_type.php';
-require_once _CONTROLLER . '/password_recovery.php';
-require_once _CONTROLLER . '/plan_advantages.php';
-require_once _CONTROLLER . '/plan_price.php';
-require_once _CONTROLLER . '/plan.php';
-require_once _CONTROLLER . '/privacy.php';
-require_once _CONTROLLER . '/security_question.php';
-require_once _CONTROLLER . '/setting.php';
-require_once _CONTROLLER . '/term.php';
-require_once _CONTROLLER . '/token.php';
-require_once _CONTROLLER . '/user_notifications.php';
-require_once _CONTROLLER . '/user_security.php';
-require_once _CONTROLLER . '/user_settings.php';
-require_once _CONTROLLER . '/user_term.php';
-require_once _CONTROLLER . '/user_type.php';
-require_once _CONTROLLER . '/user.php';
+require_once _CONTROLER . '/access_platform.php';
+require_once _CONTROLER . '/contact_type.php';
+require_once _CONTROLER . '/contact.php';
+require_once _CONTROLER . '/first_access.php';
+require_once _CONTROLER . '/institutional.php';
+require_once _CONTROLER . '/login_type.php';
+require_once _CONTROLER . '/password_recovery.php';
+require_once _CONTROLER . '/plan_advantages.php';
+require_once _CONTROLER . '/plan_price.php';
+require_once _CONTROLER . '/plan.php';
+require_once _CONTROLER . '/privacy.php';
+require_once _CONTROLER . '/security_question.php';
+require_once _CONTROLER . '/setting.php';
+require_once _CONTROLER . '/term.php';
+require_once _CONTROLER . '/token.php';
+require_once _CONTROLER . '/user_notifications.php';
+require_once _CONTROLER . '/user_security.php';
+require_once _CONTROLER . '/user_settings.php';
+require_once _CONTROLER . '/user_term.php';
+require_once _CONTROLER . '/user_type.php';
+require_once _CONTROLER . '/user.php';
