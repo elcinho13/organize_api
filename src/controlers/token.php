@@ -78,13 +78,13 @@ $app->post('/login', function () use($app) {
 
 $app->post('/login/admin', function () use($app) {
     try {
-        $user = user::query()
+        $user = user_admin::query()
                 ->where('mail', '=', $app->request()->post('mail'))
                 ->first();
 
-        if (!is_null($user) && $user->user_type == 1 && $user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))) {
+        if (!is_null($user) && $user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))) {
             $error = new custonError(false, 0);
-            $data = user::with(relations::getUserRelations())->find($user->id);
+            $data = user_admin::find($user->id);
         } else {
             $error = new custonError(true, 7);
             $data = null;

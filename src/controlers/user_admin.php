@@ -1,8 +1,19 @@
 <?php
 
-$app->get('/users', function() {
+$app->get('/users_admin', function() {
     try {
-        $data = user::with(relations::getUserRelations())->get();
+        $data = user_admin::all();
+        $error = new custonError(false, 0);
+        helpers::jsonResponse($error, $data);
+    } catch (Exception $ex) {
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
+});
+
+$app->get('/user_admin/:id', function($id) {
+    try {
+        $data = user_admin::find($id);
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -11,23 +22,13 @@ $app->get('/users', function() {
     }
 });
 
-$app->get('/user/:id', function($id) {
+$app->post('/user_admin/mail', function () use ($app) {
     try {
-        $data = user::with(relations::getUserRelations())->find($id);
-        $error = new custonError(false, 0);
-        return helpers::jsonResponse($error->parse_error(), $data);
-    } catch (Exception $ex) {
-        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error(), null);
-    }
-});
-
-$app->post('/user/mail', function () use ($app) {
-    try {
-        $data = user::with(relations::getUserRelations())->where('mail', '=', $app->request()->post('mail'))->first();
-        if (!is_null($data)) {
+        $data = user_admin::where('mail', '=', $app->request()->post('mail'))->first();
+        if(!is_null($data)){
             $error = new custonError(false, 0);
-        } else {
+        }
+        else{
             $error = new custonError(true, 2, 2, 'Nenhum usuário encontrado.');
         }
         return helpers::jsonResponse($error->parse_error(), $data);
@@ -37,22 +38,18 @@ $app->post('/user/mail', function () use ($app) {
     }
 });
 
-$app->post('/user/save', function () use ($app) {
+$app->post('/user_admin/save', function () use($app) {
     try {
-        $user = new user();
-        $user->user_type = $app->request()->post('user_type');
-        $user->plan = $app->request()->post('plan');
-        $user->privacy = $app->request()->post('privacy');
-        $user->full_name = $app->request()->post('full_name');
-        $user->mail = $app->request()->post('mail');
-        $user->password = application::cryptPassword($app->request()->post('birth_date'), $app->request()->post('password'));
-        $user->cpf = $app->request()->post('cpf');
-        $user->birth_date = $app->request()->post('birth_date');
-        $user->gender = $app->request()->post('gender');
-        $user->user_last_update = $app->request()->post('user_admin');
+        $user_admin = new user_admin();
+        $user_admin->name = $app->request()->post('name');
+        $user_admin->cpf = $app->request()->post('cpf');
+        $user_admin->birth_date = $app->request()->post('birth_date');
+        $user_admin->phone = $app->request()->post('phone');
+        $user_admin->mail = $app->request()->post('mail');
+        $user_admin->password = application::cryptPassword($app->request()->post('birth_date'), $app->request()->post('password'));
 
-        if ($user->save()) {
-            $data = user::with(relations::getUserRelations())->find($user->id);
+        if ($user_admin->save()) {
+            $data = user_admin::find($user_admin->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -70,7 +67,7 @@ $app->post('/user/save', function () use ($app) {
  * pasta server: /var/www/html/organize/upload/
  */
 
-$app->post('/user/:id/photo', function ($id) {
+$app->post('/user_admin/:id/photo', function ($id) {
     try {
         $way = 'http://ec2-52-67-67-126.sa-east-1.compute.amazonaws.com/organize/upload/';
         $folder = '/var/www/html/organize/upload/';
@@ -86,7 +83,7 @@ $app->post('/user/:id/photo', function ($id) {
                 $file_name .= '.' . $extension;
 
                 if (move_uploaded_file($_FILES['photo']['tmp_name'], $folder . $file_name)) {
-                    $user = user::find($id);
+                    $user = user_admin::find($id);
                     $user->profile_picture = $way . $file_name;
                     if ($user->update()) {
                         $error = new custonError(false, 0, 0, 'Upload do arquivo realizado com sucesso.');
@@ -109,17 +106,17 @@ $app->post('/user/:id/photo', function ($id) {
     }
 });
 
-$app->post('/user/:id', function ($id) use ($app) {
+$app->post('/user_admin/:id', function ($id) use ($app) {
     try {
         $fields = $app->request()->post();
-        $user = user::find($id);
+        $user = user_admin::find($id);
 
         foreach ($fields as $key => $value) {
             $user->$key = $value;
         }
 
         if ($user->update()) {
-            $data = user::with(relations::getUserRelations())->find($user->id);
+            $data = user_admin::find($user->id);
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }
@@ -129,9 +126,9 @@ $app->post('/user/:id', function ($id) use ($app) {
     }
 });
 
-$app->post('/user/:id/edit_password', function ($id) use ($app) {
+$app->post('/user_admin/:id/edit_password', function ($id) use ($app) {
     try {
-        $user = user::find($id);
+        $user = user_admin::find($id);
         $oldPassword = application::cryptPassword($user->birth_date, $app->request()->post('old_password'));
         if ($oldPassword !== $user->password) {
             $error = new custonError(true, 4, 0, 'Senha atual inválida.');
@@ -150,3 +147,4 @@ $app->post('/user/:id/edit_password', function ($id) use ($app) {
         return helpers::jsonResponse($error->parse_error(), null);
     }
 });
+
