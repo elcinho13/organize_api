@@ -15,8 +15,9 @@ CREATE TABLE IF NOT EXISTS `org_user_admin`(
     `profile_picture` VARCHAR(255),
     `cpf` VARCHAR(255) UNIQUE,
     `birth_date` DATE,
-    `mail` INT UNSIGNED UNIQUE,
     `phone` VARCHAR(255) UNIQUE,
+    `mail` VARCHAR(255) UNIQUE,
+    `password` VARCHAR(255),
     `is_active` TINYINT(1) DEFAULT 1,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP

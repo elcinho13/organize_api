@@ -5,8 +5,8 @@
 
 USE `organize_test`;
 
-INSERT INTO `org_user_admin`(`id`, `name`, `profile_picture`, `cpf`, `birth_date`, `mail`, `phone`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'Master', NULL, NULL, NULL, 'desenvolvimento@organize4event.com', NULL, 1, '2017-05-28 18:56:00', NULL);
+INSERT INTO `org_user_admin`(`id`, `name`, `profile_picture`, `cpf`, `birth_date`, `phone`, `mail`, `password`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Master', NULL, NULL, NULL, NULL, 'desenvolvimento@organize4event.com', '123456', 1, '2017-05-28 18:56:00', NULL);
 
 INSERT INTO `org_access_platform` (`id`, `locale`, `code_enum`, `name`, `is_active`, `user_last_update`, `created_at`, `updated_at`) VALUES
 (1, 'pt_BR', 1, 'Android', 1, 1, '2017-04-12 21:12:41', '2017-04-12 21:12:41'),
