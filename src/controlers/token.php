@@ -83,8 +83,14 @@ $app->post('/login/admin', function () use($app) {
                 ->first();
 
         if (!is_null($user) && $user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))) {
-            $error = new custonError(false, 0);
-            $data = user_admin::find($user->id);
+            $user_admin = updateLoginAdmin($user->id);
+            if (!is_null($user_admin)) {
+                $error = new custonError(false, 0);
+                $data = user_admin::find($user_admin->id);
+            } else {
+                $error = new custonError(true, 7);
+                $data = null;
+            }
         } else {
             $error = new custonError(true, 7);
             $data = null;
@@ -95,3 +101,18 @@ $app->post('/login/admin', function () use($app) {
         return helpers::jsonResponse($error->parse_error(), null);
     }
 });
+
+function updateLoginAdmin($user_id) {
+    $user_admin = user_admin::find($user_id)->get();
+    $current_date = date('Y-m-d H:i:s');
+    $salt = $user_admin->id . $user_admin->birth_date . $user_admin->cpf . $current_date;
+    $token = application::generate_code(100, $salt);
+    $user_admin->token = $token;
+    $user_admin->last_access = $current_date;
+
+    if ($user_admin->update) {
+        return user_admin::find($user_admin->id)->get();
+    } else {
+        return null;
+    }
+}
