@@ -81,9 +81,9 @@ $app->post('/login/admin', function () use($app) {
         $user = user_admin::query()
                 ->where('mail', '=', $app->request()->post('mail'))
                 ->first();
-
         if (!is_null($user) && $user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))) {
             $user_admin = updateLoginAdmin($user->id);
+            
             if (!is_null($user_admin)) {
                 $error = new custonError(false, 0);
                 $data = user_admin::find($user_admin->id);
@@ -103,15 +103,17 @@ $app->post('/login/admin', function () use($app) {
 });
 
 function updateLoginAdmin($user_id) {
-    $user_admin = user_admin::find($user_id)->get();
+    $user_admin = user_admin::find($user_id);
     $current_date = date('Y-m-d H:i:s');
-    $salt = $user_admin->id . $user_admin->birth_date . $user_admin->cpf . $current_date;
+    $salt = $user_admin->id . $user_admin->birth_date . $user_admin->cpf . microtime();
     $token = application::generate_code(100, $salt);
     $user_admin->token = $token;
     $user_admin->last_access = $current_date;
-
-    if ($user_admin->update) {
-        return user_admin::find($user_admin->id)->get();
+   
+    if ($user_admin->update()) {
+        $user = user_admin::find($user_admin->id);
+        
+        return $user;
     } else {
         return null;
     }
