@@ -1,6 +1,8 @@
 {
     "name": "API ORGANIZE",
     "description": "The Organize System API",
+    "version":"1.0",
+    "update":"2017-06-06",
     "homepage":"http://localhost/organize_api/",
     "keywords":["organize", "events", "graduation", "api"],
     "authors": [

@@ -1,16 +1,15 @@
 <?php
 
 class custonError {
-    
+
     private $is_new;
     private $has_error;
     private $type;
     private $code;
     private $message;
     private $exception;
-    
     private $error = [];
-    
+
     const SUCCESS = 0;
     const GENERIC = 1;
     const GETDATA = 2;
@@ -19,7 +18,7 @@ class custonError {
     const DELETE = 5;
     const UPLOAD = 6;
     const LOGIN = 7;
-    
+    const AUTHENTICATE = 8;
     const SUCCESS_MESSAGE = 'Dados retornados com sucesso.';
     const GENERIC_MESSAGE = 'Ocorreu um erro genérico no servidor.';
     const GETDATA_MESSAGE = 'Ocorreu um erro ao buscar os dados.';
@@ -28,29 +27,28 @@ class custonError {
     const DELETE_MESSAGE = 'Ocorreu um erro ao deletar os dados.';
     const UPLOAD_MESSAGE = 'Ocorreu um erro ao carregar o arquivo.';
     const LOGIN_MESSAGE = 'Usuário ou senha inválidos.';
-    
-    function __construct($has_error, $type, $code = null, $exception = null, $is_new = 0) {
+    const AUTHENTICATE_MESSAGE = 'Acesso não autorizado.';
+
+    function __construct($has_error, $type, $code = null, $exception = null) {
         $this->has_error = $has_error;
         $this->type = $type;
         $this->code = $code;
         $this->exception = $exception;
-        $this->is_new = $is_new;
     }
-    
-    function parse_error(){
+
+    function parse_error() {
         $this->error = array(
             'has_error' => $this->has_error,
             'type' => $this->type,
             'code' => $this->code,
-            'message'=> '',
+            'message' => '',
             'exception' => $this->exception,
-            'is_new'=>$this->is_new
         );
-        
-        if(is_null($this->error['code'])){
+
+        if (is_null($this->error['code'])) {
             $this->error['code'] = $this->type;
         }
-        switch ($this->type){
+        switch ($this->type) {
             case custonError::SUCCESS:
                 $this->error['message'] = custonError::SUCCESS_MESSAGE;
                 break;
@@ -58,7 +56,7 @@ class custonError {
                 $this->error['message'] = custonError::GENERIC_MESSAGE;
                 break;
             case custonError::GETDATA:
-               $this->error['message'] = custonError::GETDATA_MESSAGE;
+                $this->error['message'] = custonError::GETDATA_MESSAGE;
                 break;
             case custonError::INSERT:
                 $this->error['message'] = custonError::INSERT_MESSAGE;
@@ -75,8 +73,11 @@ class custonError {
             case custonError::LOGIN:
                 $this->error['message'] = custonError::LOGIN_MESSAGE;
                 break;
+            case custonError::AUTHENTICATE:
+                $this->error['message'] = custonError::AUTHENTICATE_MESSAGE;
+                break;
         }
-        
+
         return $this->error;
-    }   
+    }
 }

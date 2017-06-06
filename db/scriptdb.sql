@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `org_user_admin`(
     `phone` VARCHAR(255) UNIQUE,
     `mail` VARCHAR(255) UNIQUE,
     `password` VARCHAR(255),
-    `token` VARCHAR(255),
+    `access_token` VARCHAR(255),
     `last_access` DATETIME,
     `is_active` TINYINT(1) DEFAULT 1,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

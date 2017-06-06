@@ -111,17 +111,22 @@ $app->post('/user/:id/photo', function ($id) {
 
 $app->post('/user/:id', function ($id) use ($app) {
     try {
-        $fields = $app->request()->post();
-        $user = user::find($id);
+        if (!helpers::authenticate($app->request()->params('token'))) {
+            $error = new custonError(true, 8, 401);
+            return helpers::jsonResponse($error->parse_error(), null);
+        } else {
+            $fields = $app->request()->post();
+            $user = user::find($id);
 
-        foreach ($fields as $key => $value) {
-            $user->$key = $value;
-        }
+            foreach ($fields as $key => $value) {
+                $user->$key = $value;
+            }
 
-        if ($user->update()) {
-            $data = user::with(relations::getUserRelations())->find($user->id);
-            $error = new custonError(false, 0);
-            return helpers::jsonResponse($error->parse_error(), $data);
+            if ($user->update()) {
+                $data = user::with(relations::getUserRelations())->find($user->id);
+                $error = new custonError(false, 0);
+                return helpers::jsonResponse($error->parse_error(), $data);
+            }
         }
     } catch (Exception $ex) {
         $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
