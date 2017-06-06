@@ -166,5 +166,5 @@ INSERT INTO `org_class` (`id`, `institution`, `course`, `shift`, `identify`, `st
 (1, 1, 1, 1, 'Turma SI Pitágoras 2013', 2013, 1, 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
 (2, 1, 2, 1, 'Turma Sei lá Pitágoras 2013', 2013, 1, 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30');
 
-INSERT INTO `org_academic_data` (`id`, `user`, `literacy`, `institution`, `course`, `class`, `start_date`, `final_date`, `is_active`, `user_last_update`, `created_at`, `updated_at`) VALUES
+INSERT INTO `org_user_academic_data` (`id`, `user`, `literacy`, `institution`, `course`, `class`, `start_date`, `final_date`, `is_active`, `user_last_update`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, 1, 1, '2013-02-10', '2016-12-10', 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30');

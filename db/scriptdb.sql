@@ -756,7 +756,7 @@ CREATE TABLE IF NOT EXISTS `org_class`(
 -- -----------------------------------------------------------------------------
 -- Create table org_academic_data
 -- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_academic_data`(
+CREATE TABLE IF NOT EXISTS `org_user_academic_data`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `user` INT UNSIGNED,
     `literacy` INT UNSIGNED,
