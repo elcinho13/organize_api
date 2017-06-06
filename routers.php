@@ -17,8 +17,11 @@ require_once _CONFIG . '/database.php';
 require_once _MODEL . '/access_platform.php';
 require_once _MODEL . '/contact_type.php';
 require_once _MODEL . '/contact.php';
+require_once _MODEL . '/course.php';
 require_once _MODEL . '/first_access.php';
 require_once _MODEL . '/institutional.php';
+require_once _MODEL . '/institution_type.php';
+require_once _MODEL . '/institution.php';
 require_once _MODEL . '/login_type.php';
 require_once _MODEL . '/password_recovery.php';
 require_once _MODEL . '/plan_advantages.php';
@@ -36,13 +39,18 @@ require_once _MODEL . '/user_settings.php';
 require_once _MODEL . '/user_term.php';
 require_once _MODEL . '/user_type.php';
 require_once _MODEL . '/user.php';
+require_once _MODEL . '/user_contact.php';
+
 
 //Controllers
 require_once _CONTROLER . '/access_platform.php';
 require_once _CONTROLER . '/contact_type.php';
 require_once _CONTROLER . '/contact.php';
+require_once _CONTROLER . '/course.php';
 require_once _CONTROLER . '/first_access.php';
 require_once _CONTROLER . '/institutional.php';
+require_once _CONTROLER . '/institution_type.php';
+require_once _CONTROLER . '/institution.php';
 require_once _CONTROLER . '/login_type.php';
 require_once _CONTROLER . '/password_recovery.php';
 require_once _CONTROLER . '/plan_advantages.php';
@@ -60,3 +68,4 @@ require_once _CONTROLER . '/user_settings.php';
 require_once _CONTROLER . '/user_term.php';
 require_once _CONTROLER . '/user_type.php';
 require_once _CONTROLER . '/user.php';
+require_once _CONTROLER . '/user_contact.php';

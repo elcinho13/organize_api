@@ -44,7 +44,8 @@ class relations {
     }
     static function getContactRelations(){
         $relations = [
-            'contact_type'
+            'contact_type',
+            'user_contact'
         ];
         return $relations;
     }
@@ -65,6 +66,21 @@ class relations {
         $relations = [
             'security_question',
             'access_platform'
+        ];
+        return $relations;
+    }
+
+    static function getCourseRelations(){
+        $relations = [
+        'course'
+        ];
+        return $relations;
+    }
+
+    static function getInstitutionRelations(){
+        $relations = [
+        'institution_type',
+        'institution'
         ];
         return $relations;
     }
