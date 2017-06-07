@@ -29,7 +29,7 @@ $app->post('/password_recovery', function() use($app) {
             $password_recovery->user_last_update = $app->request()->post('user_admin');
 
             if ($password_recovery->save()) {
-                $link = 'configurar esta rota' . $password_recovery->token;
+                $link = 'http://organize4event?token='.$password_recovery->token;
                 send_mail($user_mail, $user->full_name, $link);
             }
         } else {
@@ -75,7 +75,7 @@ $app->post('/new_password', function() use($app) {
         } else {
             $error = new custonError(true, 1, 1, 'A senha é inválida.');
         }
-        
+
         return helpers::jsonResponse($error->parse_error(), null);
     } catch (Exception $ex) {
         $error = new custonError(true, 1, $ex->getCode(), $ex->getMessage());
@@ -108,8 +108,7 @@ function save_notification($mail, $brief_description, $description, $current_dat
 
 function send_mail($user_mail, $user_name, $link) {
     $mail_from = 'passwordrecovery@organize4event.com';
-    $message = $user_name. ', esta é uma mensagem de teste para recuperação de senha. ' .$link;
-
+    
     $mail = new PHPMailer;
     $mail->isSMTP();
     $mail->Host = 'mx1.hostinger.com.br';
@@ -127,7 +126,7 @@ function send_mail($user_mail, $user_name, $link) {
 
     $mail->CharSet = 'UTF-8';
     $mail->Subject = '[Organize4Event] Restauração de senha.';
-    $mail->Body = $message;
+    $mail->Body = construct_message($user_name, $link);
 
     if ($mail->send()) {
         $current_date = date('Y-m-d H:i:s');
@@ -177,4 +176,79 @@ function validate_password($password) {
             return false;
         }
     }
+}
+
+function construct_message($user_name, $link) {
+    $message = '<html>' .
+            '<head>' .
+            '<title>E-mail</title>' .
+            '<meta charset="UTF-8">' .
+            '<meta name="viewport" content="width=device-width, initial-scale=1.0">' .
+            '</head>' .
+            '<body>' .
+            '<div style="width: 700px; background-color: #e2e2e2;">' .
+            '<div style="height: 8px; width: 100%;">' . '</div>' .
+            '<div style="width: 98%; height: 100px; background-color: #222; margin: auto; padding-top: 4px;">' .
+            '<div style="width: 20%; float: left;">' .
+            '<img style="height: 100px; margin-left: 12px;" src="http://organize4event.com/wp-content/uploads/2017/05/logo-com-brilho.png">' .
+            '</div>' .
+            '<div style="width: 80%; float: left; color: #fff; text-align: center; font-size: 30px; padding-top: 24px; font-weight: bold;">
+                    Recuperação de senha
+                </div>' .
+            '</div>' .
+            '<div style="width: 98%; background-color: #fff; margin: auto;">' .
+            '<div style="width: 100%; padding: 12px;">' .
+            '<div style="color: #777; font-weight: bold;">
+                        Olá, ' . $user_name . '.' .
+            '</div>' .
+            '<div style="margin-top: 8px; font-weight: bold;">
+                        Você solicitou a recuperação de sua senha no sistema Organize4Event.<br/></br>' .
+            'O link de recuperação será válido por 12 horas a partir da hora de envio.' .
+            '</div>' .
+            '<div style="margin-top: 8px; font-size: 14px;">' .
+            'Sua nova senha não pode ser igual a última senha utilizada e deve ter o mínimo de 6 caracteres alfanuméricos.' .
+            '</div>' .
+            '</div>' .
+            '</div>' .
+            '<div style="height: 4px; width: 100%;">' . '</div>' .
+            '<div style="width: 98%; background-color: #fff; margin: auto;">' .
+            '<div style="width: 100%; padding: 12px;">' .
+            '<a href="' . $link . '" target="_blank" style="text-decoration: none; color: #222;">' .
+            '<div style="width: 25%; border-radius: 4px; background-color: #f8ee04; color: #222; text-align: center; height: 28px; margin: auto; padding-top: 4px; border: 2px solid #222;">' .
+            'RESTAURAR SENHA' .
+            '</div>' .
+            '</a>' .
+            '<div style="margin-top: 8px; font-size: 14px;">' .
+            'Caso tenha problemas com o botão acima, copie e cole o link abaixo em uma nova janela do seu navegador:' . $link .
+            '</div>' .
+            '<div style="margin-top: 8px; font-size: 12px;">' .
+            'Se você não solicitou a restauração de sua senha, favor desconsiderar este e-mail ou entre em contado com nosso suporte para maiores informações.' .
+            '</div>' .
+            '</div>' .
+            '</div>' .
+            '<div style="height: 4px; width: 100%;">' . '</div>' .
+            '<div style="height: 40px; width: 98%; background-color: #222; margin: auto; color: #fff;">' .
+            '<div style="width: 33%; float: left; text-align: center; margin-top: 8px;">' .
+            'Sobre a Organize' .
+            '</div>' .
+            '<div style="width: 33%; float: left; text-align: center; margin-top: 8px;">' .
+            'Termos de Uso' .
+            '</div>' .
+            '<div style="width: 33%; float: left; text-align: center; margin-top: 8px;">' .
+            'Fale com o suporte' .
+            '</div>' .
+            '</div>' .
+            '<div style="height: 8px; width: 100%;">' . '</div>' .
+            '<div style="height: 60px; width: 98%; background-color: #ccc; margin: auto; color: #222;">' .
+            '<div style="padding: 8px; font-size: 14px;">' .
+            'Produzido por Organize4Event<br/>' .
+            'Copyright 2017 - Organize4Event' .
+            '</div>' .
+            '</div>' .
+            '<div style="height: 8px; width: 100%;">' . '</div>' .
+            '</div>' .
+            '</body>' .
+            '</html>';
+
+    return $message;
 }

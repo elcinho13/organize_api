@@ -136,7 +136,12 @@ $app->post('/user/:id', function ($id) use ($app) {
 
 $app->post('/user/:id/edit_password', function ($id) use ($app) {
     try {
-        $user = user::find($id);
+        if(!helpers::authenticate($app->request()->params('token'))){
+            $error = new custonError(true, 8, 401);
+            return helpers::jsonResponse($error->parse_error(), null);
+        }
+        else{
+            $user = user::find($id);
         $oldPassword = application::cryptPassword($user->birth_date, $app->request()->post('old_password'));
         if ($oldPassword !== $user->password) {
             $error = new custonError(true, 4, 0, 'Senha atual inválida.');
@@ -150,6 +155,7 @@ $app->post('/user/:id/edit_password', function ($id) use ($app) {
         }
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
+        }
     } catch (Exception $ex) {
         $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error(), null);
