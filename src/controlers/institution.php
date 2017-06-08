@@ -44,19 +44,19 @@ $app->post('/institution/save', function() use($app){
 	}
 });
 	
-$app->post('/institution/:id/active', function($id) use($app){
-	try{
-		$institution = institution::find($id);
-		$institution->is_active = $app->request()->post('is_active');
+$app->post('/institution/:id/active', function ($id) use($app) {
+    try {
+        $institution = institution::find($id);
+        $institution->is_active = $app->request()->post('is_active');
 
-		if($institution->update()){
-			$data = institution::with(relations::getInstitutionRelations())->find($institution->id);
-			$error = new custonError(false, 0);
-			return helpers::jsonResponse($error->parse_error(), $data);
-		}
-	}catch (Exception $ex){
-		$error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
-		return helpers::jsonResponse($error->parse_error(), null);
-	}
+        if ($institution->update()) {
+            $data = institution::with(relations::getInstitutionRelations())->find($institution->id);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
+        }
+    } catch (Exception $ex) {
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
 });
 

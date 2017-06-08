@@ -79,4 +79,20 @@ class relations {
         return $relations;
     }
 
+    static function getClassesRelations(){
+        $relations = [
+        'institution',
+        'course',
+        'shift'
+        ];
+        return $relations;
+    }
+
+    static function getSocialNetworkRelations(){
+        $relations = [
+        'social_network_type'
+        ];
+        return $relations;
+    }
+
 }
