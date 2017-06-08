@@ -14,7 +14,8 @@ class relations {
             'user_security.access_platform',
             'user_security.security_question',
             'user_settings.setting',
-            'user_notifications'
+            'user_notifications',
+            'user_contact'
         ];
         return $relations;
     }
@@ -30,7 +31,8 @@ class relations {
             'user.user_security.access_platform',
             'user.user_security.security_question',
             'user.user_settings.setting',
-            'user.user_notifications'
+            'user.user_notifications',
+            'user.user_contact'
         ];
         return $relations;
     }
@@ -44,8 +46,7 @@ class relations {
     }
     static function getContactRelations(){
         $relations = [
-            'contact_type',
-            'user_contact'
+            'contact_type'
         ];
         return $relations;
     }
@@ -70,18 +71,12 @@ class relations {
         return $relations;
     }
 
-    static function getCourseRelations(){
+    static function getInstitutionRelations(){
         $relations = [
-        'course'
+        'institution_type',
+        'place'
         ];
         return $relations;
     }
 
-    static function getInstitutionRelations(){
-        $relations = [
-        'institution_type',
-        'institution'
-        ];
-        return $relations;
-    }
 }

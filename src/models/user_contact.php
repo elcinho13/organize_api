@@ -14,8 +14,4 @@ class user_contact extends Eloquent{
 	public function contact_type() {
         return $this->belongsTo('contact_type', 'contact_type');
     }
-
-    public function contact() {
-    	return $this->belongsTo('contact', 'contact');
-    }
 }

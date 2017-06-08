@@ -11,4 +11,7 @@ class institution extends Eloquent {
         return $this->belongsTo('institution_type', 'institution_type');
 	}
 
+	public function place(){
+		return $this->belongsTo('place', 'place');
+	}
 }

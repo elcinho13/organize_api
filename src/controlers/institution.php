@@ -47,7 +47,7 @@ $app->post('/institution/save', function() use($app){
 $app->post('/institution/:id/active', function($id) use($app){
 	try{
 		$institution = institution::find($id);
-		$institution->is_active = $app->request->post('is_active');
+		$institution->is_active = $app->request()->post('is_active');
 
 		if($institution->update()){
 			$data = institution::with(relations::getInstitutionRelations())->find($institution->id);

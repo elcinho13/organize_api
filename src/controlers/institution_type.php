@@ -13,9 +13,9 @@ $app->get('/institution_type/:locale', function ($locale){
 
 
 
-$app->get('/institution_type/:locale/:id', function($locale, $is){
+$app->get('/institution_type/:locale/:id', function($locale, $id){
 	try{
-		$data = institution_type::query()->where('locale', '=', $locale)->where('code_enum', '=', $id)->frist();
+		$data = institution_type::query()->where('locale', '=', $locale)->where('code_enum', '=', $id)->get();
 		$error = new custonError(false, 0);
 		return helpers::jsonResponse($error->parse_error(), $data);
 	}catch (Exception $ex) {

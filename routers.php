@@ -27,6 +27,7 @@ require_once _MODEL . '/password_recovery.php';
 require_once _MODEL . '/plan_advantages.php';
 require_once _MODEL . '/plan_price.php';
 require_once _MODEL . '/plan.php';
+require_once _MODEL . '/place.php';
 require_once _MODEL . '/privacy.php';
 require_once _MODEL . '/security_question.php';
 require_once _MODEL . '/setting.php';
