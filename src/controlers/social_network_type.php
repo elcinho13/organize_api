@@ -42,22 +42,6 @@ $app->post('/social_network_type/save', function() use($app){
 	}
 });
 
-$app->post('/social_network_type/:id/user_last_update', function ($id) use($app){
-	try{
-		$social_network_type = social_network_type::find($id);
-		$social_network_type->user_last_update = $app->request()->post('user_admin');	
-
-		if ($social_network_type->update()) {
-            $data = social_network_type::find($social_network_type->id);
-            $error = new custonError(false, 0);
-            return helpers::jsonResponse($error->parse_error(), $data);
-        }
-    } catch (Exception $ex) {
-        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error(), null);
-    }
-});
-
 
 $app->post('/social_network_type/:id/active', function ($id) use($app) {
     try {

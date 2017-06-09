@@ -43,22 +43,6 @@ $app->post('/literacy/save', function() use($app){
 	}
 });
 
-$app->post('/literacy/:id/user_last_update', function ($id) use($app){
-	try{
-		$literacy = literacy::find($id);
-		$literacy->user_last_update = $app->request()->post('user_admin');	
-
-		if ($literacy->update()) {
-            $data = literacy::find($literacy->id);
-            $error = new custonError(false, 0);
-            return helpers::jsonResponse($error->parse_error(), $data);
-        }
-    } catch (Exception $ex) {
-        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error(), null);
-    }
-});
-
 
 $app->post('/literacy/:id/active', function ($id) use($app) {
     try {

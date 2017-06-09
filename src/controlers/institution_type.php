@@ -44,18 +44,3 @@ $app->post('/institution_type/save', function() use ($app){
 
 });
 
-$app->post('/institution_type/:id/user_last_update', function ($id) use($app){
-    try{
-        $institution_type = institution_type::find($id);
-        $institution_type->user_last_update = $app->request()->post('user_admin');   
-
-        if ($institution_type->update()) {
-            $data = institution_type::find($institution_type->id);
-            $error = new custonError(false, 0);
-            return helpers::jsonResponse($error->parse_error(), $data);
-        }
-    } catch (Exception $ex) {
-        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
-        return helpers::jsonResponse($error->parse_error(), null);
-    }
-});

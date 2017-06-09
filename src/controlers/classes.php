@@ -31,7 +31,6 @@ $app->post('/classes/save', function() use($app){
 		$classes->identify = $app->request()->post('identify');
 		$classes->start_year = $app->request()->post('start_year');
 		$classes->start_semester = $app->request()->post('start_semester');
-		$classes->user_last_update = $app->request()->post('user_admin');
 
 		if($classes->save()){
 			$data = classes::with(relations::getClassesRelations())->find($classes->id);

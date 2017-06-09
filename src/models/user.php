@@ -44,6 +44,6 @@ class user extends Eloquent {
     }
 
     public function user_social_network(){
-        return $this->belongsTo('user_social_network', 'user_social_network');
+        return $this->hasMany('user_social_network', 'user_social_network');
     }
 }
