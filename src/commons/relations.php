@@ -32,7 +32,8 @@ class relations {
             'user.user_security.security_question',
             'user.user_settings.setting',
             'user.user_notifications',
-            'user.user_contact'
+            'user.user_contact',
+            'user.user_social_network'
         ];
         return $relations;
     }
@@ -81,7 +82,7 @@ class relations {
 
     static function getClassesRelations(){
         $relations = [
-        'institution',
+        'institution.institution_type',
         'course',
         'shift'
         ];
