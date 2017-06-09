@@ -25,7 +25,7 @@ $app->post('/token/save', function () use($app) {
             }
             $error = new custonError(false, 0);
             $data = token::with(relations::getTokenRelations())->find($token->id);
-            return helpers::jsonResponse($error, $data);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
         $error = new custonError(true, 3, $ex->getCode(), $ex->getMessage());
