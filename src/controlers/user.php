@@ -2,7 +2,9 @@
 
 $app->get('/users', function() {
     try {
-        $data = user::with(relations::getUserRelations())->get();
+        $data = user::with(relations::getUserRelations())
+                ->where('is_active', '=', true)
+                ->get();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -62,6 +64,23 @@ $app->post('/user/save', function () use ($app) {
     }
 });
 
+$app->post('/user/:id/active', function ($id) use($app) {
+    try {
+        $user = user::find($id);
+        $user->is_active = $app->request()->post('is_active');
+        $user->user_last_update = $app->request()->post('user_admin');
+
+        if ($user->update()) {
+            $data = user::with(relations::getUserRelations())->find($user->id);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
+        }
+    } catch (Exception $ex) {
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
+});
+
 /*
  * caminho local: http://localhost/_uploads/organize/
  * caminho server: http://ec2-52-67-67-126.sa-east-1.compute.amazonaws.com/organize/upload/
@@ -111,17 +130,22 @@ $app->post('/user/:id/photo', function ($id) {
 
 $app->post('/user/:id', function ($id) use ($app) {
     try {
-        $fields = $app->request()->post();
-        $user = user::find($id);
+        if (!helpers::authenticate($app->request()->params('token'))) {
+            $error = new custonError(true, 8, 401);
+            return helpers::jsonResponse($error->parse_error(), null);
+        } else {
+            $fields = $app->request()->post();
+            $user = user::find($id);
 
-        foreach ($fields as $key => $value) {
-            $user->$key = $value;
-        }
+            foreach ($fields as $key => $value) {
+                $user->$key = $value;
+            }
 
-        if ($user->update()) {
-            $data = user::with(relations::getUserRelations())->find($user->id);
-            $error = new custonError(false, 0);
-            return helpers::jsonResponse($error->parse_error(), $data);
+            if ($user->update()) {
+                $data = user::with(relations::getUserRelations())->find($user->id);
+                $error = new custonError(false, 0);
+                return helpers::jsonResponse($error->parse_error(), $data);
+            }
         }
     } catch (Exception $ex) {
         $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
@@ -131,7 +155,12 @@ $app->post('/user/:id', function ($id) use ($app) {
 
 $app->post('/user/:id/edit_password', function ($id) use ($app) {
     try {
-        $user = user::find($id);
+        if(!helpers::authenticate($app->request()->params('token'))){
+            $error = new custonError(true, 8, 401);
+            return helpers::jsonResponse($error->parse_error(), null);
+        }
+        else{
+            $user = user::find($id);
         $oldPassword = application::cryptPassword($user->birth_date, $app->request()->post('old_password'));
         if ($oldPassword !== $user->password) {
             $error = new custonError(true, 4, 0, 'Senha atual inválida.');
@@ -145,6 +174,7 @@ $app->post('/user/:id/edit_password', function ($id) use ($app) {
         }
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
+        }
     } catch (Exception $ex) {
         $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error(), null);

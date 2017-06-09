@@ -25,7 +25,7 @@ $app->post('/token/save', function () use($app) {
             }
             $error = new custonError(false, 0);
             $data = token::with(relations::getTokenRelations())->find($token->id);
-            return helpers::jsonResponse($error, $data);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
         $error = new custonError(true, 3, $ex->getCode(), $ex->getMessage());
@@ -81,10 +81,16 @@ $app->post('/login/admin', function () use($app) {
         $user = user_admin::query()
                 ->where('mail', '=', $app->request()->post('mail'))
                 ->first();
-
         if (!is_null($user) && $user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))) {
-            $error = new custonError(false, 0);
-            $data = user_admin::find($user->id);
+            $user_admin = updateLoginAdmin($user->id);
+            
+            if (!is_null($user_admin)) {
+                $error = new custonError(false, 0);
+                $data = user_admin::find($user_admin->id);
+            } else {
+                $error = new custonError(true, 7);
+                $data = null;
+            }
         } else {
             $error = new custonError(true, 7);
             $data = null;
@@ -95,3 +101,20 @@ $app->post('/login/admin', function () use($app) {
         return helpers::jsonResponse($error->parse_error(), null);
     }
 });
+
+function updateLoginAdmin($user_id) {
+    $user_admin = user_admin::find($user_id);
+    $current_date = date('Y-m-d H:i:s');
+    $salt = $user_admin->id . $user_admin->birth_date . $user_admin->cpf . microtime();
+    $token = application::generate_code(100, $salt);
+    $user_admin->token = $token;
+    $user_admin->last_access = $current_date;
+   
+    if ($user_admin->update()) {
+        $user = user_admin::find($user_admin->id);
+        
+        return $user;
+    } else {
+        return null;
+    }
+}

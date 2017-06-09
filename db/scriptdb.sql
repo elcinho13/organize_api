@@ -1,6 +1,6 @@
 /**
- * Version: 09
- * Updated: 28/05/2017
+ * Version: 10
+ * Updated: 31/05/2017
  */
 
 CREATE DATABASE IF NOT EXISTS `organize_test`;
@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS `org_user_admin`(
     `phone` VARCHAR(255) UNIQUE,
     `mail` VARCHAR(255) UNIQUE,
     `password` VARCHAR(255),
+    `access_token` VARCHAR(255),
+    `last_access` DATETIME,
     `is_active` TINYINT(1) DEFAULT 1,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
@@ -754,7 +756,7 @@ CREATE TABLE IF NOT EXISTS `org_class`(
 -- -----------------------------------------------------------------------------
 -- Create table org_academic_data
 -- -----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `org_academic_data`(
+CREATE TABLE IF NOT EXISTS `org_user_academic_data`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `user` INT UNSIGNED,
     `literacy` INT UNSIGNED,
