@@ -13,7 +13,6 @@ $app->get('/user_settings/:id', function($id) {
 
 
 $app->get('/user_settings/user/:user', function($user_id) {
-
     try {
         $data = user_settings::with(relations::getUserSettingsRelations())
                 ->where('user', '=', $user_id)

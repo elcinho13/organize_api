@@ -4,6 +4,7 @@ $app->get('/plan/:locale', function ($locale) {
     try {
         $data = plan::with(relations::getPlanRelations())
                 ->where('locale', '=', $locale)
+                ->where('is_active', '=', true)
                 ->get();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
@@ -36,7 +37,7 @@ $app->post('/plan/save', function () use($app) {
         $plan->description = $app->request()->post('description');
         $plan->security_code = application::generate_code(10, 'plan');
         $plan->user_last_update = $app->request()->post('user_admin');
-        
+
         if ($plan->save()) {
             $data = plan::with(relations::getPlanRelations())->find($plan->id);
             $error = new custonError(false, 0);
@@ -52,7 +53,8 @@ $app->post('/plan/:id/active', function ($id) use($app) {
     try {
         $plan = plan::find($id);
         $plan->is_active = $app->request()->post('is_active');
-
+        $plan->user_last_update = $app->request()->post('user_admin');
+        
         if ($plan->update()) {
             $data = plan::with(relations::getPlanRelations())->find($plan->id);
             $error = new custonError(false, 0);

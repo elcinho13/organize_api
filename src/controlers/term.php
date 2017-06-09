@@ -38,6 +38,7 @@ $app->post('/term/:id/active', function ($id) use($app) {
     try {
         $term = term::find($id);
         $term->is_active = $app->request()->post('is_active');
+        $term->user_last_update = $app->request()->post('user_admin');
 
         if ($term->update()) {
             $data = $term::find($term->id);

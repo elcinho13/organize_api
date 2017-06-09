@@ -46,3 +46,20 @@ $app->post('/first_access/:id/edit', function ($id) use($app) {
         return helpers::jsonResponse($error->parse_error(), null);
     }
 });
+
+$app->post('/first_access/:id/active', function ($id) use($app) {
+    try {
+        $first_access = first_access::find($id);
+        $first_access->is_active = $app->request()->post('is_active');
+        $first_access->user_last_update = $app->request()->post('user_admin');
+
+        if ($first_access->update()) {
+            $data = first_access::with(relations::getFirstAccessUserRelations())->find($first_access->id);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
+        }
+    } catch (Exception $ex) {
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
+});

@@ -25,6 +25,7 @@ $app->post('/plan_price/:id/active', function ($id) use($app) {
     try {
         $plan_price = plan_price::find($id);
         $plan_price->is_active = $app->request()->post('is_active');
+        $plan_price->user_last_update = $app->request()->post('user_admin');
 
         if ($plan_price->update()) {
             $data = plan::with(relations::getPlanRelations())->find($plan_price->plan);

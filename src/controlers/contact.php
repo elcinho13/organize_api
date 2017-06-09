@@ -2,12 +2,10 @@
 
 $app->get('/contact/:locale', function ($locale) {
     try {
-        $contacts = contact::with(relations::getContactRelations())->get();
-        foreach ($contacts as $contact) {
-            if ($contact->locale == $locale) {
-                $data[] = $contact;
-            }
-        }
+        $data = contact::with(relations::getContactRelations())
+                ->where('locale', '=',  $locale)
+                ->where('is_active', '=', true)
+                ->get();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -57,6 +55,7 @@ $app->post('/contact/:id/active', function ($id) use($app) {
     try {
         $contact = contact::find($id);
         $contact->is_active = $app->request()->post('is_active');
+        $contact->user_last_update = $app->request()->post('user_admin');
 
         if ($contact->update()) {
             $data = contact::with(relations::getContactRelations())->find($contact->id);

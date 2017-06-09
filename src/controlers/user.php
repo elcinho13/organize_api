@@ -2,7 +2,9 @@
 
 $app->get('/users', function() {
     try {
-        $data = user::with(relations::getUserRelations())->get();
+        $data = user::with(relations::getUserRelations())
+                ->where('is_active', '=', true)
+                ->get();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
     } catch (Exception $ex) {
@@ -58,6 +60,23 @@ $app->post('/user/save', function () use ($app) {
         }
     } catch (Exception $ex) {
         $error = new custonError(true, 3, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
+});
+
+$app->post('/user/:id/active', function ($id) use($app) {
+    try {
+        $user = user::find($id);
+        $user->is_active = $app->request()->post('is_active');
+        $user->user_last_update = $app->request()->post('user_admin');
+
+        if ($user->update()) {
+            $data = user::with(relations::getUserRelations())->find($user->id);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
+        }
+    } catch (Exception $ex) {
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error(), null);
     }
 });

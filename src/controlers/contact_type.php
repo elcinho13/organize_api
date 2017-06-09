@@ -4,6 +4,7 @@ $app->get('/contact_type/:locale', function ($locale) {
     try {
         $data = contact_type::query()
                 ->where('locale', '=', $locale)
+                ->where('is_active', '=', true)
                 ->get();
         $error = new custonError(false, 0);
         return helpers::jsonResponse($error->parse_error(), $data);
@@ -42,6 +43,23 @@ $app->post('/contact_type/save', function () use($app) {
         }
     } catch (Exception $ex) {
         $error = new custonError(true, 3, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
+});
+
+$app->post('/contact_type/:id/active', function ($id) use($app) {
+    try {
+        $contact_type = contact_type::find($id);
+        $contact_type->is_active = $app->request()->post('is_active');
+        $contact_type->user_last_update = $app->request()->post('user_admin');
+
+        if ($contact_type->update()) {
+            $data = contact_type::find($contact_type->id);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
+        }
+    } catch (Exception $ex) {
+        $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());
         return helpers::jsonResponse($error->parse_error(), null);
     }
 });
