@@ -14,7 +14,8 @@ class relations {
             'user_security.access_platform',
             'user_security.security_question',
             'user_settings.setting',
-            'user_notifications'
+            'user_notifications',
+            'user_contact'
         ];
         return $relations;
     }
@@ -30,7 +31,9 @@ class relations {
             'user.user_security.access_platform',
             'user.user_security.security_question',
             'user.user_settings.setting',
-            'user.user_notifications'
+            'user.user_notifications',
+            'user.user_contact',
+            'user.user_social_network'
         ];
         return $relations;
     }
@@ -68,4 +71,29 @@ class relations {
         ];
         return $relations;
     }
+
+    static function getInstitutionRelations(){
+        $relations = [
+        'institution_type',
+        'place'
+        ];
+        return $relations;
+    }
+
+    static function getClassesRelations(){
+        $relations = [
+        'institution.institution_type',
+        'course',
+        'shift'
+        ];
+        return $relations;
+    }
+
+    static function getSocialNetworkRelations(){
+        $relations = [
+        'social_network_type'
+        ];
+        return $relations;
+    }
+
 }

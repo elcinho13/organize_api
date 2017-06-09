@@ -38,4 +38,12 @@ class user extends Eloquent {
     public function user_notifications(){
         return $this->hasMany('user_notifications', 'user');
     }
+
+    public function user_contact(){
+        return $this->belongsTo('user_contact', 'user_contact');
+    }
+
+    public function user_social_network(){
+        return $this->hasMany('user_social_network', 'user_social_network');
+    }
 }
