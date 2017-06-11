@@ -19,6 +19,7 @@ class custonError {
     const UPLOAD = 6;
     const LOGIN = 7;
     const AUTHENTICATE = 8;
+    
     const SUCCESS_MESSAGE = 'Dados retornados com sucesso.';
     const GENERIC_MESSAGE = 'Ocorreu um erro genérico no servidor.';
     const GETDATA_MESSAGE = 'Ocorreu um erro ao buscar os dados.';

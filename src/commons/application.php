@@ -9,8 +9,9 @@ class application {
     
     static function generate_code($size, $salt) {
         $alpha = mt_getrandmax() . $salt . microtime();
-        $beta = md5($alpha);
-        $code = substr($beta, 0, $size);
+        $beta = str_replace(' ', '.','',$alpha);
+        $delta = md5($beta);
+        $code = substr($delta, 0, $size);
 
         return $code;
     }

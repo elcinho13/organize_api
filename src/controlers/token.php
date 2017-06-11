@@ -7,7 +7,7 @@ $app->post('/token/save', function () use($app) {
         $token = new token();
         $token->login_type = $app->request()->post('login_type');
         $token->access_platform = $app->request()->post('access_platform');
-        $token->access_token = application::generate_code(100, $salt);
+        $token->access_token = application::generate_code(50, $salt);
         $token->access_date = $app->request()->post('access_date');
         $token->keep_logged = $app->request()->post('keep_logged');
         $token->user_last_update = $app->request()->post('user_admin');

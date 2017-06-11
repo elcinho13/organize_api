@@ -46,6 +46,9 @@ require_once _MODEL . '/user_term.php';
 require_once _MODEL . '/user_type.php';
 require_once _MODEL . '/user.php';
 require_once _MODEL . '/user_contact.php';
+require_once _MODEL . '/user_address.php';
+require_once _MODEL . '/institution_course.php';
+require_once _MODEL . '/user_academic_data.php';
 
 
 //Controllers
@@ -80,3 +83,7 @@ require_once _CONTROLER . '/user_term.php';
 require_once _CONTROLER . '/user_type.php';
 require_once _CONTROLER . '/user.php';
 require_once _CONTROLER . '/user_contact.php';
+require_once _CONTROLER . '/place.php';
+require_once _CONTROLER . '/user_address.php';
+require_once _CONTROLER . '/institution_course.php';
+require_once _CONTROLER . '/user_academic_data.php';

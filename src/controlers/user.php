@@ -26,7 +26,9 @@ $app->get('/user/:id', function($id) {
 
 $app->post('/user/mail', function () use ($app) {
     try {
-        $data = user::with(relations::getUserRelations())->where('mail', '=', $app->request()->post('mail'))->first();
+        $data = user::with(relations::getUserRelations())
+                ->where('mail', '=', $app->request()->post('mail'))
+                ->first();
         if (!is_null($data)) {
             $error = new custonError(false, 0);
         } else {
@@ -168,7 +170,7 @@ $app->post('/user/:id/edit_password', function ($id) use ($app) {
         } else {
             $user->password = application::cryptPassword($user->birth_date, $app->request()->post('password'));
             if ($user->update()) {
-                $error = new custonError(false, 99, 1, 'Senha alterada com sucesso.');
+                $error = new custonError(false, 0, 1, 'Senha alterada com sucesso.');
                 $data = $error->parse_error();
             }
         }
