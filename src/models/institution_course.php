@@ -14,4 +14,5 @@ class institution_course extends Eloquent {
     public function course() {
         return $this->belongsTo('course', 'course');
     }
+
 }

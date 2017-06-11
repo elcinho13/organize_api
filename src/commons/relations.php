@@ -15,19 +15,14 @@ class relations {
             'user_academic_data.institution.institution_type',
             'user_academic_data.institution.place',
             'user_academic_data.course',
-            'user_academic_data.classes.shift',
+            'user_academic_data.academic_class.shift',
             'user_term.term',
             'user_security.access_platform',
             'user_security.security_question',
             'user_settings.setting',
             'user_notifications',
             'user_contact.contact_type',
-            'user_social_network.social_network_type',
-            'user_academic_data.literacy',
-            'user_academic_data.institution.institution_type',
-            'user_academic_data.institution.place',
-            'user_academic_data.course',
-            'user_academic_data.classes.shift',
+            'user_social_network.social_network_type'
         ];
         return $relations;
     }
@@ -41,6 +36,11 @@ class relations {
             'user.plan.advantages',
             'user.privacy',
             'user.user_address.place',
+            'user.user_academic_data.literacy',
+            'user.user_academic_data.institution.institution_type',
+            'user.user_academic_data.institution.place',
+            'user.user_academic_data.course',
+            'user.user_academic_data.academic_class.shift',
             'user.user_term.term',
             'user.user_security.access_platform',
             'user.user_security.security_question',
@@ -90,26 +90,17 @@ class relations {
         return $relations;
     }
 
-    static function getCourseRelations() {
-        $relations = [
-            'classes.shift'
-        ];
-        return $relations;
-    }
-
     static function getInstitutionRelations() {
         $relations = [
             'institution_type',
             'place',
-            'courses.course.classes.shift'
         ];
         return $relations;
     }
 
-    static function getClassesRelations() {
+    static function getAcademicClassRelations() {
         $relations = [
-            'institution_course.institution.institution_type',
-            'institution_course.institution.place',
+            'institution_course.institution',
             'institution_course.course',
             'shift'
         ];
@@ -145,7 +136,7 @@ class relations {
             'institution.institution_type',
             'institution.place',
             'course',
-            'classes.shift'
+            'academic_class.shift'
         ];
         return $relations;
     }

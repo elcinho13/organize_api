@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/contact_type/:locale', function ($locale) {
+$app->get('/contact_types/:locale', function ($locale) {
     try {
         $data = contact_type::query()
                 ->where('locale', '=', $locale)

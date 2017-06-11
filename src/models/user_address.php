@@ -14,4 +14,5 @@ class user_address extends Eloquent {
     public function place() {
         return $this->belongsTo('place', 'place');
     }
+
 }

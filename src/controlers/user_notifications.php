@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/notification/user/:user', function($user_id) {
+$app->get('/user_notifications/user/:user', function($user_id) {
     try {
         $data = user_notifications::where('user', '=', $user_id)->get();
         $error = new custonError(false, 0);
@@ -11,7 +11,7 @@ $app->get('/notification/user/:user', function($user_id) {
     }
 });
 
-$app->get('/notification/:id', function($id) {
+$app->get('/user_notification/:id', function($id) {
     try {
         $data = user_notifications::find($id);
         $error = new custonError(false, 0);
@@ -22,7 +22,7 @@ $app->get('/notification/:id', function($id) {
     }
 });
 
-$app->post('/notification/:save', function() use ($app) {
+$app->post('/user_notification/:save', function() use ($app) {
     try {
         $user_notifications = new user_notifications();
         $user_notifications->user = $app->request()->post('user');
@@ -43,7 +43,7 @@ $app->post('/notification/:save', function() use ($app) {
     }
 });
 
-$app->post('/notification/:id/read', function($id) use ($app) {
+$app->post('/user_notification/:id/read', function($id) use ($app) {
     try {
         $user_notifications = user_notifications::find($id);
         $user_notifications->is_read = $app->request->post('is_read');

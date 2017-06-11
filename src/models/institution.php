@@ -15,8 +15,4 @@ class institution extends Eloquent {
         return $this->belongsTo('place', 'place');
     }
 
-    public function courses() {
-        return $this->hasMany('institution_course', 'institution');
-    }
-
 }

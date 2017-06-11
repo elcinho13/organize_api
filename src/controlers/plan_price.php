@@ -11,7 +11,8 @@ $app->post('/plan_price/save', function () use($app) {
         $plan_price->user_last_update = $app->request()->post('user_admin');
 
         if ($plan_price->save()) {
-            $data = plan::with(relations::getPlanRelations())->find($app->request()->post('plan_id'));;
+            $data = plan::with(relations::getPlanRelations())->find($app->request()->post('plan_id'));
+            ;
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }

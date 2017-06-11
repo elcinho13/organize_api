@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/plan/:locale', function ($locale) {
+$app->get('/plans/:locale', function ($locale) {
     try {
         $data = plan::with(relations::getPlanRelations())
                 ->where('locale', '=', $locale)
@@ -54,7 +54,7 @@ $app->post('/plan/:id/active', function ($id) use($app) {
         $plan = plan::find($id);
         $plan->is_active = $app->request()->post('is_active');
         $plan->user_last_update = $app->request()->post('user_admin');
-        
+
         if ($plan->update()) {
             $data = plan::with(relations::getPlanRelations())->find($plan->id);
             $error = new custonError(false, 0);

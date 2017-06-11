@@ -54,4 +54,5 @@ class user extends Eloquent {
     public function user_academic_data() {
         return $this->hasOne('user_academic_data', 'user');
     }
+
 }

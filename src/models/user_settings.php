@@ -10,7 +10,7 @@ class user_settings extends Eloquent {
     public function user() {
         return $this->belongsTo('user', 'user');
     }
-    
+
     public function setting() {
         return $this->belongsTo('setting', 'setting');
     }

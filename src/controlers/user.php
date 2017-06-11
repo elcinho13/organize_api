@@ -157,25 +157,24 @@ $app->post('/user/:id', function ($id) use ($app) {
 
 $app->post('/user/:id/edit_password', function ($id) use ($app) {
     try {
-        if(!helpers::authenticate($app->request()->params('token'))){
+        if (!helpers::authenticate($app->request()->params('token'))) {
             $error = new custonError(true, 8, 401);
             return helpers::jsonResponse($error->parse_error(), null);
-        }
-        else{
-            $user = user::find($id);
-        $oldPassword = application::cryptPassword($user->birth_date, $app->request()->post('old_password'));
-        if ($oldPassword !== $user->password) {
-            $error = new custonError(true, 4, 0, 'Senha atual inválida.');
-            $data = $error->parse_error();
         } else {
-            $user->password = application::cryptPassword($user->birth_date, $app->request()->post('password'));
-            if ($user->update()) {
-                $error = new custonError(false, 0, 1, 'Senha alterada com sucesso.');
+            $user = user::find($id);
+            $oldPassword = application::cryptPassword($user->birth_date, $app->request()->post('old_password'));
+            if ($oldPassword !== $user->password) {
+                $error = new custonError(true, 4, 0, 'Senha atual inválida.');
                 $data = $error->parse_error();
+            } else {
+                $user->password = application::cryptPassword($user->birth_date, $app->request()->post('password'));
+                if ($user->update()) {
+                    $error = new custonError(false, 0, 1, 'Senha alterada com sucesso.');
+                    $data = $error->parse_error();
+                }
             }
-        }
-        $error = new custonError(false, 0);
-        return helpers::jsonResponse($error->parse_error(), $data);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
         }
     } catch (Exception $ex) {
         $error = new custonError(true, 4, $ex->getCode(), $ex->getMessage());

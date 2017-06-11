@@ -14,28 +14,26 @@ class helpers {
             'exception' => $error['exception'],
             'data' => $data
         ];
-        
+
         return $app->response()->body(json_encode($response));
     }
-    
-    static function authenticate($token){
-        if(is_null($token)){
+
+    static function authenticate($token) {
+        if (is_null($token)) {
             return false;
-        }
-        else{
+        } else {
             $is_authenticate = token::query()->where('access_token', '=', $token)->first();
-            if(is_null($is_authenticate)){
+            if (is_null($is_authenticate)) {
                 $is_authenticate = user_admin::query()->where('access_token', '=', $token)->first();
-                if(is_null($is_authenticate)){
+                if (is_null($is_authenticate)) {
                     return false;
-                }
-                else{
+                } else {
                     return true;
                 }
-            }
-            else{
+            } else {
                 return true;
             }
         }
     }
+
 }

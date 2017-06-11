@@ -23,7 +23,8 @@ class user_academic_data extends Eloquent {
         return $this->belongsTo('course', 'course');
     }
 
-    public function classes() {
-        return $this->belongsTo('classes', 'class');
+    public function academic_class() {
+        return $this->belongsTo('academic_class', 'academic_class');
     }
+
 }

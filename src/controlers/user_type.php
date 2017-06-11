@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/user_type/:locale', function ($locale) {
+$app->get('/user_types/:locale', function ($locale) {
     try {
         $data = user_type::query()
                 ->where('locale', '=', $locale)

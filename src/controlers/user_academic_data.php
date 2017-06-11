@@ -9,11 +9,12 @@ $app->post('/user_academic_data/save', function () use($app) {
             $user_academic_data = new user_academic_data();
             $user_academic_data->user = $app->request()->post('user_id');
             $user_academic_data->literacy = $app->request()->post('literacy_id');
-            $user_academic_data->institution = $app->request()->post('institution');
-            $user_academic_data->course = $app->request()->post('course');
-            $user_academic_data->class = $app->request()->post('class');
+            $user_academic_data->institution = $app->request()->post('institution_id');
+            $user_academic_data->course = $app->request()->post('course_id');
+            $user_academic_data->academic_class = $app->request()->post('class_id');
             $user_academic_data->start_date = $app->request()->post('start_date');
             $user_academic_data->final_date = $app->request()->post('final_date');
+            $user_academic_data->user_last_update = $app->request()->post('user_admin');
 
             if ($user_academic_data->save()) {
                 $data = user_academic_data::with(relations::getUserAcademicDataRelations())->find($user_academic_data->id);

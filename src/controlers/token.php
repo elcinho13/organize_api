@@ -83,7 +83,7 @@ $app->post('/login/admin', function () use($app) {
                 ->first();
         if (!is_null($user) && $user->password == application::cryptPassword($user->birth_date, $app->request()->post('password'))) {
             $user_admin = updateLoginAdmin($user->id);
-            
+
             if (!is_null($user_admin)) {
                 $error = new custonError(false, 0);
                 $data = user_admin::find($user_admin->id);
@@ -109,10 +109,10 @@ function updateLoginAdmin($user_id) {
     $token = application::generate_code(100, $salt);
     $user_admin->token = $token;
     $user_admin->last_access = $current_date;
-   
+
     if ($user_admin->update()) {
         $user = user_admin::find($user_admin->id);
-        
+
         return $user;
     } else {
         return null;
