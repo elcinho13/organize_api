@@ -1,6 +1,6 @@
 /**
- * Version: 09
- * Updated: 28/05/2017
+ * Version: 11
+ * Updated: 11/06/2017
  */
 
 USE `organize_test`;
@@ -162,9 +162,11 @@ INSERT INTO `org_institution_course` (`id`, `institution`, `course`, `duration`,
 (2, 1, 2, 8, 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30');
 
 
-INSERT INTO `org_class` (`id`, `institution`, `course`, `shift`, `identify`, `start_year`, `start_semester`, `is_active`, `user_last_update`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 'Turma SI Pitágoras 2013', 2013, 1, 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
-(2, 1, 2, 1, 'Turma Sei lá Pitágoras 2013', 2013, 1, 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30');
+INSERT INTO `org_class` (`id`, `institution_course`, `shift`, `identify`, `start_year`, `start_semester`, `is_active`, `user_last_update`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Turma SI Pitágoras 2013', 2013, 1, 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(2, 1, 1, 'Turma Sei lá Pitágoras 2013', 2013, 1, 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(3, 2, 1, 'Turma Sei lá Pitágoras 2014', 2014, 1, 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30'),
+(4, 2, 1, 'Turma Sei lá Pitágoras 2015', 2015, 1, 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30');
 
 INSERT INTO `org_user_academic_data` (`id`, `user`, `literacy`, `institution`, `course`, `class`, `start_date`, `final_date`, `is_active`, `user_last_update`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, 1, 1, '2013-02-10', '2016-12-10', 1, 1, '2017-05-25 18:29:30', '2017-05-25 18:29:30');

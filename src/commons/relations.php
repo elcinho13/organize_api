@@ -11,13 +11,23 @@ class relations {
             'plan.advantages',
             'privacy',
             'user_address.place',
+            'user_academic_data.literacy',
+            'user_academic_data.institution.institution_type',
+            'user_academic_data.institution.place',
+            'user_academic_data.course',
+            'user_academic_data.classes.shift',
             'user_term.term',
             'user_security.access_platform',
             'user_security.security_question',
             'user_settings.setting',
             'user_notifications',
             'user_contact.contact_type',
-            'user_social_network.social_network_type'
+            'user_social_network.social_network_type',
+            'user_academic_data.literacy',
+            'user_academic_data.institution.institution_type',
+            'user_academic_data.institution.place',
+            'user_academic_data.course',
+            'user_academic_data.classes.shift',
         ];
         return $relations;
     }
@@ -82,6 +92,13 @@ class relations {
 
     static function getCourseRelations() {
         $relations = [
+            'classes.shift'
+        ];
+        return $relations;
+    }
+
+    static function getInstitutionRelations() {
+        $relations = [
             'institution_type',
             'place',
             'courses.course.classes.shift'
@@ -91,8 +108,9 @@ class relations {
 
     static function getClassesRelations() {
         $relations = [
-            'institution.institution_type',
-            'course',
+            'institution_course.institution.institution_type',
+            'institution_course.institution.place',
+            'institution_course.course',
             'shift'
         ];
         return $relations;
@@ -117,6 +135,17 @@ class relations {
             'institution.institution_type',
             'institution.place',
             'course'
+        ];
+        return $relations;
+    }
+
+    static function getUserAcademicDataRelations() {
+        $relations = [
+            'literacy',
+            'institution.institution_type',
+            'institution.place',
+            'course',
+            'classes.shift'
         ];
         return $relations;
     }

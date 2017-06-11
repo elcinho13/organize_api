@@ -1,6 +1,6 @@
 <?php 
 
-$app->get('/institution', function() {
+$app->get('/institutions', function() {
 	try{
 		$data = institution::with(relations::getInstitutionRelations())->get();
 		$error = new custonError(false, 0);

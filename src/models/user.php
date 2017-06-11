@@ -50,4 +50,8 @@ class user extends Eloquent {
     public function user_address() {
         return $this->hasOne('user_address', 'user');
     }
+
+    public function user_academic_data() {
+        return $this->hasOne('user_academic_data', 'user');
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/course/:locale', function ($locale){
+$app->get('/courses/:locale', function ($locale){
 	try {
 		$data = course::query()->where('locale', '=', $locale)->get();
 		$error = new custonError(false, 0);
@@ -28,7 +28,7 @@ $app->post('/course/save', function() use($app){
 		$course = new course();
 		$course->locale = $app->request()->post('locale');
 		$course->code_enum = $app->request()->post('code_enum');
-		$course->name = $app->request->post('name');
+		$course->name = $app->request()->post('name');
 
 		if($course->save()){
 			$data = course::find($course->id);

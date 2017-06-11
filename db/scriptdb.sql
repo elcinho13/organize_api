@@ -1,6 +1,6 @@
 /**
- * Version: 10
- * Updated: 31/05/2017
+ * Version: 11
+ * Updated: 11/06/2017
  */
 
 CREATE DATABASE IF NOT EXISTS `organize_test`;
@@ -728,8 +728,7 @@ CREATE TABLE IF NOT EXISTS `org_institution_course`(
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `org_class`(
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `institution` INT UNSIGNED,
-    `course` INT UNSIGNED,
+    `institution_course` INT UNSIGNED,
     `shift` INT UNSIGNED,
     `identify` VARCHAR(200) UNIQUE,
     `start_year` INT(4),
@@ -742,14 +741,11 @@ CREATE TABLE IF NOT EXISTS `org_class`(
     KEY `org_class_fk1` (`user_last_update`),
     CONSTRAINT `org_class_fk1` FOREIGN KEY (`user_last_update`) REFERENCES `org_user_admin` (`id`),
 
-    KEY `org_class_fk2` (`institution`),
-    CONSTRAINT `org_class_fk2` FOREIGN KEY (`institution`) REFERENCES `org_institution` (`id`),
+    KEY `org_class_fk2` (`institution_course`),
+    CONSTRAINT `org_class_fk2` FOREIGN KEY (`institution_course`) REFERENCES `org_institution_course` (`id`),
 
-    KEY `org_class_fk3` (`course`),
-    CONSTRAINT `org_class_fk3` FOREIGN KEY (`course`) REFERENCES `org_course` (`id`),
-
-    KEY `org_class_fk4` (`shift`),
-    CONSTRAINT `org_class_fk4` FOREIGN KEY (`shift`) REFERENCES `org_shift` (`id`)
+    KEY `org_class_fk3` (`shift`),
+    CONSTRAINT `org_class_fk3` FOREIGN KEY (`shift`) REFERENCES `org_shift` (`id`)
 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
