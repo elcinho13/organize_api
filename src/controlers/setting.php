@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/setting/:locale', function ($locale) {
+$app->get('/settings/:locale', function ($locale) {
     try {
         $data = setting::query()
                 ->where('locale', '=', $locale)

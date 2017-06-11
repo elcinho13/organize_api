@@ -24,13 +24,14 @@ $app->post('/plan_advantages/:id/edit', function ($id) use($app) {
     try {
         $fields = $app->request()->post();
         $plan_advantages = plan_advantages::find($id);
-        
-        foreach ($fields as $key => $value){
+
+        foreach ($fields as $key => $value) {
             $plan_advantages->$key = $value;
         }
 
         if ($plan_advantages->update()) {
-            $data = plan::with(relations::getPlanRelations())->find($app->request()->post('plan_id'));;
+            $data = plan::with(relations::getPlanRelations())->find($app->request()->post('plan_id'));
+            ;
             $error = new custonError(false, 0);
             return helpers::jsonResponse($error->parse_error(), $data);
         }

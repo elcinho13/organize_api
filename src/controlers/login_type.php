@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/login_type/:locale', function ($locale) {
+$app->get('/login_types/:locale', function ($locale) {
     try {
         $data = login_type::query()
                 ->where('locale', '=', $locale)

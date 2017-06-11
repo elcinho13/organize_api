@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/privacy/:locale', function ($locale) {
+$app->get('/privacies/:locale', function ($locale) {
     try {
         $data = privacy::query()
                 ->where('locale', '=', $locale)

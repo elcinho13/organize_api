@@ -10,8 +10,9 @@ class token extends Eloquent {
     public function login_type() {
         return $this->belongsTo('login_type', 'login_type');
     }
-    
+
     public function access_platform() {
         return $this->belongsTo('access_platform', 'access_platform');
     }
+
 }

@@ -18,6 +18,7 @@ class custonError {
     const DELETE = 5;
     const UPLOAD = 6;
     const LOGIN = 7;
+    
     const AUTHENTICATE = 8;
     const SUCCESS_MESSAGE = 'Dados retornados com sucesso.';
     const GENERIC_MESSAGE = 'Ocorreu um erro genérico no servidor.';
@@ -80,4 +81,5 @@ class custonError {
 
         return $this->error;
     }
+
 }

@@ -25,10 +25,9 @@ $app->get('/user_admin/:id', function($id) {
 $app->post('/user_admin/mail', function () use ($app) {
     try {
         $data = user_admin::where('mail', '=', $app->request()->post('mail'))->first();
-        if(!is_null($data)){
+        if (!is_null($data)) {
             $error = new custonError(false, 0);
-        }
-        else{
+        } else {
             $error = new custonError(true, 2, 2, 'Nenhum usuário encontrado.');
         }
         return helpers::jsonResponse($error->parse_error(), $data);

@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/access_platform/:locale', function ($locale) {
+$app->get('/access_platforms/:locale', function ($locale) {
     try {
         $data = access_platform::query()
                 ->where('locale', '=', $locale)
@@ -35,7 +35,7 @@ $app->post('/access_platform/save', function () use($app) {
         $access_platform->code_enum = $app->request()->post('code_enum');
         $access_platform->name = $app->request()->post('name');
         $access_platform->user_last_update = $app->request()->post('user_admin');
-        
+
         if ($access_platform->save()) {
             $data = access_platform::find($access_platform->id);
             $error = new custonError(false, 0);

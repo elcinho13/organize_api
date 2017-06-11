@@ -1,9 +1,9 @@
 <?php
 
-$app->get('/contact/:locale', function ($locale) {
+$app->get('/contacts/:locale', function ($locale) {
     try {
         $data = contact::with(relations::getContactRelations())
-                ->where('locale', '=',  $locale)
+                ->where('locale', '=', $locale)
                 ->where('is_active', '=', true)
                 ->get();
         $error = new custonError(false, 0);
@@ -27,7 +27,6 @@ $app->get('/contact/:locale/:id', function ($locale, $id) {
         return helpers::jsonResponse($error->parse_error(), null);
     }
 });
-
 
 
 $app->post('/contact/save', function () use($app) {
