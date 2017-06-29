@@ -32,29 +32,27 @@ $app->get('/institution/:id', function($id) use ($app) {
     }
 });
 
-
-$app->get('/institution/:institution_id/institution_type/:institution_type/institution', function($institution_type_id) use($app) {
-   try {
+$app->get('/institution_type/:id/institutions', function($id) use($app) {
+    try {
         if (!helpers::authenticate($app->request()->params('token'))) {
-          $error = new custonError(true, 8, 401);
-          return helpers::jsonResponse($error->parse_error(), null);
-        }else{
-           $institution = institution::with(relations::getInstitutionRelations())
+            $error = new custonError(true, 8, 401);
+            return helpers::jsonResponse($error->parse_error(), null);
+        } else {
+            $institutions = institution::query()
                     ->where('is_active', '=', true)
                     ->get();
-            $institution_type = institution_type::query()
+            $institution_types = institution_type::query()
                     ->where('is_active', '=', true)
-                    ->where('id', '=', $institution_type_id)
+                    ->where('institution_type', '=', $id)
                     ->get();
             $data = [];
-            foreach ($institution_type as $institution_type) {
-                foreach ($institution as $institution) {
-                    if ($institution_type->id === $institution->institution_type) {
+            foreach ($institution_types as $institution_type) {
+                foreach ($institutions as $institution) {
+                    if ($institution_type->institution === $institution->id) {
                         array_push($data, $institution);
                     }
                 }
             }
-
             if (count($data) > 0) {
                 $error = new custonError(false, 0);
                 return helpers::jsonResponse($error->parse_error(), $data);
@@ -68,6 +66,38 @@ $app->get('/institution/:institution_id/institution_type/:institution_type/insti
         return helpers::jsonResponse($error->parse_error(), null);
     }
 });
+
+$app->get('/course/:locale/:id', function ($locale, $id) {
+    try {
+        $data = course::query()->where('locale', '=', $locale)->where('code_enum', '=', $id)->get();
+        $error = new custonError(false, 0);
+        return helpers::jsonResponse($error->parse_error(), $data);
+    } catch (Exception $ex) {
+        $error = new custonError(true, 2, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
+});
+$app->post('/course/save', function() use($app) {
+    try {
+        $course = new course();
+        $course->locale = $app->request()->post('locale');
+        $course->code_enum = $app->request()->post('code_enum');
+        $course->name = $app->request()->post('name');
+        $course->user_last_update = $app->request()->post('user_admin');
+        if ($course->save()) {
+            $data = course::find($course->id);
+            $error = new custonError(false, 0);
+            return helpers::jsonResponse($error->parse_error(), $data);
+        }
+    } catch (Exception $ex) {
+        $error = new custonError(true, 3, $ex->getCode(), $ex->getMessage());
+        return helpers::jsonResponse($error->parse_error(), null);
+    }
+});
+
+
+
+
     
 $app->post('/institution/save', function() use($app) {
     try {
@@ -141,4 +171,3 @@ $app->post('/institution/:id/active', function ($id) use($app) {
         return helpers::jsonResponse($error->parse_error(), null);
     }
 });
-
